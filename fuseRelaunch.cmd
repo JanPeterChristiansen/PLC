@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "C:/Users/japem/Documents/repos/VHDL/PLC/ALUTestBench_isim_beh.exe" -prj "C:/Users/japem/Documents/repos/VHDL/PLC/ALUTestBench_beh.prj" "work.ALUTestBench" 
