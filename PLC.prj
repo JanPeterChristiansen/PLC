@@ -1,0 +1,4 @@
+vhdl work "Registers.vhd"
+vhdl work "RandomAccessMemory.vhd"
+vhdl work "ALU.vhd"
+vhdl work "PLC.vhd"

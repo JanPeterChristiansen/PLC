@@ -53,29 +53,32 @@ begin
 process(clk)
 begin
 
-	-- write from C bus to register address A on falling edge
-	if we = '1' then
-		if falling_edge(clk) then
-			REG(conv_integer(addrA)) <= C;
+	-- rising edge -> read from registers to bus
+	if rising_edge(clk) then
+		
+		-- read from register address A to A-bus
+		if reA = '1' then  
+			A <= REG(conv_integer(addrA)); 
+		else
+			A <= (others => 'Z'); 
 		end if; 
-	else
-		REG(conv_integer(addrA)) <= REG(conv_integer(addrA)); 
-	end if; 
-	
-	-- read from register address A to A-bus
-	if reA = '1' then  
-		A <= REG(conv_integer(addrA)); 
-	else
-		A <= (others => 'Z'); 
-	end if; 
-	
-	-- read from register address B to B-bus
-	if reB = '1' then
-		B <= REG(conv_integer(addrB));
-	else 
-		B <= (others => 'Z'); 
+		
+		-- read from register address B to B-bus
+		if reB = '1' then
+			B <= REG(conv_integer(addrB));
+		else 
+			B <= (others => 'Z'); 
+		end if;
+		
 	end if;
-	
+
+	-- falling edge -> write to register address A from C-bus
+	if falling_edge(clk) then
+		if (we = '1') then
+			REG(conv_integer(addrA)) <= C;
+		end if;
+	end if;
+
 end process; 
 end Behavioral;
 

@@ -48,7 +48,7 @@ architecture Behavioral of ALU is
 begin
 
 	-- Intermediate product
-	PROD <= std_logic_vector(signed(A) * signed(B));
+	PROD <= A * B;
 
 	-- select output
 	with FUNC select OUTPUT <= 
