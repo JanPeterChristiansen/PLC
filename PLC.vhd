@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    15:56:27 03/25/2020 
+-- Create Date:    11:49:34 04/15/2020 
 -- Design Name: 
--- Module Name:    OutputSelect - Behavioral 
+-- Module Name:    PLC - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -20,6 +20,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -30,25 +31,36 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity OutputSelect is
-    Port ( A 		: in  STD_LOGIC_VECTOR (15 downto 0);
-           B 		: in  STD_LOGIC_VECTOR (15 downto 0);
-           F 		: in  STD_LOGIC_VECTOR (1 downto 0);
-			  SUM 	: in 	STD_LOGIC_VECTOR (15 downto 0);
-           OUTPUT : out STD_LOGIC_VECTOR (15 downto 0));
-end OutputSelect;
+entity PLC is
+	Port ( 
+		CLK : in  STD_LOGIC;
+		LED : out STD_LOGIC_VECTOR(7 downto 0)
+	);
+	
+end PLC;
 
-architecture Behavioral of OutputSelect is
+architecture Behavioral of PLC is
+
+	-- ALU control signals
+	signal ALUControlSignal : STD_LOGIC_VECTOR (3 downto 0) := x"0";
+
+	-- CPU busses
+	signal A, B, C : STD_LOGIC_VECTOR (15 downto 0);
+
+	
 
 begin
 
--- OUTPUT SELECTER
-with F select
-	OUTPUT <= 	SUM 			when "11", -- ADDER
-					A and B 		when "00", -- AND
-					A or B 		when "01", -- OR
-					not B 		when "10", -- NOT B
-					x"0000" 		when others; 
+ALU : entity work.ALU
+	Port Map(
+		A <= A,
+		B <= B,
+		FUNC <= ALUControlSignal,
+		OUTPUT <= C
+	);
+
+-- for test
+LED <= C(7 downto 0);
 
 end Behavioral;
 

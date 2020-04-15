@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    10:57:34 04/07/2020 
+-- Create Date:    11:02:35 04/15/2020 
 -- Design Name: 
 -- Module Name:    ALU - Behavioral 
 -- Project Name: 
@@ -19,7 +19,8 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -32,68 +33,42 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity ALU is
 	Port ( 
-		CLK 		: in STD_LOGIC;
-		FUNC 		: in STD_LOGIC_VECTOR (7 downto 0);
-		A 			: in STD_LOGIC_VECTOR (15 downto 0);
-		B 			: in STD_LOGIC_VECTOR (15 downto 0);
-		LED 		: out STD_LOGIC_VECTOR (7 downto 0); -- USING LED AS OUTPUT TO COMPILE
-		CARRY 	: out STD_LOGIC
-	);
+		A 			: in  STD_LOGIC_VECTOR (15 downto 0);
+      B 			: in  STD_LOGIC_VECTOR (15 downto 0);
+      FUNC 		: in  STD_LOGIC_VECTOR (3 downto 0);
+      OUTPUT 	: out  STD_LOGIC_VECTOR (15 downto 0)
+	);	
 	
 end ALU;
 
 architecture Behavioral of ALU is
 
-	signal ControlSignal : STD_LOGIC_VECTOR (5 downto 0);
-	
-	signal QA 	: STD_LOGIC_VECTOR (15 downto 0);
-	signal QB 	: STD_LOGIC_VECTOR (15 downto 0);
-	signal SUM 	: STD_LOGIC_VECTOR (15 downto 0);
-	
-	signal OUTPUT : STD_LOGIC_VECTOR (15 downto 0);
+	signal PROD : STD_LOGIC_VECTOR (31 downto 0);
 
 begin
 
-Interpreter : entity work.Interpreter
-	Port Map(
-		FUNC => FUNC,
-		OUTPUT => ControlSignal
-	);
-	
--- selects input
-InputSelect : entity work.InputSelect
-	Port Map(
-		A => A,
-		B => B,
-		ENA => ControlSignal(3),
-		INVA => ControlSignal(1),
-		ENB => ControlSignal(2),
-		QA => QA,
-		QB => QB
-	);
-	
--- adds A and B with carry
-Adder : entity work.Adder
-	Port Map(
-		A => QA,
-		B => QB,
-		INC => ControlSignal(0),
-		SUM => SUM,
-		CARRY => CARRY
-	);
+	-- Intermediate product
+	PROD <= std_logic_vector(signed(A) * signed(B));
 
--- selects output
-OutputSelect : entity work.OutputSelect
-	Port Map(
-		A => QA,
-		B => QB,
-		SUM => SUM,
-		F => ControlSignal(5 downto 4),
-		OUTPUT => OUTPUT
-	);
-
--- temporary connection for debugging
-LED <= OUTPUT(7 downto 0);
+	-- select output
+	with FUNC select OUTPUT <= 
+		x"0000" 						when x"0", -- 0
+		x"0001" 						when x"1", -- 1
+		(not x"0001") + 1			when x"2", -- -1
+		A 								when x"3", -- A
+		not A 						when x"4", -- not A
+		A + 1 						when x"5", -- A + 1
+		A + B							when x"6", -- A + B
+		A + B + 1					when x"7", -- A + B + 1
+		A - 1 						when x"8", -- A - 1
+		A - B 						when x"9", -- A - B
+		x"0000" - A 				when x"a", -- -A
+		A and B 						when x"b", -- AND
+		A or B 						when x"c", -- OR
+		A xor B 						when x"d", -- XOR
+		PROD(15 downto 0)		 	when x"e", -- A * B
+		(others => 'U')			when others;
+		
 
 end Behavioral;
 

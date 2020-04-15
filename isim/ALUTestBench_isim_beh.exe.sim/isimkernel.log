@@ -2,9 +2,9 @@ Command line:
    ALUTestBench_isim_beh.exe
      -simmode  gui
      -simrunnum  0
-     -socket  63426
+     -socket  64533
 
-Wed Apr 15 10:42:34 2020
+Wed Apr 15 11:48:36 2020
 
 
  Elaboration Time: 0.03125 sec

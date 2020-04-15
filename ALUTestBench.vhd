@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   14:40:28 04/14/2020
+-- Create Date:   11:37:39 04/15/2020
 -- Design Name:   
 -- Module Name:   C:/Users/japem/Documents/repos/VHDL/PLC/ALUTestBench.vhd
 -- Project Name:  PLC
@@ -27,6 +27,7 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -41,25 +42,23 @@ ARCHITECTURE behavior OF ALUTestBench IS
  
     COMPONENT ALU
     PORT(
-         CLK 		: IN  std_logic;
-         FUNC 		: IN  std_logic_vector(7 downto 0);
-         A 			: IN  std_logic_vector(15 downto 0);
-         B 			: IN  std_logic_vector(15 downto 0);
-         LED 		: OUT  std_logic_vector(7 downto 0);
-         CARRY 	: OUT  std_logic
+         CLK : IN  std_logic;
+         A : IN  std_logic_vector(15 downto 0);
+         B : IN  std_logic_vector(15 downto 0);
+         FUNC : IN  std_logic_vector(3 downto 0);
+         LED : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
-   signal CLK 		: std_logic := '0';
-   signal FUNC 	: std_logic_vector(7 downto 0) 		:= x"09";
-   signal A 		: std_logic_vector(15 downto 0) 		:= x"000a";
-   signal B 		: std_logic_vector(15 downto 0) 		:= x"0013";
+   signal CLK : std_logic := '0';
+   signal A 	: std_logic_vector(15 downto 0) 	:= x"000a";
+   signal B 	: std_logic_vector(15 downto 0) 	:= (not x"0003") + 1;
+   signal FUNC : std_logic_vector(3 downto 0) 	:= x"9";
 
  	--Outputs
-   signal LED 		: std_logic_vector(7 downto 0);
-   signal CARRY 	: std_logic;
+   signal LED : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
    constant CLK_period : time := 10 ns;
@@ -69,11 +68,10 @@ BEGIN
 	-- Instantiate the Unit Under Test (UUT)
    uut: ALU PORT MAP (
           CLK => CLK,
-          FUNC => FUNC,
           A => A,
           B => B,
-          LED => LED,
-          CARRY => CARRY
+          FUNC => FUNC,
+          LED => LED
         );
 
    -- Clock process definitions
