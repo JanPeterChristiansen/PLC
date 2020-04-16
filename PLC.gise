@@ -89,17 +89,13 @@
   </files>
 
   <transforms xmlns="http://www.xilinx.com/XMLSchema">
-    <transform xil_pn:end_ts="1586959060" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1586959060">
+    <transform xil_pn:end_ts="1587029896" xil_pn:name="TRAN_copyInitialToAbstractSimulation" xil_pn:start_ts="1587029896">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1586959060" xil_pn:in_ck="8647239233972372390" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1586959060">
+    <transform xil_pn:end_ts="1587029896" xil_pn:in_ck="8647239233972372390" xil_pn:name="TRAN_copyAbstractToPostAbstractSimulation" xil_pn:start_ts="1587029896">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="InputChanged"/>
-      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="ALU.vhd"/>
       <outfile xil_pn:name="ALUTestBench.vhd"/>
       <outfile xil_pn:name="PLC.vhd"/>
@@ -107,26 +103,21 @@
       <outfile xil_pn:name="RandomAccessMemory.vhd"/>
       <outfile xil_pn:name="Registers.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1586959060" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-2798113755348099745" xil_pn:start_ts="1586959060">
+    <transform xil_pn:end_ts="1587029896" xil_pn:name="TRAN_xawsToSimhdl" xil_pn:prop_ck="-2798113755348099745" xil_pn:start_ts="1587029896">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1586959060" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-6657716494760766691" xil_pn:start_ts="1586959060">
+    <transform xil_pn:end_ts="1587029896" xil_pn:name="TRAN_schematicsToHdlSim" xil_pn:prop_ck="-6657716494760766691" xil_pn:start_ts="1587029896">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1586959060" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="2373527743812688345" xil_pn:start_ts="1586959060">
+    <transform xil_pn:end_ts="1587029896" xil_pn:name="TRAN_regenerateCoresSim" xil_pn:prop_ck="2373527743812688345" xil_pn:start_ts="1587029896">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
     </transform>
-    <transform xil_pn:end_ts="1586959060" xil_pn:in_ck="8647239233972372390" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1586959060">
+    <transform xil_pn:end_ts="1587029896" xil_pn:in_ck="8647239233972372390" xil_pn:name="TRAN_copyPostAbstractToPreSimulation" xil_pn:start_ts="1587029896">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="InputChanged"/>
-      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="ALU.vhd"/>
       <outfile xil_pn:name="ALUTestBench.vhd"/>
       <outfile xil_pn:name="PLC.vhd"/>
@@ -134,14 +125,9 @@
       <outfile xil_pn:name="RandomAccessMemory.vhd"/>
       <outfile xil_pn:name="Registers.vhd"/>
     </transform>
-    <transform xil_pn:end_ts="1586959065" xil_pn:in_ck="8647239233972372390" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="1855588298608058516" xil_pn:start_ts="1586959060">
+    <transform xil_pn:end_ts="1587029901" xil_pn:in_ck="8647239233972372390" xil_pn:name="TRAN_ISimulateBehavioralModelRunFuse" xil_pn:prop_ck="1855588298608058516" xil_pn:start_ts="1587029896">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForInputs"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="InputChanged"/>
-      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="PLCTestBench_beh.prj"/>
       <outfile xil_pn:name="PLCTestBench_isim_beh.exe"/>
       <outfile xil_pn:name="fuse.log"/>
@@ -149,12 +135,9 @@
       <outfile xil_pn:name="isim.log"/>
       <outfile xil_pn:name="xilinxsim.ini"/>
     </transform>
-    <transform xil_pn:end_ts="1586959065" xil_pn:in_ck="8925033286864325567" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-7264463309232608905" xil_pn:start_ts="1586959065">
+    <transform xil_pn:end_ts="1587029901" xil_pn:in_ck="8925033286864325567" xil_pn:name="TRAN_ISimulateBehavioralModel" xil_pn:prop_ck="-7264463309232608905" xil_pn:start_ts="1587029901">
       <status xil_pn:value="SuccessfullyRun"/>
       <status xil_pn:value="ReadyToRun"/>
-      <status xil_pn:value="OutOfDateForPredecessor"/>
-      <status xil_pn:value="OutOfDateForOutputs"/>
-      <status xil_pn:value="OutputChanged"/>
       <outfile xil_pn:name="PLCTestBench_isim_beh.wdb"/>
       <outfile xil_pn:name="isim.cmd"/>
       <outfile xil_pn:name="isim.log"/>

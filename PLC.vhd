@@ -43,12 +43,12 @@ architecture Behavioral of PLC is
 
 	-- PROGRAMM
 	type ram_type is array (0 to 15) of STD_LOGIC_VECTOR (27 downto 0);
-	signal PROG : ram_type := (x"0100003", x"0200001", x"0000000", x"0000000",
-										x"0000000", x"0000000", x"0000000", x"0000000",
+	signal PROG : ram_type := (x"ef100aa", x"ef20055", x"0410002", x"0000000", 
+										x"0000000", x"0000000", x"0000000", x"0000000", 
 										x"0000000", x"0000000", x"0000000", x"0000000",
 										x"0000000", x"0000000", x"0000000", x"0000000");
-										
-										-- opcode | reg | mem/imidiate
+										-- 8-bit  | 4-bit | 16-bit 
+										-- opcode | reg   | value
 
 	signal PC : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 	signal start : STD_LOGIC := '1';
@@ -125,18 +125,46 @@ begin
 	case (cmd(27 downto 20)) is
 		when x"00" => -- NOP
 			ALUfunc <= x"0";
-			A <= (others => 'Z'); -- disable busses
-			B <= (others => 'Z');
 			addrA <= (others => 'Z'); -- disable registers
 			addrB <= (others => 'Z');
-			reA <= '0';
+			reA <= '0'; -- set register control signals
 			reB <= '0';
 			weC <= '0';
 			mem_enable <= '0'; -- disbale memory
 			
-		when x"01" => -- LOADI
+		when x"01" => -- NOT reg (bitwise, direct)
+			ALUfunc <= x"4"; -- write not A to C-bus
+			addrA <= cmd(19 downto 16); -- set target register address
+			addrB <= (others => 'Z'); -- set B-bus to sleep
+			reA <= '1'; -- set register control signals
+			reB <= '0';
+			weC <= '1';
+			mem_enable <= '0'; -- disable ram
+			
+		when x"02" => -- NOT reg (bitwise, indirect)
+			-- TBD
+			
+		when x"03" => -- ANDi reg $value (bitwise, Immediate)
+			B <= cmd(15 downto 0); -- write $value to B-bus
+			ALUfunc <= x"b"; -- write A and B to C-bus
+			addrA <= cmd(19 downto 16); -- set target register address
+			addrB <= (others => 'Z'); -- set B-bus to sleep
+			reA <= '1'; -- set register control signals
+			reB <= '0';
+			weC <= '1';
+			mem_enable <= '0'; -- disable ram
+			
+		when x"04" => -- AND reg reg (bitwise, direct)
+			ALUfunc <= x"b"; -- write A and B to C-bus
+			addrA <= cmd(19 downto 16); -- set target register address
+			addrB <= cmd(3 downto 0); -- set value register address
+			reA <= '1'; -- set register control signals
+			reB <= '1';
+			weC <= '1';
+			mem_enable <= '0'; -- disable ram
+		
+		when x"ef" => -- LOADI
 			A <= cmd(15 downto 0); -- write immediate value to A-bus
-			B <= (others => 'Z'); -- set B-bus to sleep
 			ALUfunc <= x"3"; -- write A to C-bus
 			addrA <= cmd(19 downto 16); -- set target regiser address
 			addrB <= (others => 'Z'); -- set B-bus to sleep
@@ -145,8 +173,7 @@ begin
 			weC <= '1';
 			mem_enable <= '0'; -- disable ram
 			
-		when x"02" => -- ADDI
-			A <= (others => 'Z');
+		when x"ff" => -- ADDI
 			B <= cmd(15 downto 0); -- write immediate value to B-bus
 			ALUfunc <= x"6"; -- write A+B to C-bus
 			addrA <= cmd(19 downto 16); -- set target register address
@@ -154,7 +181,7 @@ begin
 			reA <= '1'; -- set register control signals
 			reB <= '0';
 			weC <= '1';
-			mem_enable <= '0'; -- disable mem
+			mem_enable <= '0'; -- disable ram
 			
 		when others =>
 	end case;

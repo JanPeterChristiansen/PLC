@@ -2,9 +2,28 @@ Command line:
    PLCTestBench_isim_beh.exe
      -simmode  gui
      -simrunnum  0
-     -socket  56760
+     -socket  61482
 
-Wed Apr 15 16:07:20 2020
+Thu Apr 16 12:13:33 2020
 
 
- Elaboration Time: 1.21875 sec
+ Elaboration Time: 1.17188 sec
+
+ Current Memory Usage: 5930.66 Meg
+
+ Total Signals          : 42
+ Total Nets             : 1049451
+ Total Signal Drivers   : 21
+ Total Blocks           : 9
+ Total Primitive Blocks : 7
+ Total Processes        : 10
+ Total Traceable Variables  : 16
+ Total Scalar Nets and Variables : 1049953
+Total Line Count : 78
+
+ Total Simulation Time: 1.54688 sec
+
+ Current Memory Usage: 5773.38 Meg
+
+Thu Apr 16 12:15:23 2020
+
