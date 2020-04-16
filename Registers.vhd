@@ -50,12 +50,9 @@ begin
 
 -- CAN ONLY WRITE C-BUS TO THE ADDRESS SPECIFIED FOR A-BUS
 
-process(clk)
+process(clk, reA, reB)
 begin
-
-	-- rising edge -> read from registers to bus
-	if rising_edge(clk) then
-		
+	
 		-- read from register address A to A-bus
 		if reA = '1' then  
 			A <= REG(conv_integer(addrA)); 
@@ -69,8 +66,6 @@ begin
 		else 
 			B <= (others => 'Z'); 
 		end if;
-		
-	end if;
 
 	-- falling edge -> write to register address A from C-bus
 	if falling_edge(clk) then

@@ -127,6 +127,8 @@ Elaborating entity <PLC> (architecture <Behavioral>) from library <work>.
 Elaborating entity <ALU> (architecture <Behavioral>) from library <work>.
 
 Elaborating entity <Registers> (architecture <Behavioral>) from library <work>.
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Registers.vhd" Line 58: reg should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Registers.vhd" Line 65: reg should be on the sensitivity list of the process
 
 Elaborating entity <RandomAccessMemory> (architecture <Behavioral>) from library <work>.
 WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\RandomAccessMemory.vhd" Line 52: enable should be on the sensitivity list of the process
@@ -147,6 +149,38 @@ WARNING:Xst:653 - Signal <mem_we> is used but never assigned. This sourceless si
     Found 1-bit register for signal <start>.
     Found 4-bit adder for signal <PC[3]_GND_6_o_add_1_OUT> created at line 115.
 WARNING:Xst:737 - Found 1-bit latch for signal <ALUfunc<3>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
+    Found 1-bit tristate buffer for signal <A<15>> created at line 122
+    Found 1-bit tristate buffer for signal <A<14>> created at line 122
+    Found 1-bit tristate buffer for signal <A<13>> created at line 122
+    Found 1-bit tristate buffer for signal <A<12>> created at line 122
+    Found 1-bit tristate buffer for signal <A<11>> created at line 122
+    Found 1-bit tristate buffer for signal <A<10>> created at line 122
+    Found 1-bit tristate buffer for signal <A<9>> created at line 122
+    Found 1-bit tristate buffer for signal <A<8>> created at line 122
+    Found 1-bit tristate buffer for signal <A<7>> created at line 122
+    Found 1-bit tristate buffer for signal <A<6>> created at line 122
+    Found 1-bit tristate buffer for signal <A<5>> created at line 122
+    Found 1-bit tristate buffer for signal <A<4>> created at line 122
+    Found 1-bit tristate buffer for signal <A<3>> created at line 122
+    Found 1-bit tristate buffer for signal <A<2>> created at line 122
+    Found 1-bit tristate buffer for signal <A<1>> created at line 122
+    Found 1-bit tristate buffer for signal <A<0>> created at line 122
+    Found 1-bit tristate buffer for signal <B<15>> created at line 122
+    Found 1-bit tristate buffer for signal <B<14>> created at line 122
+    Found 1-bit tristate buffer for signal <B<13>> created at line 122
+    Found 1-bit tristate buffer for signal <B<12>> created at line 122
+    Found 1-bit tristate buffer for signal <B<11>> created at line 122
+    Found 1-bit tristate buffer for signal <B<10>> created at line 122
+    Found 1-bit tristate buffer for signal <B<9>> created at line 122
+    Found 1-bit tristate buffer for signal <B<8>> created at line 122
+    Found 1-bit tristate buffer for signal <B<7>> created at line 122
+    Found 1-bit tristate buffer for signal <B<6>> created at line 122
+    Found 1-bit tristate buffer for signal <B<5>> created at line 122
+    Found 1-bit tristate buffer for signal <B<4>> created at line 122
+    Found 1-bit tristate buffer for signal <B<3>> created at line 122
+    Found 1-bit tristate buffer for signal <B<2>> created at line 122
+    Found 1-bit tristate buffer for signal <B<1>> created at line 122
+    Found 1-bit tristate buffer for signal <B<0>> created at line 122
 WARNING:Xst:737 - Found 1-bit latch for signal <ALUfunc<2>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <ALUfunc<1>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <ALUfunc<0>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
@@ -171,44 +205,12 @@ WARNING:Xst:737 - Found 1-bit latch for signal <reA>. Latches may be generated f
     Found 1-bit tristate buffer for signal <addrB<0>> created at line 122
 WARNING:Xst:737 - Found 1-bit latch for signal <reB>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
 WARNING:Xst:737 - Found 1-bit latch for signal <weC>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<15>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<14>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<13>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<12>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<11>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<10>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<9>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<8>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<7>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<6>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<5>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<4>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<3>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<2>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<1>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <B<0>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<15>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<14>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<13>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<12>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<11>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<10>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<9>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<8>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<7>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<6>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<5>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<4>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<3>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<2>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<1>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
-WARNING:Xst:737 - Found 1-bit latch for signal <A<0>>. Latches may be generated from incomplete case or if statements. We do not recommend the use of latches in FPGA/CPLD designs, as they may lead to timing problems.
     Summary:
 	inferred   1 RAM(s).
 	inferred   1 Adder/Subtractor(s).
 	inferred   5 D-type flip-flop(s).
-	inferred  49 Latch(s).
-	inferred   8 Tristate(s).
+	inferred  17 Latch(s).
+	inferred  40 Tristate(s).
 Unit <PLC> synthesized.
 
 Synthesizing Unit <ALU>.
@@ -230,10 +232,6 @@ Unit <ALU> synthesized.
 Synthesizing Unit <Registers>.
     Related source file is "C:\Users\japem\Documents\repos\VHDL\PLC\Registers.vhd".
     Found 16x16-bit dual-port RAM <Mram_REG> for signal <REG>.
-    Found 16-bit register for signal <Z_8_o_dff_5_OUT>.
-    Found 1-bit register for signal <reA_clk_DFF_17>.
-    Found 1-bit register for signal <reB_clk_DFF_33>.
-    Found 16-bit register for signal <Z_8_o_dff_4_OUT>.
     Found 1-bit tristate buffer for signal <A<15>> created at line 53
     Found 1-bit tristate buffer for signal <A<14>> created at line 53
     Found 1-bit tristate buffer for signal <A<13>> created at line 53
@@ -268,7 +266,6 @@ Synthesizing Unit <Registers>.
     Found 1-bit tristate buffer for signal <B<0>> created at line 53
     Summary:
 	inferred   1 RAM(s).
-	inferred  34 D-type flip-flop(s).
 	inferred  32 Tristate(s).
 Unit <Registers> synthesized.
 
@@ -295,16 +292,16 @@ Macro Statistics
  16-bit adder                                          : 3
  16-bit subtractor                                     : 3
  4-bit adder                                           : 1
-# Registers                                            : 7
- 1-bit register                                        : 3
- 16-bit register                                       : 3
+# Registers                                            : 3
+ 1-bit register                                        : 1
+ 16-bit register                                       : 1
  4-bit register                                        : 1
-# Latches                                              : 49
- 1-bit latch                                           : 49
+# Latches                                              : 17
+ 1-bit latch                                           : 17
 # Multiplexers                                         : 1
  16-bit 15-to-1 multiplexer                            : 1
-# Tristates                                            : 40
- 1-bit tristate buffer                                 : 40
+# Tristates                                            : 72
+ 1-bit tristate buffer                                 : 72
 # Xors                                                 : 1
  16-bit xor2                                           : 1
 
@@ -349,7 +346,7 @@ INFO:Xst:3230 - The RAM description <Mram_RAM> will not be implemented on the de
 Unit <RandomAccessMemory> synthesized (advanced).
 
 Synthesizing (advanced) Unit <Registers>.
-INFO:Xst:3231 - The small RAM <Mram_REG> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_REG> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
     -----------------------------------------------------------------------
     | ram_type           | Distributed                         |          |
     -----------------------------------------------------------------------
@@ -383,8 +380,8 @@ Macro Statistics
  16-bit subtractor                                     : 3
 # Counters                                             : 1
  4-bit up counter                                      : 1
-# Registers                                            : 51
- Flip-Flops                                            : 51
+# Registers                                            : 17
+ Flip-Flops                                            : 17
 # Multiplexers                                         : 1
  16-bit 15-to-1 multiplexer                            : 1
 # Xors                                                 : 1
@@ -395,176 +392,278 @@ Macro Statistics
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
+WARNING:Xst:1710 - FF/Latch <MEM_BUS_0> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_1> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_2> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_3> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_4> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_5> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_6> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_7> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_8> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_9> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_10> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_11> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_12> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_13> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_14> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <MEM_BUS_15> (without init value) has a constant value of 0 in block <RandomAccessMemory>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <GND_6_o_GND_6_o_DLATCH_5_q> (without init value) has a constant value of 0 in block <PLC>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <GND_6_o_GND_6_o_DLATCH_7_q> (without init value) has a constant value of 0 in block <PLC>. This FF/Latch will be trimmed during the optimization process.
+INFO:Xst:2261 - The FF/Latch <GND_6_o_GND_6_o_DLATCH_15_q> in Unit <PLC> is equivalent to the following 2 FFs/Latches, which will be removed : <GND_6_o_GND_6_o_DLATCH_19_q> <GND_6_o_GND_6_o_DLATCH_9_q> 
+INFO:Xst:2261 - The FF/Latch <ALUfunc_1> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <ALUfunc_0> 
+INFO:Xst:2261 - The FF/Latch <GND_6_o_GND_6_o_DLATCH_17_q> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <GND_6_o_GND_6_o_DLATCH_11_q> 
+WARNING:Xst:1293 - FF/Latch <ALUfunc_2> has a constant value of 0 in block <PLC>. This FF/Latch will be trimmed during the optimization process.
+INFO:Xst:2261 - The FF/Latch <ALUfunc_3> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <reA> 
+INFO:Xst:2261 - The FF/Latch <ALUfunc_1> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <weC> 
+WARNING:Xst:2042 - Unit PLC: 8 internal tristates are replaced by logic (pull-up yes): addrA<0>, addrA<1>, addrA<2>, addrA<3>, addrB<0>, addrB<1>, addrB<2>, addrB<3>.
+WARNING:Xst:2040 - Unit PLC: 32 multi-source signals are replaced by logic (pull-up yes): A<0>, A<10>, A<11>, A<12>, A<13>, A<14>, A<15>, A<1>, A<2>, A<3>, A<4>, A<5>, A<6>, A<7>, A<8>, A<9>, B<0>, B<10>, B<11>, B<12>, B<13>, B<14>, B<15>, B<1>, B<2>, B<3>, B<4>, B<5>, B<6>, B<7>, B<8>, B<9>.
+WARNING:Xst:2042 - Unit Registers: 32 internal tristates are replaced by logic (pull-up yes): A<0>, A<10>, A<11>, A<12>, A<13>, A<14>, A<15>, A<1>, A<2>, A<3>, A<4>, A<5>, A<6>, A<7>, A<8>, A<9>, B<0>, B<10>, B<11>, B<12>, B<13>, B<14>, B<15>, B<1>, B<2>, B<3>, B<4>, B<5>, B<6>, B<7>, B<8>, B<9>.
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<15>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<15>_Z_8_o_dff_4_OUT<15>>
-   Output signal of LD instance <A_15>
+Optimizing unit <PLC> ...
+INFO:Xst:2261 - The FF/Latch <ALUfunc_3> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <reB> 
+INFO:Xst:2261 - The FF/Latch <ALUfunc_1> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <GND_6_o_GND_6_o_DLATCH_6_q> 
+INFO:Xst:2261 - The FF/Latch <ALUfunc_3> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <GND_6_o_GND_6_o_DLATCH_14_q> 
+WARNING:Xst:1294 - Latch <ALUfunc_1> is equivalent to a wire in block <PLC>.
+WARNING:Xst:1294 - Latch <ALUfunc_3> is equivalent to a wire in block <PLC>.
+WARNING:Xst:1294 - Latch <GND_6_o_GND_6_o_DLATCH_13_q> is equivalent to a wire in block <PLC>.
+WARNING:Xst:1294 - Latch <GND_6_o_GND_6_o_DLATCH_15_q> is equivalent to a wire in block <PLC>.
+WARNING:Xst:1294 - Latch <GND_6_o_GND_6_o_DLATCH_17_q> is equivalent to a wire in block <PLC>.
+INFO:Xst:2261 - The FF/Latch <ALUfunc_1> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <GND_6_o_GND_6_o_DLATCH_6_q> 
+INFO:Xst:2261 - The FF/Latch <ALUfunc_3> in Unit <PLC> is equivalent to the following FF/Latch, which will be removed : <GND_6_o_GND_6_o_DLATCH_14_q> 
+WARNING:Xst:1294 - Latch <ALUfunc_1> is equivalent to a wire in block <PLC>.
+WARNING:Xst:1294 - Latch <ALUfunc_3> is equivalent to a wire in block <PLC>.
+WARNING:Xst:1294 - Latch <GND_6_o_GND_6_o_DLATCH_13_q> is equivalent to a wire in block <PLC>.
+WARNING:Xst:1294 - Latch <GND_6_o_GND_6_o_DLATCH_15_q> is equivalent to a wire in block <PLC>.
+WARNING:Xst:1294 - Latch <GND_6_o_GND_6_o_DLATCH_17_q> is equivalent to a wire in block <PLC>.
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<14>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<14>_Z_8_o_dff_4_OUT<14>>
-   Output signal of LD instance <A_14>
+Optimizing unit <ALU> ...
+WARNING:Xst:2677 - Node <REG/Mram_REG16> of sequential type is unconnected in block <PLC>.
+WARNING:Xst:2677 - Node <REG/Mram_REG15> of sequential type is unconnected in block <PLC>.
+WARNING:Xst:2677 - Node <REG/Mram_REG14> of sequential type is unconnected in block <PLC>.
+WARNING:Xst:2677 - Node <REG/Mram_REG13> of sequential type is unconnected in block <PLC>.
+WARNING:Xst:2677 - Node <REG/Mram_REG12> of sequential type is unconnected in block <PLC>.
+WARNING:Xst:2677 - Node <REG/Mram_REG11> of sequential type is unconnected in block <PLC>.
+WARNING:Xst:2677 - Node <REG/Mram_REG10> of sequential type is unconnected in block <PLC>.
+WARNING:Xst:2677 - Node <REG/Mram_REG9> of sequential type is unconnected in block <PLC>.
+WARNING:Xst:2677 - Node <ALU/Mmult_PROD> of sequential type is unconnected in block <PLC>.
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<13>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<13>_Z_8_o_dff_4_OUT<13>>
-   Output signal of LD instance <A_13>
+Mapping all equations...
+Building and optimizing final netlist ...
+WARNING:Xst:1426 - The value init of the FF/Latch start hinder the constant cleaning in the block PLC.
+   You should achieve better results by setting this init to 0.
+Found area constraint ratio of 100 (+ 5) on block PLC, actual ratio is 2.
+FlipFlop PC_0 has been replicated 2 time(s)
+FlipFlop PC_1 has been replicated 2 time(s)
+FlipFlop PC_2 has been replicated 1 time(s)
+FlipFlop PC_3 has been replicated 2 time(s)
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<12>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<12>_Z_8_o_dff_4_OUT<12>>
-   Output signal of LD instance <A_12>
+Final Macro Processing ...
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<11>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<11>_Z_8_o_dff_4_OUT<11>>
-   Output signal of LD instance <A_11>
+=========================================================================
+Final Register Report
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<10>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<10>_Z_8_o_dff_4_OUT<10>>
-   Output signal of LD instance <A_10>
+Macro Statistics
+# Registers                                            : 12
+ Flip-Flops                                            : 12
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<9>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<9>_Z_8_o_dff_4_OUT<9>>
-   Output signal of LD instance <A_9>
+=========================================================================
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<8>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<8>_Z_8_o_dff_4_OUT<8>>
-   Output signal of LD instance <A_8>
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<7>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<7>_Z_8_o_dff_4_OUT<7>>
-   Output signal of LD instance <A_7>
+Partition Implementation Status
+-------------------------------
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<6>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<6>_Z_8_o_dff_4_OUT<6>>
-   Output signal of LD instance <A_6>
+  No Partitions were found in this design.
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<5>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<5>_Z_8_o_dff_4_OUT<5>>
-   Output signal of LD instance <A_5>
+-------------------------------
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<4>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<4>_Z_8_o_dff_4_OUT<4>>
-   Output signal of LD instance <A_4>
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<3>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<3>_Z_8_o_dff_4_OUT<3>>
-   Output signal of LD instance <A_3>
+Top Level Output File Name         : PLC.ngc
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<2>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<2>_Z_8_o_dff_4_OUT<2>>
-   Output signal of LD instance <A_2>
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 68
+#      GND                         : 1
+#      INV                         : 3
+#      LUT2                        : 2
+#      LUT3                        : 4
+#      LUT4                        : 10
+#      LUT5                        : 22
+#      LUT6                        : 7
+#      MUXCY                       : 7
+#      MUXF7                       : 3
+#      VCC                         : 1
+#      XORCY                       : 8
+# FlipFlops/Latches                : 12
+#      FD                          : 1
+#      FDE                         : 11
+# RAMS                             : 8
+#      RAM16X1D                    : 8
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 8
+#      OBUF                        : 8
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<1>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<1>_Z_8_o_dff_4_OUT<1>>
-   Output signal of LD instance <A_1>
+Device utilization summary:
+---------------------------
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <A<0>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/A<0>_Z_8_o_dff_4_OUT<0>>
-   Output signal of LD instance <A_0>
+Selected Device : 6slx9tqg144-2 
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<15>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<15>_Z_8_o_dff_5_OUT<15>>
-   Output signal of LD instance <B_15>
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<14>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<14>_Z_8_o_dff_5_OUT<14>>
-   Output signal of LD instance <B_14>
+Slice Logic Utilization: 
+ Number of Slice Registers:              12  out of  11440     0%  
+ Number of Slice LUTs:                   64  out of   5720     1%  
+    Number used as Logic:                48  out of   5720     0%  
+    Number used as Memory:               16  out of   1440     1%  
+       Number used as RAM:               16
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<13>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<13>_Z_8_o_dff_5_OUT<13>>
-   Output signal of LD instance <B_13>
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:     65
+   Number with an unused Flip Flop:      53  out of     65    81%  
+   Number with an unused LUT:             1  out of     65     1%  
+   Number of fully used LUT-FF pairs:    11  out of     65    16%  
+   Number of unique control sets:         2
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<12>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<12>_Z_8_o_dff_5_OUT<12>>
-   Output signal of LD instance <B_12>
+IO Utilization: 
+ Number of IOs:                           9
+ Number of bonded IOBs:                   9  out of    102     8%  
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<11>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<11>_Z_8_o_dff_5_OUT<11>>
-   Output signal of LD instance <B_11>
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<10>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<10>_Z_8_o_dff_5_OUT<10>>
-   Output signal of LD instance <B_10>
+---------------------------
+Partition Resource Summary:
+---------------------------
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<9>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<9>_Z_8_o_dff_5_OUT<9>>
-   Output signal of LD instance <B_9>
+  No Partitions were found in this design.
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<8>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<8>_Z_8_o_dff_5_OUT<8>>
-   Output signal of LD instance <B_8>
+---------------------------
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<7>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<7>_Z_8_o_dff_5_OUT<7>>
-   Output signal of LD instance <B_7>
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<6>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<6>_Z_8_o_dff_5_OUT<6>>
-   Output signal of LD instance <B_6>
+=========================================================================
+Timing Report
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<5>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<5>_Z_8_o_dff_5_OUT<5>>
-   Output signal of LD instance <B_5>
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<4>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<4>_Z_8_o_dff_5_OUT<4>>
-   Output signal of LD instance <B_4>
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 20    |
+-----------------------------------+------------------------+-------+
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<3>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<3>_Z_8_o_dff_5_OUT<3>>
-   Output signal of LD instance <B_3>
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<2>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<2>_Z_8_o_dff_5_OUT<2>>
-   Output signal of LD instance <B_2>
+Timing Summary:
+---------------
+Speed Grade: -2
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<1>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<1>_Z_8_o_dff_5_OUT<1>>
-   Output signal of LD instance <B_1>
+   Minimum period: 12.082ns (Maximum Frequency: 82.768MHz)
+   Minimum input arrival time before clock: No path found
+   Maximum output required time after clock: 9.580ns
+   Maximum combinational path delay: No path found
 
-ERROR:Xst:528 - Multi-source in Unit <PLC> on signal <B<0>>; this signal is connected to multiple drivers.
-Drivers are: 
-   Output signal of BUFT instance <REG/B<0>_Z_8_o_dff_5_OUT<0>>
-   Output signal of LD instance <B_0>
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 12.082ns (frequency: 82.768MHz)
+  Total number of paths / destination ports: 1528 / 94
+-------------------------------------------------------------------------
+Delay:               6.041ns (Levels of Logic = 11)
+  Source:            PC_3_2 (FF)
+  Destination:       REG/Mram_REG8 (RAM)
+  Source Clock:      clk rising
+  Destination Clock: clk falling
+
+  Data Path: PC_3_2 to REG/Mram_REG8
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              5   0.525   1.069  PC_3_2 (PC_3_2)
+     LUT4:I1->O           18   0.235   1.234  addrA<2>1_1 (addrA<2>1)
+     RAM16X1D:A2->SPO      3   0.235   0.766  REG/Mram_REG3 (REG/_n0044<2>)
+     LUT5:I4->O            1   0.254   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_lut<2> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_lut<2>)
+     MUXCY:S->O            1   0.215   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<2> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<2>)
+     MUXCY:CI->O           1   0.023   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<3> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<3>)
+     MUXCY:CI->O           1   0.023   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<4> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<4>)
+     MUXCY:CI->O           1   0.023   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<5> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<5>)
+     MUXCY:CI->O           0   0.023   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<6> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<6>)
+     XORCY:CI->O           1   0.206   0.682  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_xor<7> (ALU/GND_7_o_GND_7_o_sub_7_OUT<7>)
+     LUT6:I5->O            1   0.254   0.000  ALU/FUNC<3>131_G (N7)
+     MUXF7:I1->O           2   0.175   0.000  ALU/FUNC<3>131 (LED_7_OBUF)
+     RAM16X1D:D                0.098          REG/Mram_REG8
+    ----------------------------------------
+    Total                      6.041ns (2.290ns logic, 3.751ns route)
+                                       (37.9% logic, 62.1% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 1242 / 8
+-------------------------------------------------------------------------
+Offset:              9.580ns (Levels of Logic = 12)
+  Source:            PC_3_2 (FF)
+  Destination:       LED<7> (PAD)
+  Source Clock:      clk rising
+
+  Data Path: PC_3_2 to LED<7>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE:C->Q              5   0.525   1.069  PC_3_2 (PC_3_2)
+     LUT4:I1->O           18   0.235   1.234  addrA<2>1_1 (addrA<2>1)
+     RAM16X1D:A2->SPO      3   0.235   0.766  REG/Mram_REG3 (REG/_n0044<2>)
+     LUT5:I4->O            1   0.254   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_lut<2> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_lut<2>)
+     MUXCY:S->O            1   0.215   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<2> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<2>)
+     MUXCY:CI->O           1   0.023   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<3> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<3>)
+     MUXCY:CI->O           1   0.023   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<4> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<4>)
+     MUXCY:CI->O           1   0.023   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<5> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<5>)
+     MUXCY:CI->O           0   0.023   0.000  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<6> (ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_cy<6>)
+     XORCY:CI->O           1   0.206   0.682  ALU/Msub_GND_7_o_GND_7_o_sub_7_OUT<15:0>_xor<7> (ALU/GND_7_o_GND_7_o_sub_7_OUT<7>)
+     LUT6:I5->O            1   0.254   0.000  ALU/FUNC<3>131_G (N7)
+     MUXF7:I1->O           2   0.175   0.725  ALU/FUNC<3>131 (LED_7_OBUF)
+     OBUF:I->O                 2.912          LED_7_OBUF (LED<7>)
+    ----------------------------------------
+    Total                      9.580ns (5.104ns logic, 4.476ns route)
+                                       (53.3% logic, 46.7% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+Clock to Setup on destination clock clk
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+clk            |    3.105|         |    6.041|         |
+---------------+---------+---------+---------+---------+
+
+=========================================================================
 
 
 Total REAL time to Xst completion: 4.00 secs
-Total CPU time to Xst completion: 3.93 secs
+Total CPU time to Xst completion: 4.40 secs
  
 --> 
 
-Total memory usage is 4512392 kilobytes
+Total memory usage is 4513520 kilobytes
 
-Number of errors   :   32 (   0 filtered)
-Number of warnings :   56 (   0 filtered)
-Number of infos    :    3 (   0 filtered)
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   68 (   0 filtered)
+Number of infos    :   13 (   0 filtered)
 

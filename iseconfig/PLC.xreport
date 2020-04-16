@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2020-04-16T11:58:53</DateModified>
+  <DateModified>2020-04-16T15:36:49</DateModified>
   <ModuleName>PLC</ModuleName>
-  <SummaryTimeStamp>2020-04-15T14:41:40</SummaryTimeStamp>
+  <SummaryTimeStamp>2020-04-16T13:42:12</SummaryTimeStamp>
   <SavedFilePath>C:/Users/japem/Documents/repos/VHDL/PLC/iseconfig/PLC.xreport</SavedFilePath>
   <ImplementationReportsDirectory>C:/Users/japem/Documents/repos/VHDL/PLC\</ImplementationReportsDirectory>
   <DateInitialized>2020-04-15T13:10:14</DateInitialized>

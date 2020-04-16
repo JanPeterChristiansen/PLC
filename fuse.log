@@ -21,8 +21,7 @@ Compiling architecture behavioral of entity RandomAccessMemory [randomaccessmemo
 Compiling architecture behavioral of entity PLC [plc_default]
 Compiling architecture behavior of entity plctestbench
 Time Resolution for simulation is 1ps.
-Waiting for 1 sub-compilation(s) to finish...
 Compiled 14 VHDL Units
 Built simulation executable C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench_isim_beh.exe
-Fuse Memory Usage: 41832 KB
-Fuse CPU Usage: 1405 ms
+Fuse Memory Usage: 42264 KB
+Fuse CPU Usage: 1561 ms
