@@ -36,7 +36,7 @@ entity RandomAccessMemory is
 			  WE : in  STD_LOGIC;
 			  ENABLE : in STD_LOGIC;
            MEM_BUS : inout  STD_LOGIC_VECTOR (15 downto 0)
-			  );
+			);
            
 end RandomAccessMemory;
 
@@ -47,15 +47,13 @@ architecture Behavioral of RandomAccessMemory is
 
 begin
 
-	process(CLK)
+	process(ENABLE, WE)
 	begin
 		if (ENABLE = '1') then
-			if rising_edge(CLK) then
-				if (WE = '1') then
-					RAM(conv_integer(ADDR)) <= MEM_BUS;
-				else
-					MEM_BUS <= RAM(conv_integer(ADDR));
-				end if;
+			if (WE = '1') then
+				RAM(conv_integer(ADDR)) <= MEM_BUS;
+			else
+				MEM_BUS <= RAM(conv_integer(ADDR));
 			end if;
 		end if;
 	end process;

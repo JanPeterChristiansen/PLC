@@ -50,7 +50,7 @@ begin
 
 -- CAN ONLY WRITE C-BUS TO THE ADDRESS SPECIFIED FOR A-BUS
 
-process(clk, reA, reB)
+process(clk, reA, reB, REG, addrA, addrB)
 begin
 	
 		-- read from register address A to A-bus

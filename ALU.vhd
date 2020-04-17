@@ -43,31 +43,36 @@ end ALU;
 
 architecture Behavioral of ALU is
 
-	signal PROD : STD_LOGIC_VECTOR (31 downto 0);
+	signal SignedProd : STD_LOGIC_VECTOR (31 downto 0);
+	signal UnsignedProd : STD_LOGIC_VECTOR (31 downto 0);
 
 begin
 
-	-- Intermediate product
-	PROD <= A * B;
+	-- Intermediate signed product
+	SignedProd <= std_logic_vector(signed(A) * signed(B));
+	-- Intermediate unsigned product
+	UnsignedProd <= std_logic_vector(A * B);
+
 
 	-- select output
 	with FUNC select OUTPUT <= 
-		x"0000" 						when x"0", -- 0
-		x"0001" 						when x"1", -- 1
-		(not x"0001") + 1			when x"2", -- -1
-		A 								when x"3", -- A
-		not A 						when x"4", -- not A
-		A + 1 						when x"5", -- A + 1
-		A + B							when x"6", -- A + B
-		A + B + 1					when x"7", -- A + B + 1
-		A - 1 						when x"8", -- A - 1
-		A - B 						when x"9", -- A - B
-		x"0000" - A 				when x"a", -- -A
-		A and B 						when x"b", -- AND
-		A or B 						when x"c", -- OR
-		A xor B 						when x"d", -- XOR
-		PROD(15 downto 0)		 	when x"e", -- A * B
-		(others => 'U')			when others;
+		x"0000" 							when x"0", -- 0
+		x"0001" 							when x"1", -- 1
+		(not x"0001") + 1				when x"2", -- -1
+		A 									when x"3", -- A
+		not A 							when x"4", -- not A
+		A + 1 							when x"5", -- A + 1
+		A + B								when x"6", -- A + B
+		B									when x"7", -- B
+		A - 1 							when x"8", -- A - 1
+		A - B 							when x"9", -- A - B
+		x"0000" - A 					when x"a", -- -A
+		A and B 							when x"b", -- AND
+		A or B 							when x"c", -- OR
+		A xor B 							when x"d", -- XOR
+		UnsignedProd(15 downto 0)	when x"e", -- A * B unsigned
+		SignedProd(15 downto 0)		when x"f", -- A * B signed
+		(others => 'U')				when others;
 		
 
 end Behavioral;
