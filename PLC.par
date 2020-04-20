@@ -1,7 +1,7 @@
 Release 14.7 par P.20131013 (nt64)
 Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
-TITAN::  Fri Apr 17 14:42:31 2020
+TITAN::  Mon Apr 20 13:11:37 2020
 
 par -w -intstyle ise -ol high -mt off PLC_map.ncd PLC.ncd PLC.pcf 
 
@@ -45,7 +45,7 @@ Slice Logic Utilization:
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                    62 out of   1,430    4%
+  Number of occupied Slices:                    64 out of   1,430    4%
   Number of MUXCYs used:                        16 out of   2,860    1%
   Number of LUT Flip Flop pairs used:          207
     Number with an unused Flip Flop:           202 out of     207   97%
@@ -101,15 +101,15 @@ Starting Router
 
 Phase  1  : 1394 unrouted;      REAL time: 2 secs 
 
-Phase  2  : 1142 unrouted;      REAL time: 2 secs 
+Phase  2  : 1142 unrouted;      REAL time: 3 secs 
 
-Phase  3  : 461 unrouted;      REAL time: 3 secs 
+Phase  3  : 392 unrouted;      REAL time: 3 secs 
 
-Phase  4  : 461 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 3 secs 
+Phase  4  : 395 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 3 secs 
 
 Updating file: PLC.ncd with current fully routed design.
 
-Phase  5  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 4 secs 
+Phase  5  : 0 unrouted; (Setup:111, Hold:0, Component Switching Limit:0)     REAL time: 4 secs 
 
 Phase  6  : 0 unrouted; (Setup:0, Hold:0, Component Switching Limit:0)     REAL time: 4 secs 
 
@@ -139,7 +139,7 @@ Generating Clock Report
 +---------------------+--------------+------+------+------------+-------------+
 |        Clock Net    |   Resource   |Locked|Fanout|Net Skew(ns)|Max Delay(ns)|
 +---------------------+--------------+------+------+------------+-------------+
-|           clk_BUFGP |  BUFGMUX_X2Y2| No   |   10 |  0.014     |  1.497      |
+|           clk_BUFGP |  BUFGMUX_X2Y2| No   |   10 |  0.038     |  1.491      |
 +---------------------+--------------+------+------+------------+-------------+
 
 * Net Skew is the difference between the minimum and maximum routing
@@ -159,8 +159,8 @@ Asterisk (*) preceding a constraint indicates it was not met.
   Constraint                                |    Check    | Worst Case |  Best Case | Timing |   Timing   
                                             |             |    Slack   | Achievable | Errors |    Score   
 ----------------------------------------------------------------------------------------------------------
-  NET "clk_BUFGP/IBUFG" PERIOD = 31.25 ns H | SETUP       |     0.687ns|    29.876ns|       0|           0
-  IGH 50%                                   | HOLD        |     0.492ns|            |       0|           0
+  NET "clk_BUFGP/IBUFG" PERIOD = 31.25 ns H | SETUP       |     0.693ns|    29.864ns|       0|           0
+  IGH 50%                                   | HOLD        |     0.482ns|            |       0|           0
 ----------------------------------------------------------------------------------------------------------
 
 
@@ -174,7 +174,7 @@ All signals are completely routed.
 Total REAL time to PAR completion: 4 secs 
 Total CPU time to PAR completion: 4 secs 
 
-Peak Memory Usage:  4466 MB
+Peak Memory Usage:  4465 MB
 
 Placer: Placement generated during map.
 Routing: Completed - No errors found.

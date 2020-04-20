@@ -5,7 +5,7 @@
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="par" timeStamp="Fri Apr 17 14:42:33 2020">
+  <application stringID="par" timeStamp="Mon Apr 20 13:11:39 2020">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
@@ -88,8 +88,8 @@
             <item label="Resource" stringID="RESOURCE" value="BUFGMUX_X2Y2"/>
             <item label="Locked" stringID="LOCKED" value="No"/>
             <item dataType="float" label="Fanout" stringID="FANOUT" value="10.000000"/>
-            <item dataType="float" label="Net Skew(ns)" stringID="NET_SKEW" value="0.014000"/>
-            <item dataType="float" label="Max Delay(ns)" stringID="MAX_DELAY" value="1.497000"/>
+            <item dataType="float" label="Net Skew(ns)" stringID="NET_SKEW" value="0.038000"/>
+            <item dataType="float" label="Max Delay(ns)" stringID="MAX_DELAY" value="1.491000"/>
           </row>
         </table>
       </section>
@@ -1104,7 +1104,7 @@
     </task>
   </application>
 
-  <application stringID="Par" timeStamp="Fri Apr 17 14:42:33 2020">
+  <application stringID="Par" timeStamp="Mon Apr 20 13:11:40 2020">
     <section stringID="User_Env">
       <table stringID="User_EnvVar">
         <column stringID="variable"/>
@@ -1183,10 +1183,10 @@
           <item dataType="int" stringID="PAR_NUM_LUT_RT_DRIVES_CARRY4" value="1"/>
           <item dataType="int" stringID="PAR_NUM_LUT_RT_DRIVES_OTHERS" value="0"/>
         </item>
-        <item AVAILABLE="1430" dataType="int" stringID="PAR_OCCUPIED_SLICES" value="62">
+        <item AVAILABLE="1430" dataType="int" stringID="PAR_OCCUPIED_SLICES" value="64">
           <item AVAILABLE="355" dataType="int" stringID="PAR_NUM_SLICEL" value="7"/>
           <item AVAILABLE="360" dataType="int" stringID="PAR_NUM_SLICEM" value="7"/>
-          <item AVAILABLE="715" dataType="int" stringID="PAR_NUM_SLICEX" value="48"/>
+          <item AVAILABLE="715" dataType="int" stringID="PAR_NUM_SLICEX" value="50"/>
         </item>
         <item dataType="int" stringID="PAR_OCCUPIED_LUT_AND_FF" value="207">
           <item dataType="int" stringID="PAR_OCCUPIED_LUT_ONLY" value="202"/>

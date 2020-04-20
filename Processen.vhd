@@ -33,9 +33,9 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity Processen is
     Port ( cmd : in  STD_LOGIC_VECTOR (27 downto 0);
-			  C : in STD_LOGIC_VECTOR (15 downto 0);
-           A : out  STD_LOGIC_VECTOR (15 downto 0);
-           B : out  STD_LOGIC_VECTOR (15 downto 0);
+			  RAM_dout : in STD_LOGIC_VECTOR (15 downto 0);
+           A : inout  STD_LOGIC_VECTOR (15 downto 0);
+           B : inout  STD_LOGIC_VECTOR (15 downto 0);
            ALUfunc : out  STD_LOGIC_VECTOR (3 downto 0);
            addrA : out  STD_LOGIC_VECTOR (3 downto 0);
            addrB : out  STD_LOGIC_VECTOR (3 downto 0);
@@ -43,7 +43,10 @@ entity Processen is
            reB : out  STD_LOGIC;
            weC : out  STD_LOGIC;
 			  jump : out STD_LOGIC;
-			  skip : out STD_LOGIC);
+			  skip : out STD_LOGIC;
+			  RAM_we : out STD_LOGIC_VECTOR (0 downto 0);
+			  RAM_addr : out STD_LOGIC_VECTOR (9 downto 0);
+			  RAM_din : out STD_LOGIC_VECTOR (15 downto 0));
 end Processen;
 
 architecture Behavioral of Processen is
@@ -57,7 +60,7 @@ begin
 	-- SET DEFAULT
 	A <= (others => 'Z');
 	B <= (others => 'Z');
-	ALUfunc <= x"0";
+	ALUfunc <= (others => 'Z');
 	addrA <= (others => 'Z');
 	addrB <= (others => 'Z');
 	reA <= '0'; 
@@ -65,6 +68,9 @@ begin
 	weC <= '0';
 	jump <= '0';
 	skip <= '0';
+	RAM_we(0) <= '0';
+	RAM_addr <= (others => '0');
+	RAM_din <= (others => '0');
 	
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is
@@ -275,7 +281,7 @@ begin
 			ALUfunc <= x"3"; 						-- write A to C-bus
 			addrA <= cmd(19 downto 16); 		-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
-			if (C = x"0000") then				-- if register is 0 set skip flag
+			if (A = x"0000") then				-- if register is 0 set skip flag
 				skip <= '1';
 			end if;
 			
@@ -285,7 +291,7 @@ begin
 			addrB <= cmd(3 downto 0); 			-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
-			if (C = x"0000") then				-- if register is 0 set skip flag
+			if (A = x"0000") then				-- if register is 0 set skip flag
 				skip <= '1';
 			end if;
 			
@@ -297,7 +303,7 @@ begin
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
-			if (signed(C) < 0) then				-- if A < B set skip flag 
+			if (signed(A) < 0) then				-- if A < B set skip flag 
 				skip <= '1';
 			end if;
 			
@@ -308,7 +314,7 @@ begin
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
-			if (signed(C) > 0) then 			-- if A leq B set skip flag
+			if (signed(A) > 0) then 			-- if A leq B set skip flag
 			else
 				skip <= '1';
 			end if;

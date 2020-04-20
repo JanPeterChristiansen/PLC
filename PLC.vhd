@@ -66,6 +66,27 @@ architecture Behavioral of PLC is
 	signal addrA, addrB : STD_LOGIC_VECTOR (3 downto 0);
 	signal reA, reB, weC : STD_LOGIC;
 
+	
+	-- RAM 1024 x 16-bit
+	component BlockRAM
+		PORT (
+			clka : in STD_LOGIC;
+			ena : in STD_LOGIC;
+			wea : in STD_LOGIC_VECTOR (0 downto 0);
+			addra : in STD_LOGIC_VECTOR (9 downto 0);
+			dina : in STD_LOGIC_VECTOR (15 downto 0);
+			douta : out STD_LOGIC_VECTOR (15 downto 0)
+		);
+	end component;
+	
+	
+	-- RAM SIGNALS
+	signal RAM_en : STD_LOGIC;
+	signal RAM_we : STD_LOGIC_VECTOR (0 downto 0);
+	signal RAM_addr : STD_LOGIC_VECTOR (9 downto 0);
+	signal RAM_din, RAM_dout : STD_LOGIC_VECTOR (15 downto 0);
+	
+	
 
 begin
 
@@ -90,6 +111,17 @@ REG : entity work.Registers
 		reA => reA,
 		reB => reB,
 		we => weC
+	);
+
+-- RAM port map
+RAM : BlockRAM
+	PORT MAP(
+		clka => clk,
+		ena => '1',
+		wea => RAM_we,
+		addra => RAM_addr,
+		dina => RAM_din,
+		douta => RAM_dout
 	);
 
 
@@ -120,7 +152,6 @@ end process;
 PROCESSEN : entity work.Processen
 	Port Map(
 		cmd => cmd,
-		C => C,
 		A => A,
 		B => B,
 		ALUfunc => ALUfunc,
@@ -130,7 +161,11 @@ PROCESSEN : entity work.Processen
 		reB => reB,
 		weC => weC,
 		jump => jump,
-		skip => skip
+		skip => skip,
+		RAM_we => RAM_we,
+		RAM_addr => RAM_addr,
+		RAM_din => RAM_din,
+		RAM_dout => RAM_dout
 	);
 
 
