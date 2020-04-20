@@ -1,8 +1,0 @@
-INTSTYLE=ise
-INFILE=C:\Users\japem\Documents\repos\VHDL\PLC\PLC.ncd
-OUTFILE=C:\Users\japem\Documents\repos\VHDL\PLC\PLC.bit
-FAMILY=Spartan6
-PART=xc6slx9-2tqg144
-WORKINGDIR=C:\Users\japem\Documents\repos\VHDL\PLC
-LICENSE=WebPack
-USER_INFO=211889981_0_0_411

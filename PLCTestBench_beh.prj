@@ -1,7 +1,0 @@
-vhdl work "Registers.vhd"
-vhdl work "Processen.vhd"
-verilog work "ipcore_dir/BlockRAM.v"
-vhdl work "ALU.vhd"
-vhdl work "PLC.vhd"
-vhdl work "PLCTestBench.vhd"
-verilog work "C:/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v"
