@@ -65,3 +65,13 @@ xlnx_auto_0_xdb/
 xst/
 _ngo/
 _xmsgs/
+
+# my own
+.wdb
+.exe
+.log.xmsgs
+.cmd
+.ini
+isim/
+netgen/synthesis
+
