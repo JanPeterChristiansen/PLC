@@ -67,11 +67,12 @@ _ngo/
 _xmsgs/
 
 # my own
-.wdb
-.exe
-.log.xmsgs
-.cmd
-.ini
+*.wdb
+*.exe
+*.log
+*.xmsgs
+*.cmd
+*.ini
 isim/
 netgen/synthesis
 
