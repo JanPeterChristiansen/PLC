@@ -43,8 +43,8 @@ architecture Behavioral of PLC is
 
 	-- PROGRAMM
 	type ram_type is array (0 to 15) of STD_LOGIC_VECTOR (27 downto 0);
-	signal PROG : ram_type := (x"1a1ffff", x"2220001", x"2010000", x"2020000", 
-										x"2300000", x"0000000", x"0000000", x"0000000", 
+	signal PROG : ram_type := (x"1a0f0f0", x"1e00001", x"2000000", x"1b00001", 
+										x"2000000", x"2300000", x"0000000", x"0000000", 
 										x"0000000", x"0000000", x"0000000", x"0000000", 
 										x"0000000", x"0000000", x"0000000", x"0000000");
 										-- 8-bit  | 4-bit | 16-bit 
@@ -52,7 +52,7 @@ architecture Behavioral of PLC is
 
 	signal PC : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 	signal start : STD_LOGIC := '1';
-	signal jump : STD_LOGIC := '0';
+	signal jump: STD_LOGIC := '0';
 	signal skip : STD_LOGIC := '0';
 	signal cmd : STD_LOGIC_VECTOR (27 downto 0) := x"0000000";
 
@@ -66,10 +66,9 @@ architecture Behavioral of PLC is
 	signal addrA, addrB : STD_LOGIC_VECTOR (3 downto 0);
 	signal reA, reB, weC : STD_LOGIC;
 
-	
-	-- RAM 1024 x 16-bit
+	-- RAM block 1024 x 16-bit
 	component BlockRAM
-		PORT (
+		PORT(
 			clka : in STD_LOGIC;
 			ena : in STD_LOGIC;
 			wea : in STD_LOGIC_VECTOR (0 downto 0);
@@ -79,15 +78,13 @@ architecture Behavioral of PLC is
 		);
 	end component;
 	
-	
-	-- RAM SIGNALS
+	-- RAM signals
 	signal RAM_en : STD_LOGIC;
 	signal RAM_we : STD_LOGIC_VECTOR (0 downto 0);
-	signal RAM_addr : STD_LOGIC_VECTOR (9 downto 0);
+	signal RAM_addr : STD_LOGIC_VECTOR(9 downto 0);
 	signal RAM_din, RAM_dout : STD_LOGIC_VECTOR (15 downto 0);
 	
 	
-
 begin
 
 -- ALU port map
@@ -114,10 +111,10 @@ REG : entity work.Registers
 	);
 
 -- RAM port map
-RAM : BlockRAM
+RAM : blockRAM
 	PORT MAP(
 		clka => clk,
-		ena => '1',
+		ena => RAM_en,
 		wea => RAM_we,
 		addra => RAM_addr,
 		dina => RAM_din,
@@ -162,10 +159,11 @@ PROCESSEN : entity work.Processen
 		weC => weC,
 		jump => jump,
 		skip => skip,
+		RAM_en => RAM_en,
 		RAM_we => RAM_we,
 		RAM_addr => RAM_addr,
 		RAM_din => RAM_din,
-		RAM_dout => RAM_dout
+		RAM_dout => RAM_dout		
 	);
 
 

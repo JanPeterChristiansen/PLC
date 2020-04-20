@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench_isim_beh.exe" -prj "C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench_beh.prj" "work.PLCTestBench" 
+-intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench_isim_beh.exe" -prj "C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench_beh.prj" "work.PLCTestBench" "work.glbl" 
