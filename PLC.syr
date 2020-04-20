@@ -10,7 +10,7 @@ Total CPU time to Xst completion: 0.10 secs
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.11 secs
  
 --> Reading design: PLC.prj
 
@@ -99,12 +99,17 @@ DSP48 Utilization Ratio            : 100
 Auto BRAM Packing                  : NO
 Slice Utilization Ratio Delta      : 5
 
+---- Other Options
+Cores Search Directories           : {"ipcore_dir"  }
+
 =========================================================================
 
 
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
+Analyzing Verilog file "C:\Users\japem\Documents\repos\VHDL\PLC\ipcore_dir\BlockRAM.v" into library work
+Parsing module <BlockRAM>.
 Parsing VHDL file "C:\Users\japem\Documents\repos\VHDL\PLC\Registers.vhd" into library work
 Parsing entity <Registers>.
 Parsing architecture <Behavioral> of entity <registers>.
@@ -123,16 +128,23 @@ Parsing architecture <Behavioral> of entity <plc>.
 =========================================================================
 
 Elaborating entity <PLC> (architecture <Behavioral>) from library <work>.
+Going to verilog side to elaborate module BlockRAM
+
+Elaborating module <BlockRAM>.
+WARNING:HDLCompiler:1499 - "C:\Users\japem\Documents\repos\VHDL\PLC\ipcore_dir\BlockRAM.v" Line 39: Empty module <BlockRAM> remains a black box.
+Back to vhdl to continue elaboration
 
 Elaborating entity <ALU> (architecture <Behavioral>) from library <work>.
 
 Elaborating entity <Registers> (architecture <Behavioral>) from library <work>.
 
 Elaborating entity <Processen> (architecture <Behavioral>) from library <work>.
-WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 275: c should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 285: c should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 297: c should be on the sensitivity list of the process
-WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 308: c should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 242: ram_dout should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 263: c should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 301: c should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 311: c should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 323: c should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 334: c should be on the sensitivity list of the process
 
 =========================================================================
 *                           HDL Synthesis                               *
@@ -144,8 +156,8 @@ WARNING:Xst:2999 - Signal 'PROG', unconnected in block 'PLC', is tied to its ini
     Found 16x28-bit single-port Read Only RAM <Mram_PROG> for signal <PROG>.
     Found 4-bit register for signal <PC>.
     Found 1-bit register for signal <start>.
-    Found 4-bit adder for signal <PC[3]_GND_6_o_add_1_OUT> created at line 107.
-    Found 4-bit adder for signal <PC[3]_GND_6_o_add_2_OUT> created at line 112.
+    Found 4-bit adder for signal <PC[3]_GND_6_o_add_1_OUT> created at line 136.
+    Found 4-bit adder for signal <PC[3]_GND_6_o_add_2_OUT> created at line 141.
     Summary:
 	inferred   1 RAM(s).
 	inferred   1 Adder/Subtractor(s).
@@ -155,11 +167,11 @@ Unit <PLC> synthesized.
 
 Synthesizing Unit <ALU>.
     Related source file is "C:\Users\japem\Documents\repos\VHDL\PLC\ALU.vhd".
-    Found 16-bit adder for signal <A[15]_GND_7_o_add_3_OUT> created at line 64.
+    Found 16-bit adder for signal <A[15]_GND_9_o_add_3_OUT> created at line 64.
     Found 16-bit adder for signal <A[15]_B[15]_add_4_OUT> created at line 65.
-    Found 16-bit subtractor for signal <GND_7_o_GND_7_o_sub_6_OUT<15:0>> created at line 67.
-    Found 16-bit subtractor for signal <GND_7_o_GND_7_o_sub_7_OUT<15:0>> created at line 68.
-    Found 16-bit subtractor for signal <GND_7_o_GND_7_o_sub_8_OUT<15:0>> created at line 69.
+    Found 16-bit subtractor for signal <GND_9_o_GND_9_o_sub_6_OUT<15:0>> created at line 67.
+    Found 16-bit subtractor for signal <GND_9_o_GND_9_o_sub_7_OUT<15:0>> created at line 68.
+    Found 16-bit subtractor for signal <GND_9_o_GND_9_o_sub_8_OUT<15:0>> created at line 69.
     Found 16x16-bit multiplier for signal <SignedProd> created at line 52.
     Found 16x16-bit multiplier for signal <UnsignedProd> created at line 54.
     Found 16-bit 16-to-1 multiplexer for signal <OUTPUT> created at line 58.
@@ -211,54 +223,46 @@ Unit <Registers> synthesized.
 
 Synthesizing Unit <Processen>.
     Related source file is "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd".
-    Found 256x11-bit Read Only RAM for signal <_n2116>
-    Found 1-bit tristate buffer for signal <A<15>> created at line 54
-    Found 1-bit tristate buffer for signal <A<14>> created at line 54
-    Found 1-bit tristate buffer for signal <A<13>> created at line 54
-    Found 1-bit tristate buffer for signal <A<12>> created at line 54
-    Found 1-bit tristate buffer for signal <A<11>> created at line 54
-    Found 1-bit tristate buffer for signal <A<10>> created at line 54
-    Found 1-bit tristate buffer for signal <A<9>> created at line 54
-    Found 1-bit tristate buffer for signal <A<8>> created at line 54
-    Found 1-bit tristate buffer for signal <A<7>> created at line 54
-    Found 1-bit tristate buffer for signal <A<6>> created at line 54
-    Found 1-bit tristate buffer for signal <A<5>> created at line 54
-    Found 1-bit tristate buffer for signal <A<4>> created at line 54
-    Found 1-bit tristate buffer for signal <A<3>> created at line 54
-    Found 1-bit tristate buffer for signal <A<2>> created at line 54
-    Found 1-bit tristate buffer for signal <A<1>> created at line 54
-    Found 1-bit tristate buffer for signal <A<0>> created at line 54
-    Found 1-bit tristate buffer for signal <B<15>> created at line 54
-    Found 1-bit tristate buffer for signal <B<14>> created at line 54
-    Found 1-bit tristate buffer for signal <B<13>> created at line 54
-    Found 1-bit tristate buffer for signal <B<12>> created at line 54
-    Found 1-bit tristate buffer for signal <B<11>> created at line 54
-    Found 1-bit tristate buffer for signal <B<10>> created at line 54
-    Found 1-bit tristate buffer for signal <B<9>> created at line 54
-    Found 1-bit tristate buffer for signal <B<8>> created at line 54
-    Found 1-bit tristate buffer for signal <B<7>> created at line 54
-    Found 1-bit tristate buffer for signal <B<6>> created at line 54
-    Found 1-bit tristate buffer for signal <B<5>> created at line 54
-    Found 1-bit tristate buffer for signal <B<4>> created at line 54
-    Found 1-bit tristate buffer for signal <B<3>> created at line 54
-    Found 1-bit tristate buffer for signal <B<2>> created at line 54
-    Found 1-bit tristate buffer for signal <B<1>> created at line 54
-    Found 1-bit tristate buffer for signal <B<0>> created at line 54
-    Found 1-bit tristate buffer for signal <addrA<3>> created at line 54
-    Found 1-bit tristate buffer for signal <addrA<2>> created at line 54
-    Found 1-bit tristate buffer for signal <addrA<1>> created at line 54
-    Found 1-bit tristate buffer for signal <addrA<0>> created at line 54
-    Found 1-bit tristate buffer for signal <addrB<3>> created at line 54
-    Found 1-bit tristate buffer for signal <addrB<2>> created at line 54
-    Found 1-bit tristate buffer for signal <addrB<1>> created at line 54
-    Found 1-bit tristate buffer for signal <addrB<0>> created at line 54
-    Found 16-bit comparator greater for signal <GND_43_o_C[15]_LessThan_3_o> created at line 297
-    Found 16-bit comparator lessequal for signal <C[15]_GND_43_o_LessThan_4_o> created at line 308
+    Found 256x11-bit Read Only RAM for signal <_n1369>
+    Found 1-bit tristate buffer for signal <A<15>> created at line 59
+    Found 1-bit tristate buffer for signal <A<14>> created at line 59
+    Found 1-bit tristate buffer for signal <A<13>> created at line 59
+    Found 1-bit tristate buffer for signal <A<12>> created at line 59
+    Found 1-bit tristate buffer for signal <A<11>> created at line 59
+    Found 1-bit tristate buffer for signal <A<10>> created at line 59
+    Found 1-bit tristate buffer for signal <A<9>> created at line 59
+    Found 1-bit tristate buffer for signal <A<8>> created at line 59
+    Found 1-bit tristate buffer for signal <A<7>> created at line 59
+    Found 1-bit tristate buffer for signal <A<6>> created at line 59
+    Found 1-bit tristate buffer for signal <A<5>> created at line 59
+    Found 1-bit tristate buffer for signal <A<4>> created at line 59
+    Found 1-bit tristate buffer for signal <A<3>> created at line 59
+    Found 1-bit tristate buffer for signal <A<2>> created at line 59
+    Found 1-bit tristate buffer for signal <A<1>> created at line 59
+    Found 1-bit tristate buffer for signal <A<0>> created at line 59
+    Found 1-bit tristate buffer for signal <B<15>> created at line 59
+    Found 1-bit tristate buffer for signal <B<14>> created at line 59
+    Found 1-bit tristate buffer for signal <B<13>> created at line 59
+    Found 1-bit tristate buffer for signal <B<12>> created at line 59
+    Found 1-bit tristate buffer for signal <B<11>> created at line 59
+    Found 1-bit tristate buffer for signal <B<10>> created at line 59
+    Found 1-bit tristate buffer for signal <B<9>> created at line 59
+    Found 1-bit tristate buffer for signal <B<8>> created at line 59
+    Found 1-bit tristate buffer for signal <B<7>> created at line 59
+    Found 1-bit tristate buffer for signal <B<6>> created at line 59
+    Found 1-bit tristate buffer for signal <B<5>> created at line 59
+    Found 1-bit tristate buffer for signal <B<4>> created at line 59
+    Found 1-bit tristate buffer for signal <B<3>> created at line 59
+    Found 1-bit tristate buffer for signal <B<2>> created at line 59
+    Found 1-bit tristate buffer for signal <B<1>> created at line 59
+    Found 1-bit tristate buffer for signal <B<0>> created at line 59
+    Found 16-bit comparator greater for signal <GND_45_o_C[15]_LessThan_3_o> created at line 323
+    Found 16-bit comparator lessequal for signal <C[15]_GND_45_o_LessThan_4_o> created at line 334
     Summary:
 	inferred   1 RAM(s).
 	inferred   2 Comparator(s).
-	inferred   3 Multiplexer(s).
-	inferred  40 Tristate(s).
+	inferred  19 Multiplexer(s).
+	inferred  32 Tristate(s).
 Unit <Processen> synthesized.
 
 =========================================================================
@@ -280,12 +284,12 @@ Macro Statistics
 # Comparators                                          : 2
  16-bit comparator greater                             : 1
  16-bit comparator lessequal                           : 1
-# Multiplexers                                         : 29
- 1-bit 2-to-1 multiplexer                              : 3
+# Multiplexers                                         : 45
+ 1-bit 2-to-1 multiplexer                              : 19
  16-bit 2-to-1 multiplexer                             : 22
  4-bit 2-to-1 multiplexer                              : 4
-# Tristates                                            : 72
- 1-bit tristate buffer                                 : 72
+# Tristates                                            : 64
+ 1-bit tristate buffer                                 : 64
 # Xors                                                 : 1
  16-bit xor2                                           : 1
 
@@ -296,6 +300,8 @@ INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmet
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
+Reading core <ipcore_dir/BlockRAM.ngc>.
+Loading core <BlockRAM> for timing and area information for instance <RAM>.
 
 Synthesizing (advanced) Unit <PLC>.
 INFO:Xst:3231 - The small RAM <Mram_PROG> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
@@ -312,7 +318,7 @@ INFO:Xst:3231 - The small RAM <Mram_PROG> will be implemented on LUTs in order t
 Unit <PLC> synthesized (advanced).
 
 Synthesizing (advanced) Unit <Processen>.
-INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram__n2116> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram__n1369> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
     -----------------------------------------------------------------------
     | ram_type           | Distributed                         |          |
     -----------------------------------------------------------------------
@@ -363,8 +369,8 @@ Macro Statistics
 # Comparators                                          : 2
  16-bit comparator greater                             : 1
  16-bit comparator lessequal                           : 1
-# Multiplexers                                         : 29
- 1-bit 2-to-1 multiplexer                              : 3
+# Multiplexers                                         : 45
+ 1-bit 2-to-1 multiplexer                              : 19
  16-bit 2-to-1 multiplexer                             : 22
  4-bit 2-to-1 multiplexer                              : 4
 # Xors                                                 : 1
@@ -375,7 +381,7 @@ Macro Statistics
 =========================================================================
 *                         Low Level Synthesis                           *
 =========================================================================
-WARNING:Xst:2042 - Unit Processen: 40 internal tristates are replaced by logic (pull-up yes): A<0>, A<10>, A<11>, A<12>, A<13>, A<14>, A<15>, A<1>, A<2>, A<3>, A<4>, A<5>, A<6>, A<7>, A<8>, A<9>, B<0>, B<10>, B<11>, B<12>, B<13>, B<14>, B<15>, B<1>, B<2>, B<3>, B<4>, B<5>, B<6>, B<7>, B<8>, B<9>, addrA<0>, addrA<1>, addrA<2>, addrA<3>, addrB<0>, addrB<1>, addrB<2>, addrB<3>.
+WARNING:Xst:2042 - Unit Processen: 32 internal tristates are replaced by logic (pull-up yes): A<0>, A<10>, A<11>, A<12>, A<13>, A<14>, A<15>, A<1>, A<2>, A<3>, A<4>, A<5>, A<6>, A<7>, A<8>, A<9>, B<0>, B<10>, B<11>, B<12>, B<13>, B<14>, B<15>, B<1>, B<2>, B<3>, B<4>, B<5>, B<6>, B<7>, B<8>, B<9>.
 WARNING:Xst:2042 - Unit Registers: 32 internal tristates are replaced by logic (pull-up yes): A<0>, A<10>, A<11>, A<12>, A<13>, A<14>, A<15>, A<1>, A<2>, A<3>, A<4>, A<5>, A<6>, A<7>, A<8>, A<9>, B<0>, B<10>, B<11>, B<12>, B<13>, B<14>, B<15>, B<1>, B<2>, B<3>, B<4>, B<5>, B<6>, B<7>, B<8>, B<9>.
 
 Optimizing unit <PLC> ...
@@ -387,6 +393,8 @@ Building and optimizing final netlist ...
 WARNING:Xst:1426 - The value init of the FF/Latch start hinder the constant cleaning in the block PLC.
    You should achieve better results by setting this init to 0.
 Found area constraint ratio of 100 (+ 5) on block PLC, actual ratio is 3.
+FlipFlop PC_2 has been replicated 2 time(s)
+FlipFlop PC_3 has been replicated 1 time(s)
 
 Final Macro Processing ...
 
@@ -394,8 +402,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 5
- Flip-Flops                                            : 5
+# Registers                                            : 8
+ Flip-Flops                                            : 8
 
 =========================================================================
 
@@ -418,21 +426,24 @@ Top Level Output File Name         : PLC.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 224
-#      GND                         : 1
-#      INV                         : 11
-#      LUT4                        : 46
-#      LUT5                        : 33
-#      LUT6                        : 98
+# BELS                             : 218
+#      GND                         : 2
+#      INV                         : 2
+#      LUT2                        : 1
+#      LUT3                        : 10
+#      LUT4                        : 16
+#      LUT5                        : 21
+#      LUT6                        : 130
 #      MUXCY                       : 15
-#      MUXF7                       : 3
+#      MUXF7                       : 4
 #      VCC                         : 1
 #      XORCY                       : 16
-# FlipFlops/Latches                : 5
+# FlipFlops/Latches                : 8
 #      FD                          : 1
-#      FDE                         : 4
-# RAMS                             : 16
+#      FDE                         : 7
+# RAMS                             : 17
 #      RAM16X1D                    : 16
+#      RAMB16BWER                  : 1
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
 # IO Buffers                       : 8
@@ -447,17 +458,17 @@ Selected Device : 6slx9tqg144-2
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:               5  out of  11440     0%  
- Number of Slice LUTs:                  220  out of   5720     3%  
-    Number used as Logic:               188  out of   5720     3%  
+ Number of Slice Registers:               8  out of  11440     0%  
+ Number of Slice LUTs:                  212  out of   5720     3%  
+    Number used as Logic:               180  out of   5720     3%  
     Number used as Memory:               32  out of   1440     2%  
        Number used as RAM:               32
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    223
-   Number with an unused Flip Flop:     218  out of    223    97%  
-   Number with an unused LUT:             3  out of    223     1%  
-   Number of fully used LUT-FF pairs:     2  out of    223     0%  
+ Number of LUT Flip Flop pairs used:    218
+   Number with an unused Flip Flop:     210  out of    218    96%  
+   Number with an unused LUT:             6  out of    218     2%  
+   Number of fully used LUT-FF pairs:     2  out of    218     0%  
    Number of unique control sets:         2
 
 IO Utilization: 
@@ -465,6 +476,8 @@ IO Utilization:
  Number of bonded IOBs:                   9  out of    102     8%  
 
 Specific Feature Utilization:
+ Number of Block RAM/FIFO:                1  out of     32     3%  
+    Number using Block RAM only:          1
  Number of BUFG/BUFGCTRLs:                1  out of     16     6%  
  Number of DSP48A1s:                      2  out of     16    12%  
 
@@ -486,11 +499,13 @@ NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
 
 Clock Information:
 ------------------
------------------------------------+------------------------+-------+
-Clock Signal                       | Clock buffer(FF name)  | Load  |
------------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 21    |
------------------------------------+------------------------+-------+
+-----------------------------------+------------------------------------------------------------------------------------------------------------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)                                                                                                        | Load  |
+-----------------------------------+------------------------------------------------------------------------------------------------------------------------------+-------+
+clk                                | BUFGP                                                                                                                        | 25    |
+RAM/N1                             | NONE(RAM/U0/xst_blk_mem_generator/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram)| 1     |
+-----------------------------------+------------------------------------------------------------------------------------------------------------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
 Asynchronous Control Signals Information:
 ----------------------------------------
@@ -500,9 +515,9 @@ Timing Summary:
 ---------------
 Speed Grade: -2
 
-   Minimum period: 29.536ns (Maximum Frequency: 33.857MHz)
+   Minimum period: 24.323ns (Maximum Frequency: 41.113MHz)
    Minimum input arrival time before clock: No path found
-   Maximum output required time after clock: 18.121ns
+   Maximum output required time after clock: 15.554ns
    Maximum combinational path delay: No path found
 
 Timing Details:
@@ -511,10 +526,10 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
-  Clock period: 29.536ns (frequency: 33.857MHz)
-  Total number of paths / destination ports: 2744172 / 168
+  Clock period: 24.323ns (frequency: 41.113MHz)
+  Total number of paths / destination ports: 2359906 / 87
 -------------------------------------------------------------------------
-Delay:               14.768ns (Levels of Logic = 23)
+Delay:               12.161ns (Levels of Logic = 21)
   Source:            PC_1 (FF)
   Destination:       REG/Mram_REG16 (RAM)
   Source Clock:      clk rising
@@ -524,13 +539,11 @@ Delay:               14.768ns (Levels of Logic = 23)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q             14   0.525   1.403  PC_1 (PC_1)
-     LUT4:I0->O           10   0.254   1.438  Mram_PROG2011 (Mram_PROG20)
-     LUT5:I0->O           31   0.254   1.503  PROCESSEN_Mram__n2116181 (PROCESSEN/_n2116<9>)
-     LUT4:I3->O           18   0.254   1.234  addrA<1>LogicTrst1 (addrA<1>)
-     RAM16X1D:A1->SPO      1   0.235   0.682  REG/Mram_REG2 (REG/_n0044<1>)
-     LUT4:I3->O            7   0.254   0.909  A<1>LogicTrst1 (A<1>)
-     DSP48A1:B1->M0        2   3.894   0.834  ALU/Mmult_SignedProd (ALU/SignedProd<0>)
+     FDE:C->Q             15   0.525   1.263  PC_1 (PC_1)
+     LUT4:I2->O           11   0.250   1.469  Mram_PROG221 (Mram_PROG22)
+     LUT5:I0->O           16   0.254   1.290  PROCESSEN_Mram__n1369181 (PROCESSEN/_n1369<9>)
+     LUT6:I4->O           11   0.250   1.038  A<0>LogicTrst2 (A<0>)
+     DSP48A1:B0->M0        2   3.894   0.834  ALU/Mmult_SignedProd (ALU/SignedProd<0>)
      LUT6:I4->O            1   0.250   0.000  ALU/Mmux_OUTPUT15_rs_lut<0> (ALU/Mmux_OUTPUT15_rs_lut<0>)
      MUXCY:S->O            1   0.215   0.000  ALU/Mmux_OUTPUT15_rs_cy<0> (ALU/Mmux_OUTPUT15_rs_cy<0>)
      MUXCY:CI->O           1   0.023   0.000  ALU/Mmux_OUTPUT15_rs_cy<1> (ALU/Mmux_OUTPUT15_rs_cy<1>)
@@ -547,17 +560,17 @@ Delay:               14.768ns (Levels of Logic = 23)
      MUXCY:CI->O           1   0.023   0.000  ALU/Mmux_OUTPUT15_rs_cy<12> (ALU/Mmux_OUTPUT15_rs_cy<12>)
      MUXCY:CI->O           1   0.023   0.000  ALU/Mmux_OUTPUT15_rs_cy<13> (ALU/Mmux_OUTPUT15_rs_cy<13>)
      MUXCY:CI->O           0   0.023   0.000  ALU/Mmux_OUTPUT15_rs_cy<14> (ALU/Mmux_OUTPUT15_rs_cy<14>)
-     XORCY:CI->O           1   0.206   0.000  ALU/Mmux_OUTPUT15_rs_xor<15> (C<15>)
+     XORCY:CI->O           2   0.206   0.000  ALU/Mmux_OUTPUT15_rs_xor<15> (C<15>)
      RAM16X1D:D                0.098          REG/Mram_REG16
     ----------------------------------------
-    Total                     14.768ns (6.764ns logic, 8.003ns route)
-                                       (45.8% logic, 54.2% route)
+    Total                     12.161ns (6.267ns logic, 5.894ns route)
+                                       (51.5% logic, 48.5% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
-  Total number of paths / destination ports: 686078 / 8
+  Total number of paths / destination ports: 296231 / 8
 -------------------------------------------------------------------------
-Offset:              18.121ns (Levels of Logic = 16)
+Offset:              15.554ns (Levels of Logic = 14)
   Source:            PC_1 (FF)
   Destination:       LED<7> (PAD)
   Source Clock:      clk rising
@@ -566,13 +579,11 @@ Offset:              18.121ns (Levels of Logic = 16)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDE:C->Q             14   0.525   1.403  PC_1 (PC_1)
-     LUT4:I0->O           10   0.254   1.438  Mram_PROG2011 (Mram_PROG20)
-     LUT5:I0->O           31   0.254   1.503  PROCESSEN_Mram__n2116181 (PROCESSEN/_n2116<9>)
-     LUT4:I3->O           18   0.254   1.234  addrA<1>LogicTrst1 (addrA<1>)
-     RAM16X1D:A1->SPO      1   0.235   0.682  REG/Mram_REG2 (REG/_n0044<1>)
-     LUT4:I3->O            7   0.254   0.909  A<1>LogicTrst1 (A<1>)
-     DSP48A1:B1->M0        2   3.894   0.834  ALU/Mmult_SignedProd (ALU/SignedProd<0>)
+     FDE:C->Q             15   0.525   1.263  PC_1 (PC_1)
+     LUT4:I2->O           11   0.250   1.469  Mram_PROG221 (Mram_PROG22)
+     LUT5:I0->O           16   0.254   1.290  PROCESSEN_Mram__n1369181 (PROCESSEN/_n1369<9>)
+     LUT6:I4->O           11   0.250   1.038  A<0>LogicTrst2 (A<0>)
+     DSP48A1:B0->M0        2   3.894   0.834  ALU/Mmult_SignedProd (ALU/SignedProd<0>)
      LUT6:I4->O            1   0.250   0.000  ALU/Mmux_OUTPUT15_rs_lut<0> (ALU/Mmux_OUTPUT15_rs_lut<0>)
      MUXCY:S->O            1   0.215   0.000  ALU/Mmux_OUTPUT15_rs_cy<0> (ALU/Mmux_OUTPUT15_rs_cy<0>)
      MUXCY:CI->O           1   0.023   0.000  ALU/Mmux_OUTPUT15_rs_cy<1> (ALU/Mmux_OUTPUT15_rs_cy<1>)
@@ -581,11 +592,11 @@ Offset:              18.121ns (Levels of Logic = 16)
      MUXCY:CI->O           1   0.023   0.000  ALU/Mmux_OUTPUT15_rs_cy<4> (ALU/Mmux_OUTPUT15_rs_cy<4>)
      MUXCY:CI->O           1   0.023   0.000  ALU/Mmux_OUTPUT15_rs_cy<5> (ALU/Mmux_OUTPUT15_rs_cy<5>)
      MUXCY:CI->O           1   0.023   0.000  ALU/Mmux_OUTPUT15_rs_cy<6> (ALU/Mmux_OUTPUT15_rs_cy<6>)
-     XORCY:CI->O           2   0.206   0.725  ALU/Mmux_OUTPUT15_rs_xor<7> (LED_7_OBUF)
+     XORCY:CI->O           3   0.206   0.765  ALU/Mmux_OUTPUT15_rs_xor<7> (LED_7_OBUF)
      OBUF:I->O                 2.912          LED_7_OBUF (LED<7>)
     ----------------------------------------
-    Total                     18.121ns (9.392ns logic, 8.728ns route)
-                                       (51.8% logic, 48.2% route)
+    Total                     15.554ns (8.895ns logic, 6.659ns route)
+                                       (57.2% logic, 42.8% route)
 
 =========================================================================
 
@@ -597,20 +608,20 @@ Clock to Setup on destination clock clk
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-clk            |    6.940|         |   14.768|         |
+clk            |   13.088|   10.335|   12.161|         |
 ---------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
-Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 5.36 secs
+Total REAL time to Xst completion: 7.00 secs
+Total CPU time to Xst completion: 6.16 secs
  
 --> 
 
-Total memory usage is 4512484 kilobytes
+Total memory usage is 4512428 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    8 (   0 filtered)
-Number of infos    :    4 (   0 filtered)
+Number of warnings :   11 (   0 filtered)
+Number of infos    :    5 (   0 filtered)
 
