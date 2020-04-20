@@ -298,7 +298,7 @@ begin
 			ALUfunc <= x"3"; 						-- write A to C-bus
 			addrA <= cmd(19 downto 16); 		-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
-			if (A = x"0000") then				-- if register is 0 set skip flag
+			if (C = x"0000") then				-- if register is 0 set skip flag
 				skip <= '1';
 			end if;
 			
@@ -308,7 +308,7 @@ begin
 			addrB <= cmd(3 downto 0); 			-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
-			if (A = x"0000") then				-- if register is 0 set skip flag
+			if (C = x"0000") then				-- if register is 0 set skip flag
 				skip <= '1';
 			end if;
 			
@@ -320,7 +320,7 @@ begin
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
-			if (signed(A) < 0) then				-- if A < B set skip flag 
+			if (signed(C) < 0) then				-- if A < B set skip flag 
 				skip <= '1';
 			end if;
 			
@@ -331,7 +331,7 @@ begin
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
-			if (signed(A) > 0) then 			-- if A leq B set skip flag
+			if (signed(C) > 0) then 			-- if A leq B set skip flag
 			else
 				skip <= '1';
 			end if;

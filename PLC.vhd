@@ -149,6 +149,7 @@ end process;
 PROCESSEN : entity work.Processen
 	Port Map(
 		cmd => cmd,
+		C => C,
 		A => A,
 		B => B,
 		ALUfunc => ALUfunc,
