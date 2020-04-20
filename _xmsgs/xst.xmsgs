@@ -5,25 +5,28 @@
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
 <messages>
-<msg type="warning" file="HDLCompiler" num="1499" delta="new" >"C:\Users\japem\Documents\repos\VHDL\PLC\ipcore_dir\BlockRAM.v" Line 39: Empty module &lt;<arg fmt="%s" index="1">BlockRAM</arg>&gt; remains a black box.
+<msg type="warning" file="HDLCompiler" num="1499" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\ipcore_dir\BlockRAM.v" Line 39: Empty module &lt;<arg fmt="%s" index="1">BlockRAM</arg>&gt; remains a black box.
 </msg>
 
-<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 284: <arg fmt="%s" index="1">a</arg> should be on the sensitivity list of the process
+<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 242: <arg fmt="%s" index="1">ram_dout</arg> should be on the sensitivity list of the process
 </msg>
 
-<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 294: <arg fmt="%s" index="1">a</arg> should be on the sensitivity list of the process
+<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 263: <arg fmt="%s" index="1">c</arg> should be on the sensitivity list of the process
 </msg>
 
-<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 306: <arg fmt="%s" index="1">a</arg> should be on the sensitivity list of the process
+<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 301: <arg fmt="%s" index="1">c</arg> should be on the sensitivity list of the process
 </msg>
 
-<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 317: <arg fmt="%s" index="1">a</arg> should be on the sensitivity list of the process
+<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 311: <arg fmt="%s" index="1">c</arg> should be on the sensitivity list of the process
+</msg>
+
+<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 323: <arg fmt="%s" index="1">c</arg> should be on the sensitivity list of the process
+</msg>
+
+<msg type="warning" file="HDLCompiler" num="92" delta="old" >"C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 334: <arg fmt="%s" index="1">c</arg> should be on the sensitivity list of the process
 </msg>
 
 <msg type="warning" file="Xst" num="2999" delta="old" >Signal &apos;<arg fmt="%s" index="1">PROG</arg>&apos;, unconnected in block &apos;<arg fmt="%s" index="2">PLC</arg>&apos;, is tied to its initial value.
-</msg>
-
-<msg type="warning" file="Xst" num="647" delta="old" >Input &lt;<arg fmt="%s" index="1">RAM_dout</arg>&gt; is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 </msg>
 
 <msg type="info" file="Xst" num="1767" delta="old" >HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
@@ -32,24 +35,21 @@
 <msg type="info" file="Xst" num="3231" delta="old" >The small RAM &lt;<arg fmt="%s" index="1">Mram_PROG</arg>&gt; will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
 </msg>
 
-<msg type="info" file="Xst" num="3218" delta="old" >HDL ADVISOR - The RAM &lt;<arg fmt="%s" index="1">Mram__n2181</arg>&gt; will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+<msg type="info" file="Xst" num="3218" delta="old" >HDL ADVISOR - The RAM &lt;<arg fmt="%s" index="1">Mram__n1369</arg>&gt; will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
 </msg>
 
 <msg type="info" file="Xst" num="3218" delta="old" >HDL ADVISOR - The RAM &lt;<arg fmt="%s" index="1">Mram_REG</arg>&gt; will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
 </msg>
 
-<msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">Processen</arg>: <arg fmt="%d" index="2">44</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
+<msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">Processen</arg>: <arg fmt="%d" index="2">32</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
 
 <msg type="warning" file="Xst" num="2042" delta="old" >Unit <arg fmt="%s" index="1">Registers</arg>: <arg fmt="%d" index="2">32</arg> internal tristates are replaced by logic (pull-up <arg fmt="%s" index="3">yes</arg>): </msg>
 
-<msg type="warning" file="Xst" num="1906" delta="old" >Unit <arg fmt="%s" index="1">Registers</arg> is merged (output ports from interface drive multi-sources)
+<msg type="warning" file="Xst" num="1426" delta="old" >The value init of the FF/Latch <arg fmt="%s" index="1">start</arg> hinder the constant cleaning in the block <arg fmt="%s" index="2">PLC</arg>.
+You should achieve better results by setting this init to <arg fmt="%i" index="3">0</arg>.
 </msg>
 
-<msg type="warning" file="Xst" num="1906" delta="old" >Unit <arg fmt="%s" index="1">Processen</arg> is merged (output ports from interface drive multi-sources)
-</msg>
-
-<msg type="internal" file="Xst" num="0" delta="new" srcfile="../interf/cmain.c" srcline="3423" srcrcs="1.29" >
-Process will terminate. For technical support on this issue, please open a WebCase with this project attached at http://www.xilinx.com/support. 
+<msg type="info" file="Xst" num="2169" delta="old" >HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 </msg>
 
 </messages>

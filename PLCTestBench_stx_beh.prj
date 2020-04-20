@@ -1,0 +1,5 @@
+vhdl isim_temp "Registers.vhd"
+vhdl isim_temp "Processen.vhd"
+vhdl isim_temp "ALU.vhd"
+vhdl isim_temp "PLC.vhd"
+vhdl isim_temp "PLCTestBench.vhd"

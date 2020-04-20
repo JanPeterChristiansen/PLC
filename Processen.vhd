@@ -32,21 +32,23 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity Processen is
-    Port ( cmd : in  STD_LOGIC_VECTOR (27 downto 0);
-			  RAM_dout : in STD_LOGIC_VECTOR (15 downto 0);
-           A : inout  STD_LOGIC_VECTOR (15 downto 0);
-           B : inout  STD_LOGIC_VECTOR (15 downto 0);
-           ALUfunc : out  STD_LOGIC_VECTOR (3 downto 0);
-           addrA : out  STD_LOGIC_VECTOR (3 downto 0);
-           addrB : out  STD_LOGIC_VECTOR (3 downto 0);
-           reA : out  STD_LOGIC;
-           reB : out  STD_LOGIC;
-           weC : out  STD_LOGIC;
-			  jump : out STD_LOGIC;
-			  skip : out STD_LOGIC;
-			  RAM_we : out STD_LOGIC_VECTOR (0 downto 0);
-			  RAM_addr : out STD_LOGIC_VECTOR (9 downto 0);
-			  RAM_din : out STD_LOGIC_VECTOR (15 downto 0));
+	 Port ( cmd : in  STD_LOGIC_VECTOR (27 downto 0);
+			C : in STD_LOGIC_VECTOR (15 downto 0);
+			A : out  STD_LOGIC_VECTOR (15 downto 0);
+			B : out  STD_LOGIC_VECTOR (15 downto 0);
+			ALUfunc : out  STD_LOGIC_VECTOR (3 downto 0);
+			addrA : out  STD_LOGIC_VECTOR (3 downto 0);
+			addrB : out  STD_LOGIC_VECTOR (3 downto 0);
+			reA : out  STD_LOGIC;
+			reB : out  STD_LOGIC;
+			weC : out  STD_LOGIC;
+			jump : out STD_LOGIC;
+			skip : out STD_LOGIC;
+			RAM_en : out STD_LOGIC;
+			RAM_we : out STD_LOGIC_VECTOR (0 downto 0);
+			RAM_addr : out STD_LOGIC_VECTOR (9 downto 0);
+			RAM_din : out STD_LOGIC_VECTOR (15 downto 0);
+			RAM_dout : in STD_LOGIC_VECTOR (15 downto 0));
 end Processen;
 
 architecture Behavioral of Processen is
@@ -60,18 +62,20 @@ begin
 	-- SET DEFAULT
 	A <= (others => 'Z');
 	B <= (others => 'Z');
-	ALUfunc <= (others => 'Z');
-	addrA <= (others => 'Z');
-	addrB <= (others => 'Z');
+	ALUfunc <= x"0";
+	addrA <= (others => 'U');
+	addrB <= (others => 'U');
 	reA <= '0'; 
 	reB <= '0';
 	weC <= '0';
 	jump <= '0';
 	skip <= '0';
+	RAM_en <= '1';
 	RAM_we(0) <= '0';
-	RAM_addr <= (others => '0');
-	RAM_din <= (others => '0');
+	RAM_addr <= (others => 'U');
+	RAM_din <= (others => 'U');
 	
+
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is
 		when x"00" => 								-- NOP
@@ -235,7 +239,13 @@ begin
 			weC <= '1'; 							-- write from C-bus to target register
 			
 		when x"1b" => -- LOAD reg mem (direct)
-			-- TBD
+			A <= RAM_dout; 						-- write memory to A-bus
+			ALUfunc <= x"3"; 						-- write A to C-bus
+			addrA <= cmd(19 downto 16); 		-- set target regiser address
+			weC <= '1'; 							-- write from C-bus to target register
+			RAM_addr <= cmd(9 downto 0); 		-- set memory address
+			
+
 			
 		when x"1c" => -- LOAD reg reg (indirect)
 			-- TBD
@@ -245,7 +255,14 @@ begin
 			-- TBD (not enough space in cmd for a 16bit address and a 16bit value)
 			
 		when x"1e" => -- STORE reg mem (direct)
-			-- TBD
+			ALUfunc <= x"3"; 						-- write A to C-bus
+			addrA <= cmd(19 downto 16);		-- set target regiser address
+			reA <= '1'; 							-- read from target register to A-bus
+			RAM_we(0) <= '1'; 					-- write to memory
+			RAM_addr <= cmd(9 downto 0); 		-- set memory address
+			RAM_din <= C; 							-- write C to memory
+			
+			
 			
 		when x"1f" => -- STORE reg reg (indirect)
 			-- TBD (what does this OP even mean ???)
