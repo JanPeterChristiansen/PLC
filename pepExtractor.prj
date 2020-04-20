@@ -1,4 +1,0 @@
-work	"ALU.vhd"
-work	"PLC.vhd"
-work	"RandomAccessMemory.vhd"
-work	"Registers.vhd"
