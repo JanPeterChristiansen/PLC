@@ -1,0 +1,5 @@
+vhdl work "Registers.vhd"
+vhdl work "Processen.vhd"
+vhdl work "ALU.vhd"
+vhdl work "PLC.vhd"
+vhdl work "PLCTestBench.vhd"

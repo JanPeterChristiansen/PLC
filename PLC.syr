@@ -1,0 +1,399 @@
+Release 14.7 - xst P.20131013 (nt64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.10 secs
+ 
+--> Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.10 secs
+ 
+--> Reading design: PLC.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "PLC.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "PLC"
+Output Format                      : NGC
+Target Device                      : xc6slx9-2-tqg144
+
+---- Source Options
+Top Module Name                    : PLC
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : Soft
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+---- Other Options
+Cores Search Directories           : {"ipcore_dir"  }
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Analyzing Verilog file "C:\Users\japem\Documents\repos\VHDL\PLC\ipcore_dir\BlockRAM.v" into library work
+Parsing module <BlockRAM>.
+Parsing VHDL file "C:\Users\japem\Documents\repos\VHDL\PLC\Registers.vhd" into library work
+Parsing entity <Registers>.
+Parsing architecture <Behavioral> of entity <registers>.
+Parsing VHDL file "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" into library work
+Parsing entity <Processen>.
+Parsing architecture <Behavioral> of entity <processen>.
+Parsing VHDL file "C:\Users\japem\Documents\repos\VHDL\PLC\ALU.vhd" into library work
+Parsing entity <ALU>.
+Parsing architecture <Behavioral> of entity <alu>.
+Parsing VHDL file "C:\Users\japem\Documents\repos\VHDL\PLC\PLC.vhd" into library work
+Parsing entity <PLC>.
+Parsing architecture <Behavioral> of entity <plc>.
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating entity <PLC> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <ALU> (architecture <Behavioral>) from library <work>.
+
+Elaborating entity <Registers> (architecture <Behavioral>) from library <work>.
+Going to verilog side to elaborate module BlockRAM
+
+Elaborating module <BlockRAM>.
+WARNING:HDLCompiler:1499 - "C:\Users\japem\Documents\repos\VHDL\PLC\ipcore_dir\BlockRAM.v" Line 39: Empty module <BlockRAM> remains a black box.
+Back to vhdl to continue elaboration
+
+Elaborating entity <Processen> (architecture <Behavioral>) from library <work>.
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 284: a should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 294: a should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 306: a should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd" Line 317: a should be on the sensitivity list of the process
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Synthesizing Unit <PLC>.
+    Related source file is "C:\Users\japem\Documents\repos\VHDL\PLC\PLC.vhd".
+WARNING:Xst:2999 - Signal 'PROG', unconnected in block 'PLC', is tied to its initial value.
+    Found 16x28-bit single-port Read Only RAM <Mram_PROG> for signal <PROG>.
+    Found 4-bit register for signal <PC>.
+    Found 1-bit register for signal <start>.
+    Found 4-bit adder for signal <PC[3]_GND_6_o_add_1_OUT> created at line 139.
+    Found 4-bit adder for signal <PC[3]_GND_6_o_add_2_OUT> created at line 144.
+    Summary:
+	inferred   1 RAM(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred   5 D-type flip-flop(s).
+	inferred   4 Multiplexer(s).
+Unit <PLC> synthesized.
+
+Synthesizing Unit <ALU>.
+    Related source file is "C:\Users\japem\Documents\repos\VHDL\PLC\ALU.vhd".
+    Found 16-bit adder for signal <A[15]_GND_7_o_add_3_OUT> created at line 64.
+    Found 16-bit adder for signal <A[15]_B[15]_add_4_OUT> created at line 65.
+    Found 16-bit subtractor for signal <GND_7_o_GND_7_o_sub_6_OUT<15:0>> created at line 67.
+    Found 16-bit subtractor for signal <GND_7_o_GND_7_o_sub_7_OUT<15:0>> created at line 68.
+    Found 16-bit subtractor for signal <GND_7_o_GND_7_o_sub_8_OUT<15:0>> created at line 69.
+    Found 16x16-bit multiplier for signal <SignedProd> created at line 52.
+    Found 16x16-bit multiplier for signal <UnsignedProd> created at line 54.
+    Found 16-bit 16-to-1 multiplexer for signal <OUTPUT> created at line 58.
+    Summary:
+	inferred   2 Multiplier(s).
+	inferred   1 Adder/Subtractor(s).
+	inferred  22 Multiplexer(s).
+Unit <ALU> synthesized.
+
+Synthesizing Unit <Registers>.
+    Related source file is "C:\Users\japem\Documents\repos\VHDL\PLC\Registers.vhd".
+    Found 16x16-bit dual-port RAM <Mram_REG> for signal <REG>.
+    Found 1-bit tristate buffer for signal <A<15>> created at line 53
+    Found 1-bit tristate buffer for signal <A<14>> created at line 53
+    Found 1-bit tristate buffer for signal <A<13>> created at line 53
+    Found 1-bit tristate buffer for signal <A<12>> created at line 53
+    Found 1-bit tristate buffer for signal <A<11>> created at line 53
+    Found 1-bit tristate buffer for signal <A<10>> created at line 53
+    Found 1-bit tristate buffer for signal <A<9>> created at line 53
+    Found 1-bit tristate buffer for signal <A<8>> created at line 53
+    Found 1-bit tristate buffer for signal <A<7>> created at line 53
+    Found 1-bit tristate buffer for signal <A<6>> created at line 53
+    Found 1-bit tristate buffer for signal <A<5>> created at line 53
+    Found 1-bit tristate buffer for signal <A<4>> created at line 53
+    Found 1-bit tristate buffer for signal <A<3>> created at line 53
+    Found 1-bit tristate buffer for signal <A<2>> created at line 53
+    Found 1-bit tristate buffer for signal <A<1>> created at line 53
+    Found 1-bit tristate buffer for signal <A<0>> created at line 53
+    Found 1-bit tristate buffer for signal <B<15>> created at line 53
+    Found 1-bit tristate buffer for signal <B<14>> created at line 53
+    Found 1-bit tristate buffer for signal <B<13>> created at line 53
+    Found 1-bit tristate buffer for signal <B<12>> created at line 53
+    Found 1-bit tristate buffer for signal <B<11>> created at line 53
+    Found 1-bit tristate buffer for signal <B<10>> created at line 53
+    Found 1-bit tristate buffer for signal <B<9>> created at line 53
+    Found 1-bit tristate buffer for signal <B<8>> created at line 53
+    Found 1-bit tristate buffer for signal <B<7>> created at line 53
+    Found 1-bit tristate buffer for signal <B<6>> created at line 53
+    Found 1-bit tristate buffer for signal <B<5>> created at line 53
+    Found 1-bit tristate buffer for signal <B<4>> created at line 53
+    Found 1-bit tristate buffer for signal <B<3>> created at line 53
+    Found 1-bit tristate buffer for signal <B<2>> created at line 53
+    Found 1-bit tristate buffer for signal <B<1>> created at line 53
+    Found 1-bit tristate buffer for signal <B<0>> created at line 53
+    Summary:
+	inferred   1 RAM(s).
+	inferred  32 Tristate(s).
+Unit <Registers> synthesized.
+
+Synthesizing Unit <Processen>.
+    Related source file is "C:\Users\japem\Documents\repos\VHDL\PLC\Processen.vhd".
+WARNING:Xst:647 - Input <RAM_dout> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 256x11-bit Read Only RAM for signal <_n2181>
+    Found 1-bit tristate buffer for signal <A<15>> created at line 57
+    Found 1-bit tristate buffer for signal <A<14>> created at line 57
+    Found 1-bit tristate buffer for signal <A<13>> created at line 57
+    Found 1-bit tristate buffer for signal <A<12>> created at line 57
+    Found 1-bit tristate buffer for signal <A<11>> created at line 57
+    Found 1-bit tristate buffer for signal <A<10>> created at line 57
+    Found 1-bit tristate buffer for signal <A<9>> created at line 57
+    Found 1-bit tristate buffer for signal <A<8>> created at line 57
+    Found 1-bit tristate buffer for signal <A<7>> created at line 57
+    Found 1-bit tristate buffer for signal <A<6>> created at line 57
+    Found 1-bit tristate buffer for signal <A<5>> created at line 57
+    Found 1-bit tristate buffer for signal <A<4>> created at line 57
+    Found 1-bit tristate buffer for signal <A<3>> created at line 57
+    Found 1-bit tristate buffer for signal <A<2>> created at line 57
+    Found 1-bit tristate buffer for signal <A<1>> created at line 57
+    Found 1-bit tristate buffer for signal <A<0>> created at line 57
+    Found 1-bit tristate buffer for signal <B<15>> created at line 57
+    Found 1-bit tristate buffer for signal <B<14>> created at line 57
+    Found 1-bit tristate buffer for signal <B<13>> created at line 57
+    Found 1-bit tristate buffer for signal <B<12>> created at line 57
+    Found 1-bit tristate buffer for signal <B<11>> created at line 57
+    Found 1-bit tristate buffer for signal <B<10>> created at line 57
+    Found 1-bit tristate buffer for signal <B<9>> created at line 57
+    Found 1-bit tristate buffer for signal <B<8>> created at line 57
+    Found 1-bit tristate buffer for signal <B<7>> created at line 57
+    Found 1-bit tristate buffer for signal <B<6>> created at line 57
+    Found 1-bit tristate buffer for signal <B<5>> created at line 57
+    Found 1-bit tristate buffer for signal <B<4>> created at line 57
+    Found 1-bit tristate buffer for signal <B<3>> created at line 57
+    Found 1-bit tristate buffer for signal <B<2>> created at line 57
+    Found 1-bit tristate buffer for signal <B<1>> created at line 57
+    Found 1-bit tristate buffer for signal <B<0>> created at line 57
+    Found 1-bit tristate buffer for signal <ALUfunc<3>> created at line 57
+    Found 1-bit tristate buffer for signal <ALUfunc<2>> created at line 57
+    Found 1-bit tristate buffer for signal <ALUfunc<1>> created at line 57
+    Found 1-bit tristate buffer for signal <ALUfunc<0>> created at line 57
+    Found 1-bit tristate buffer for signal <addrA<3>> created at line 57
+    Found 1-bit tristate buffer for signal <addrA<2>> created at line 57
+    Found 1-bit tristate buffer for signal <addrA<1>> created at line 57
+    Found 1-bit tristate buffer for signal <addrA<0>> created at line 57
+    Found 1-bit tristate buffer for signal <addrB<3>> created at line 57
+    Found 1-bit tristate buffer for signal <addrB<2>> created at line 57
+    Found 1-bit tristate buffer for signal <addrB<1>> created at line 57
+    Found 1-bit tristate buffer for signal <addrB<0>> created at line 57
+    Found 16-bit comparator greater for signal <GND_45_o_A[15]_LessThan_3_o> created at line 306
+    Found 16-bit comparator lessequal for signal <A[15]_GND_45_o_LessThan_4_o> created at line 317
+    Summary:
+	inferred   1 RAM(s).
+	inferred   2 Comparator(s).
+	inferred   3 Multiplexer(s).
+	inferred  44 Tristate(s).
+Unit <Processen> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 3
+ 16x16-bit dual-port RAM                               : 1
+ 16x28-bit single-port Read Only RAM                   : 1
+ 256x11-bit single-port Read Only RAM                  : 1
+# Multipliers                                          : 2
+ 16x16-bit multiplier                                  : 2
+# Adders/Subtractors                                   : 2
+ 16-bit addsub                                         : 1
+ 4-bit adder                                           : 1
+# Registers                                            : 2
+ 1-bit register                                        : 1
+ 4-bit register                                        : 1
+# Comparators                                          : 2
+ 16-bit comparator greater                             : 1
+ 16-bit comparator lessequal                           : 1
+# Multiplexers                                         : 29
+ 1-bit 2-to-1 multiplexer                              : 3
+ 16-bit 2-to-1 multiplexer                             : 22
+ 4-bit 2-to-1 multiplexer                              : 4
+# Tristates                                            : 76
+ 1-bit tristate buffer                                 : 76
+# Xors                                                 : 1
+ 16-bit xor2                                           : 1
+
+=========================================================================
+INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+Reading core <ipcore_dir/BlockRAM.ngc>.
+Loading core <BlockRAM> for timing and area information for instance <RAM>.
+
+Synthesizing (advanced) Unit <PLC>.
+INFO:Xst:3231 - The small RAM <Mram_PROG> will be implemented on LUTs in order to maximize performance and save block RAM resources. If you want to force its implementation on block, use option/constraint ram_style.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 16-word x 28-bit                    |          |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <PC>            |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+Unit <PLC> synthesized (advanced).
+
+Synthesizing (advanced) Unit <Processen>.
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram__n2181> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 256-word x 11-bit                   |          |
+    |     weA            | connected to signal <GND>           | high     |
+    |     addrA          | connected to signal <cmd<27:20>>    |          |
+    |     diA            | connected to signal <GND>           |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+Unit <Processen> synthesized (advanced).
+
+Synthesizing (advanced) Unit <Registers>.
+INFO:Xst:3218 - HDL ADVISOR - The RAM <Mram_REG> will be implemented on LUTs either because you have described an asynchronous read or because of currently unsupported block RAM features. If you have described an asynchronous read, making it synchronous would allow you to take advantage of available block RAM resources, for optimized device usage and improved timings. Please refer to your documentation for coding guidelines.
+    -----------------------------------------------------------------------
+    | ram_type           | Distributed                         |          |
+    -----------------------------------------------------------------------
+    | Port A                                                              |
+    |     aspect ratio   | 16-word x 16-bit                    |          |
+    |     clkA           | connected to signal <clk>           | fall     |
+    |     weA            | connected to signal <we>            | high     |
+    |     addrA          | connected to signal <addrA>         |          |
+    |     diA            | connected to signal <C>             |          |
+    |     doA            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+    | Port B                                                              |
+    |     aspect ratio   | 16-word x 16-bit                    |          |
+    |     addrB          | connected to signal <addrB>         |          |
+    |     doB            | connected to internal node          |          |
+    -----------------------------------------------------------------------
+Unit <Registers> synthesized (advanced).
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# RAMs                                                 : 3
+ 16x16-bit dual-port distributed RAM                   : 1
+ 16x28-bit single-port distributed Read Only RAM       : 1
+ 256x11-bit single-port distributed Read Only RAM      : 1
+# Multipliers                                          : 2
+ 16x16-bit multiplier                                  : 2
+# Adders/Subtractors                                   : 2
+ 16-bit addsub                                         : 1
+ 4-bit adder                                           : 1
+# Registers                                            : 5
+ Flip-Flops                                            : 5
+# Comparators                                          : 2
+ 16-bit comparator greater                             : 1
+ 16-bit comparator lessequal                           : 1
+# Multiplexers                                         : 29
+ 1-bit 2-to-1 multiplexer                              : 3
+ 16-bit 2-to-1 multiplexer                             : 22
+ 4-bit 2-to-1 multiplexer                              : 4
+# Xors                                                 : 1
+ 16-bit xor2                                           : 1
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+WARNING:Xst:2042 - Unit Processen: 44 internal tristates are replaced by logic (pull-up yes): A<0>, A<10>, A<11>, A<12>, A<13>, A<14>, A<15>, A<1>, A<2>, A<3>, A<4>, A<5>, A<6>, A<7>, A<8>, A<9>, ALUfunc<0>, ALUfunc<1>, ALUfunc<2>, ALUfunc<3>, B<0>, B<10>, B<11>, B<12>, B<13>, B<14>, B<15>, B<1>, B<2>, B<3>, B<4>, B<5>, B<6>, B<7>, B<8>, B<9>, addrA<0>, addrA<1>, addrA<2>, addrA<3>, addrB<0>, addrB<1>, addrB<2>, addrB<3>.
+WARNING:Xst:2042 - Unit Registers: 32 internal tristates are replaced by logic (pull-up yes): A<0>, A<10>, A<11>, A<12>, A<13>, A<14>, A<15>, A<1>, A<2>, A<3>, A<4>, A<5>, A<6>, A<7>, A<8>, A<9>, B<0>, B<10>, B<11>, B<12>, B<13>, B<14>, B<15>, B<1>, B<2>, B<3>, B<4>, B<5>, B<6>, B<7>, B<8>, B<9>.
+WARNING:Xst:1906 - Unit Registers is merged (output ports from interface drive multi-sources)
+WARNING:Xst:1906 - Unit Processen is merged (output ports from interface drive multi-sources)
+INTERNAL_ERROR:Xst:cmain.c:3423:1.29 -  Process will terminate. For technical support on this issue, please open a WebCase with this project attached at http://www.xilinx.com/support.  

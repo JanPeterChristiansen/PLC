@@ -1,0 +1,27 @@
+Running: fuse.exe -relaunch -intstyle "ise" -incremental -lib "secureip" -o "C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench_isim_beh.exe" -prj "C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench_beh.prj" "work.PLCTestBench" 
+ISim P.20131013 (signature 0x7708f090)
+Number of CPUs detected in this system: 12
+Turning on mult-threading, number of parallel sub-compilation jobs: 24 
+Determining compilation order of HDL files
+Parsing VHDL file "C:/Users/japem/Documents/repos/VHDL/PLC/Registers.vhd" into library work
+Parsing VHDL file "C:/Users/japem/Documents/repos/VHDL/PLC/Processen.vhd" into library work
+Parsing VHDL file "C:/Users/japem/Documents/repos/VHDL/PLC/ALU.vhd" into library work
+Parsing VHDL file "C:/Users/japem/Documents/repos/VHDL/PLC/PLC.vhd" into library work
+Parsing VHDL file "C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench.vhd" into library work
+Starting static elaboration
+Completed static elaboration
+Compiling package standard
+Compiling package std_logic_1164
+Compiling package std_logic_arith
+Compiling package std_logic_unsigned
+Compiling package numeric_std
+Compiling architecture behavioral of entity ALU [alu_default]
+Compiling architecture behavioral of entity Registers [registers_default]
+Compiling architecture behavioral of entity Processen [processen_default]
+Compiling architecture behavioral of entity PLC [plc_default]
+Compiling architecture behavior of entity plctestbench
+Time Resolution for simulation is 1ps.
+Compiled 14 VHDL Units
+Built simulation executable C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench_isim_beh.exe
+Fuse Memory Usage: 37568 KB
+Fuse CPU Usage: 1390 ms
