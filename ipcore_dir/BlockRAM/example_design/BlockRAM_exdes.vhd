@@ -88,7 +88,6 @@ USE UNISIM.VCOMPONENTS.ALL;
 ENTITY BlockRAM_exdes IS
   PORT (
       --Inputs - Port A
-    ENA            : IN STD_LOGIC;  --opt port
   
     WEA            : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     ADDRA          : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
@@ -116,7 +115,6 @@ ARCHITECTURE xilinx OF BlockRAM_exdes IS
   COMPONENT BlockRAM IS
   PORT (
       --Port A
-    ENA        : IN STD_LOGIC;  --opt port
   
     WEA        : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
     ADDRA      : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
@@ -149,7 +147,6 @@ BEGIN
   bmg0 : BlockRAM
     PORT MAP (
       --Port A
-      ENA        => ENA,
   
       WEA        => WEA,
       ADDRA      => ADDRA,

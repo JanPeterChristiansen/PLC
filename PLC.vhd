@@ -43,9 +43,9 @@ architecture Behavioral of PLC is
 
 	-- PROGRAMM
 	type ram_type is array (0 to 15) of STD_LOGIC_VECTOR (27 downto 0);
-	signal PROG : ram_type := (x"1a0f0f0", x"1e00001", x"2000000", x"1b00001", 
-										x"2000000", x"2300000", x"0000000", x"0000000", 
-										x"0000000", x"0000000", x"0000000", x"0000000", 
+	signal PROG : ram_type := (x"1a0f0f0", x"1e00001",	x"2000000", x"1b00001",
+										x"2000000", x"2300000", x"0000000", x"0000000",
+										x"0000000", x"0000000", x"0000000", x"0000000",
 										x"0000000", x"0000000", x"0000000", x"0000000");
 										-- 8-bit  | 4-bit | 16-bit 
 										-- opcode | reg   | value
@@ -55,6 +55,7 @@ architecture Behavioral of PLC is
 	signal jump: STD_LOGIC := '0';
 	signal skip : STD_LOGIC := '0';
 	signal cmd : STD_LOGIC_VECTOR (27 downto 0) := x"0000000";
+	signal next_cmd : STD_LOGIC_VECTOR (27 downto 0) := x"0000000";
 
 	-- control signals for ALU
 	signal ALUfunc : STD_LOGIC_VECTOR (3 downto 0) := x"0";
@@ -65,23 +66,25 @@ architecture Behavioral of PLC is
 	-- control signals for registers
 	signal addrA, addrB : STD_LOGIC_VECTOR (3 downto 0);
 	signal reA, reB, weC : STD_LOGIC;
-
-	-- RAM block 1024 x 16-bit
-	component BlockRAM
+	
+	
+	-- Simple Dual Port RAM block 1024 x 16-bit
+	component SimpleDualPortRAM
 		PORT(
 			clka : in STD_LOGIC;
-			ena : in STD_LOGIC;
-			wea : in STD_LOGIC_VECTOR (0 downto 0);
+			wea : in STD_LOGIC_VECTOR(0 downto 0);
 			addra : in STD_LOGIC_VECTOR (9 downto 0);
 			dina : in STD_LOGIC_VECTOR (15 downto 0);
-			douta : out STD_LOGIC_VECTOR (15 downto 0)
+			clkb : in STD_LOGIC;
+			addrb : in STD_LOGIC_VECTOR (9 downto 0);
+			doutb : out STD_LOGIC_VECTOR (15 downto 0)
 		);
 	end component;
 	
+	
 	-- RAM signals
-	signal RAM_en : STD_LOGIC;
 	signal RAM_we : STD_LOGIC_VECTOR (0 downto 0);
-	signal RAM_addr : STD_LOGIC_VECTOR(9 downto 0);
+	signal RAM_addrA, RAM_addrB : STD_LOGIC_VECTOR(9 downto 0);
 	signal RAM_din, RAM_dout : STD_LOGIC_VECTOR (15 downto 0);
 	
 	
@@ -111,19 +114,21 @@ REG : entity work.Registers
 	);
 
 -- RAM port map
-RAM : blockRAM
+RAM : SimpleDualPortRAM
 	PORT MAP(
 		clka => clk,
-		ena => RAM_en,
 		wea => RAM_we,
-		addra => RAM_addr,
+		addra => RAM_addrA,
 		dina => RAM_din,
-		douta => RAM_dout
+		clkb => clk,
+		addrb => RAM_addrB,
+		doutb => RAM_dout
 	);
 
 
 -- always parses cmd from program memory
 cmd <= PROG(conv_integer(PC));
+next_cmd <= PROG(conv_integer(PC + 1));
 
 -- update PC every clk cycle
 process(clk)
@@ -145,10 +150,12 @@ begin
 	end if;
 end process;
 
+
 -- interprets cmd fetched from program memory
 PROCESSEN : entity work.Processen
 	Port Map(
 		cmd => cmd,
+		next_cmd => next_cmd,
 		C => C,
 		A => A,
 		B => B,
@@ -160,10 +167,10 @@ PROCESSEN : entity work.Processen
 		weC => weC,
 		jump => jump,
 		skip => skip,
-		RAM_en => RAM_en,
 		RAM_we => RAM_we,
-		RAM_addr => RAM_addr,
+		RAM_addrA => RAM_addrA,
 		RAM_din => RAM_din,
+		RAM_addrB => RAM_addrB,
 		RAM_dout => RAM_dout		
 	);
 

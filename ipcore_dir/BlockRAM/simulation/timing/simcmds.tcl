@@ -57,7 +57,6 @@ wave add /BlockRAM_tb/status
       wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/ADDRA
       wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/DINA
       wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/WEA
-      wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/ENA
       wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/DOUTA
 run all
 quit

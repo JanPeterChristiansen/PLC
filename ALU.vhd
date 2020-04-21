@@ -45,20 +45,41 @@ architecture Behavioral of ALU is
 
 	signal SignedProd : STD_LOGIC_VECTOR (31 downto 0);
 	signal UnsignedProd : STD_LOGIC_VECTOR (31 downto 0);
+	signal SE, LEFT : STD_LOGIC := '0';
+	signal INTEROUT : STD_LOGIC_VECTOR (15 downto 0);
 
 begin
+
+	-- output shift register
+	SR : entity work.ShiftRegister
+		PORT MAP(
+			SE => SE,
+			LEFT => LEFT,
+			INPUT => INTEROUT,
+			OUTPUT => OUTPUT
+		);
+
+	-- select Shift enable
+	with FUNC select SE <= 
+		'1' when x"1",
+		'1' when x"2",
+		'0' when others;
+		
+	-- select bitshift direction
+	with FUNC select LEFT <= 
+		'1' when x"1", 
+		'0' when others;
 
 	-- Intermediate signed product
 	SignedProd <= std_logic_vector(signed(A) * signed(B));
 	-- Intermediate unsigned product
 	UnsignedProd <= std_logic_vector(A * B);
 
-
-	-- select output
-	with FUNC select OUTPUT <= 
+	-- select intermidiate output
+	with FUNC select INTEROUT <= 
 		x"0000" 							when x"0", -- 0
-		x"0001" 							when x"1", -- 1
-		(not x"0001") + 1				when x"2", -- -1
+		A		 							when x"1", -- BITSHIFT left A
+		A									when x"2", -- BITSHIFT right A
 		A 									when x"3", -- A
 		not A 							when x"4", -- not A
 		A + 1 							when x"5", -- A + 1
@@ -74,6 +95,7 @@ begin
 		SignedProd(15 downto 0)		when x"f", -- A * B signed
 		(others => 'U')				when others;
 		
+
 
 end Behavioral;
 

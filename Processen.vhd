@@ -33,6 +33,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity Processen is
 	 Port ( cmd : in  STD_LOGIC_VECTOR (27 downto 0);
+			next_cmd : in STD_LOGIC_VECTOR(27 downto 0);
 			C : in STD_LOGIC_VECTOR (15 downto 0);
 			A : out  STD_LOGIC_VECTOR (15 downto 0);
 			B : out  STD_LOGIC_VECTOR (15 downto 0);
@@ -44,10 +45,10 @@ entity Processen is
 			weC : out  STD_LOGIC;
 			jump : out STD_LOGIC;
 			skip : out STD_LOGIC;
-			RAM_en : out STD_LOGIC;
 			RAM_we : out STD_LOGIC_VECTOR (0 downto 0);
-			RAM_addr : out STD_LOGIC_VECTOR (9 downto 0);
+			RAM_addrA : out STD_LOGIC_VECTOR (9 downto 0);
 			RAM_din : out STD_LOGIC_VECTOR (15 downto 0);
+			RAM_addrB : out STD_LOGIC_VECTOR (9 downto 0);
 			RAM_dout : in STD_LOGIC_VECTOR (15 downto 0));
 end Processen;
 
@@ -56,7 +57,22 @@ architecture Behavioral of Processen is
 begin
 
 
-PROCESSEN : process(cmd)
+PREFETCHER: process(next_cmd)
+begin
+
+	case (next_cmd(27 downto 20)) is
+		when x"1b" => 
+			RAM_addrB <= next_cmd(9 downto 0);
+		when others => 
+			RAM_addrB <= (others => 'U');
+	end case;
+
+end process;
+
+
+
+
+PROCESSEN : process(cmd, RAM_dout, C)
 begin
 	
 	-- SET DEFAULT
@@ -70,10 +86,9 @@ begin
 	weC <= '0';
 	jump <= '0';
 	skip <= '0';
-	RAM_en <= '1';
 	RAM_we(0) <= '0';
-	RAM_addr <= (others => 'U');
 	RAM_din <= (others => 'U');
+	RAM_addrA <= (others => 'U');
 	
 
 	-- change relevant values to execute an opcode
@@ -108,7 +123,7 @@ begin
 			weC <= '1';								-- write from C-bus to target register
 		
 		when x"05" => -- AND reg reg (bitwise, indirect)
-			 -- TBD
+			-- TBD
 		
 		
 		when x"06" => -- ORi reg $value (bitwise, Immediate)
@@ -127,7 +142,7 @@ begin
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		when x"08" => -- OR reg reg (bitwise, indirect)
-			 -- TBD
+			-- TBD
 		
 		
 		when x"09" => -- XORi reg $value (bitwise, Immediate)
@@ -146,14 +161,20 @@ begin
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		when x"0b" => -- XOR reg reg (bitwise, indirect)
-			 -- TBD
+			-- TBD
 		
 		
 		when x"0c" => -- bit shift left reg
-			 -- TBD
+			ALUfunc <= x"1"; 						-- write A bitshifted 1 to left to C-bus
+			addrA <= cmd(19 downto 16); 		-- set target register address
+			reA <= '1'; 							-- read from target register to A-bus
+			weC <= '1'; 							-- write from C-bus to target register
 			 
 		when x"0d" => -- bit shift right reg
-			 -- TBD
+			ALUfunc <= x"2"; 						-- write A bitshifted 1 to left to C-bus
+			addrA <= cmd(19 downto 16); 		-- set target register address
+			reA <= '1'; 							-- read from target register to A-bus
+			weC <= '1'; 							-- write from C-bus to target register
 		
 		
 		when x"0e" => -- ADDi reg $value (Immediate)
@@ -243,7 +264,6 @@ begin
 			ALUfunc <= x"3"; 						-- write A to C-bus
 			addrA <= cmd(19 downto 16); 		-- set target regiser address
 			weC <= '1'; 							-- write from C-bus to target register
-			RAM_addr <= cmd(9 downto 0); 		-- set memory address
 			
 
 			
@@ -259,7 +279,7 @@ begin
 			addrA <= cmd(19 downto 16);		-- set target regiser address
 			reA <= '1'; 							-- read from target register to A-bus
 			RAM_we(0) <= '1'; 					-- write to memory
-			RAM_addr <= cmd(9 downto 0); 		-- set memory address
+			RAM_addrA <= cmd(9 downto 0); 	-- set memory address
 			RAM_din <= C; 							-- write C to memory
 			
 			
