@@ -282,8 +282,6 @@ begin
 			RAM_addrA <= cmd(9 downto 0); 	-- set memory address
 			RAM_din <= C; 							-- write C to memory
 			
-			
-			
 		when x"1f" => -- STORE reg reg (indirect)
 			-- TBD (what does this OP even mean ???)
 			
@@ -294,7 +292,10 @@ begin
 			weC <= '1';								-- write from C-bus to target register
 			
 		when x"21" => -- CLEAR mem (direct)
-			-- TBD
+			ALUfunc <= x"0"; 						-- write 0 to C-bus
+			RAM_we(0) <= '1'; 					-- write to memory
+			RAM_addrA <= cmd(9 downto 0); 	-- set memory address
+			RAM_din <= C; 							-- write C to memory
 			
 			
 		when x"22" => -- MOV reg reg (direct)
