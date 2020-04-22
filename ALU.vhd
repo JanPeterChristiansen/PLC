@@ -33,10 +33,10 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity ALU is
 	Port ( 
-		A 			: in  STD_LOGIC_VECTOR (15 downto 0);
-      B 			: in  STD_LOGIC_VECTOR (15 downto 0);
-      FUNC 		: in  STD_LOGIC_VECTOR (3 downto 0);
-      OUTPUT 	: out  STD_LOGIC_VECTOR (15 downto 0)
+		A 		: in  STD_LOGIC_VECTOR (15 downto 0);
+		B 		: in  STD_LOGIC_VECTOR (15 downto 0);
+		FUNC 	: in  STD_LOGIC_VECTOR (3 downto 0);
+		OUTPUT 	: out  STD_LOGIC_VECTOR (15 downto 0)
 	);	
 	
 end ALU;
@@ -81,19 +81,19 @@ begin
 		A		 							when x"1", -- BITSHIFT left A
 		A									when x"2", -- BITSHIFT right A
 		A 									when x"3", -- A
-		not A 							when x"4", -- not A
-		A + 1 							when x"5", -- A + 1
+		not A 								when x"4", -- not A
+		A + 1 								when x"5", -- A + 1
 		A + B								when x"6", -- A + B
 		B									when x"7", -- B
-		A - 1 							when x"8", -- A - 1
-		A - B 							when x"9", -- A - B
-		x"0000" - A 					when x"a", -- -A
+		A - 1 								when x"8", -- A - 1
+		A - B 								when x"9", -- A - B
+		x"0000" - A 						when x"a", -- -A
 		A and B 							when x"b", -- AND
-		A or B 							when x"c", -- OR
+		A or B 								when x"c", -- OR
 		A xor B 							when x"d", -- XOR
-		UnsignedProd(15 downto 0)	when x"e", -- A * B unsigned
-		SignedProd(15 downto 0)		when x"f", -- A * B signed
-		(others => 'U')				when others;
+		UnsignedProd(15 downto 0)			when x"e", -- A * B unsigned
+		SignedProd(15 downto 0)				when x"f", -- A * B signed
+		(others => 'U')						when others;
 		
 
 

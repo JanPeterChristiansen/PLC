@@ -43,12 +43,12 @@ architecture Behavioral of PLC is
 
 	-- PROGRAMM
 	type ram_type is array (0 to 15) of STD_LOGIC_VECTOR (27 downto 0);
-	signal PROG : ram_type := (x"1a0f0f0", x"1e00001",	x"2000000", x"1b00001",
-										x"2000000", x"2300000", x"0000000", x"0000000",
-										x"0000000", x"0000000", x"0000000", x"0000000",
-										x"0000000", x"0000000", x"0000000", x"0000000");
-										-- 8-bit  | 4-bit | 16-bit 
-										-- opcode | reg   | value
+	signal PROG : ram_type := (	x"1a10005", x"1a0000a", x"1100001", x"2800001",
+								x"2300002", x"2300001", x"0000000", x"0000000",
+								x"0000000", x"0000000", x"0000000", x"0000000", 
+								x"0000000", x"0000000", x"0000000", x"0000000");
+													-- 8-bit  | 4-bit | 16-bit 
+													-- opcode | reg   | value
 
 	signal PC : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 	signal start : STD_LOGIC := '1';

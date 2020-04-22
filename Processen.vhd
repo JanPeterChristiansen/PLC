@@ -56,7 +56,7 @@ architecture Behavioral of Processen is
 
 begin
 
-
+-- pre fetch memory addr because of read latency
 PREFETCHER: process(next_cmd)
 begin
 
@@ -99,7 +99,7 @@ begin
 			
 		when x"01" => -- NOT reg (bitwise, direct)
 			ALUfunc <= x"4"; 						-- write not A to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1';								-- write from C-bus to target register
 			
@@ -108,16 +108,16 @@ begin
 			
 			
 		when x"03" => -- ANDi reg $value (bitwise, Immediate)
-			B <= cmd(15 downto 0); 				-- write $value to B-bus
+			B <= cmd(15 downto 0); 					-- write $value to B-bus
 			ALUfunc <= x"b"; 						-- write A and B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 			
 		when x"04" => -- AND reg reg (bitwise, direct)
 			ALUfunc <= x"b"; 						-- write A and B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1';								-- write from C-bus to target register
@@ -127,16 +127,16 @@ begin
 		
 		
 		when x"06" => -- ORi reg $value (bitwise, Immediate)
-			B <= cmd(15 downto 0); 				-- write $value to B-bus
+			B <= cmd(15 downto 0); 					-- write $value to B-bus
 			ALUfunc <= x"c"; 						-- write A or B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 			
 		when x"07" => -- OR reg reg (bitwise, direct)
 			ALUfunc <= x"c"; 						-- write A or B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
@@ -146,16 +146,16 @@ begin
 		
 		
 		when x"09" => -- XORi reg $value (bitwise, Immediate)
-			B <= cmd(15 downto 0); 				-- write $value to B-bus
+			B <= cmd(15 downto 0); 					-- write $value to B-bus
 			ALUfunc <= x"d"; 						-- write A xor B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 			
 		when x"0a" => -- XOR reg reg (bitwise, direct)
 			ALUfunc <= x"d"; 						-- write A xor B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
@@ -166,28 +166,28 @@ begin
 		
 		when x"0c" => -- bit shift left reg
 			ALUfunc <= x"1"; 						-- write A bitshifted 1 to left to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 			 
 		when x"0d" => -- bit shift right reg
 			ALUfunc <= x"2"; 						-- write A bitshifted 1 to left to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		
 		when x"0e" => -- ADDi reg $value (Immediate)
-			B <= cmd(15 downto 0); 				-- write $value to B-bus
+			B <= cmd(15 downto 0); 					-- write $value to B-bus
 			ALUfunc <= x"6"; 						-- write A+B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		when x"0f" => -- ADD reg reg (direct)
 			ALUfunc <= x"6"; 						-- write A+B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
@@ -197,16 +197,16 @@ begin
 			
 		
 		when x"11" => -- SUBi reg $value (Immediate)
-			B <= cmd(15 downto 0); 				-- write $value to B-bus
+			B <= cmd(15 downto 0); 					-- write $value to B-bus
 			ALUfunc <= x"9"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		when x"12" => -- SUB reg reg (direct)
 			ALUfunc <= x"9"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
@@ -216,16 +216,16 @@ begin
 		
 	
 		when x"14" => -- MULUi reg $value (Immediate, unsigned)
-			B <= cmd(15 downto 0); 				-- write $value to B-bus
+			B <= cmd(15 downto 0); 					-- write $value to B-bus
 			ALUfunc <= x"e"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		when x"15" => -- MULU reg reg (direct, unsigned)
 			ALUfunc <= x"e"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
@@ -235,16 +235,16 @@ begin
 		
 		
 		when x"17" => -- MULi reg $value (Immediate, signed)
-			B <= cmd(15 downto 0); 				-- write $value to B-bus
+			B <= cmd(15 downto 0); 					-- write $value to B-bus
 			ALUfunc <= x"f"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		when x"18" => -- MUL reg reg (direct, signed)
 			ALUfunc <= x"f"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
@@ -254,15 +254,15 @@ begin
 		
 		
 		when x"1a" => -- LOADi reg $value (immediate)
-			A <= cmd(15 downto 0); 				-- write $value to A-bus
+			A <= cmd(15 downto 0); 					-- write $value to A-bus
 			ALUfunc <= x"3"; 						-- write A to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target regiser address
+			addrA <= cmd(19 downto 16); 			-- set target regiser address
 			weC <= '1'; 							-- write from C-bus to target register
 			
 		when x"1b" => -- LOAD reg mem (direct)
-			A <= RAM_dout; 						-- write memory to A-bus
+			A <= RAM_dout; 							-- write memory to A-bus
 			ALUfunc <= x"3"; 						-- write A to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target regiser address
+			addrA <= cmd(19 downto 16); 			-- set target regiser address
 			weC <= '1'; 							-- write from C-bus to target register
 			
 
@@ -276,10 +276,10 @@ begin
 			
 		when x"1e" => -- STORE reg mem (direct)
 			ALUfunc <= x"3"; 						-- write A to C-bus
-			addrA <= cmd(19 downto 16);		-- set target regiser address
+			addrA <= cmd(19 downto 16);				-- set target regiser address
 			reA <= '1'; 							-- read from target register to A-bus
-			RAM_we(0) <= '1'; 					-- write to memory
-			RAM_addrA <= cmd(9 downto 0); 	-- set memory address
+			RAM_we(0) <= '1'; 						-- write to memory
+			RAM_addrA <= cmd(9 downto 0); 			-- set memory address
 			RAM_din <= C; 							-- write C to memory
 			
 		when x"1f" => -- STORE reg reg (indirect)
@@ -288,20 +288,20 @@ begin
 		
 		when x"20" => -- CLEAR reg (direct)
 			ALUfunc <= x"0";						-- write 0 to C-bus
-			addrA <= cmd(19 downto 16);		-- set target register address
+			addrA <= cmd(19 downto 16);				-- set target register address
 			weC <= '1';								-- write from C-bus to target register
 			
 		when x"21" => -- CLEAR mem (direct)
 			ALUfunc <= x"0"; 						-- write 0 to C-bus
-			RAM_we(0) <= '1'; 					-- write to memory
-			RAM_addrA <= cmd(9 downto 0); 	-- set memory address
+			RAM_we(0) <= '1'; 						-- write to memory
+			RAM_addrA <= cmd(9 downto 0); 			-- set memory address
 			RAM_din <= C; 							-- write C to memory
 			
 			
 		when x"22" => -- MOV reg reg (direct)
 			ALUfunc <= x"7"; 						-- write B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reB <= '1'; 							-- read from value register to B-bus
 			weC <= '1'; 							-- write from C-bus to target register
 		
@@ -317,42 +317,41 @@ begin
 		
 		when x"25" => -- SKIP IF 0 reg (direct)
 			ALUfunc <= x"3"; 						-- write A to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
-			if (C = x"0000") then				-- if register is 0 set skip flag
+			if (C = x"0000") then					-- if register is 0 set skip flag
 				skip <= '1';
 			end if;
 			
 		when x"26" => -- SKIP IF EQ reg reg (direct)
 			ALUfunc <= x"9"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
-			if (C = x"0000") then				-- if register is 0 set skip flag
+			if (C = x"0000") then					-- if register is 0 set skip flag
 				skip <= '1';
 			end if;
 			
 			
 		when x"27" => -- SKIP IF LESS reg reg (direct)
 			ALUfunc <= x"9"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
-			weC <= '1'; 							-- write from C-bus to target register
-			if (signed(C) < 0) then				-- if A < B set skip flag 
+			if (signed(C) < 0) then					-- if A < B set skip flag 
 				skip <= '1';
 			end if;
 			
 		when x"28" => -- SKIP IF LEQ reg reg (direct)
 			ALUfunc <= x"9"; 						-- write A-B to C-bus
-			addrA <= cmd(19 downto 16); 		-- set target register address
-			addrB <= cmd(3 downto 0); 			-- set value register address
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 							-- read from value register to B-bus
-			weC <= '1'; 							-- write from C-bus to target register
-			if (signed(C) > 0) then 			-- if A leq B set skip flag
+			if (signed(C) > 0) then 				-- if A leq B set skip flag
+				-- do nothing
 			else
 				skip <= '1';
 			end if;
