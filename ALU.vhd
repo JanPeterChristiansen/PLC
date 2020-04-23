@@ -95,7 +95,5 @@ begin
 		SignedProd(15 downto 0)				when x"f", -- A * B signed
 		(others => 'U')						when others;
 		
-
-
+		
 end Behavioral;
-

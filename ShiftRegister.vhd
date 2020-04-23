@@ -32,10 +32,10 @@ use IEEE.NUMERIC_STD.ALL;
 --use UNISIM.VComponents.all;
 
 entity ShiftRegister is
-    Port ( SE : in  STD_LOGIC;
-			  LEFT : in STD_LOGIC;
-           INPUT : in  STD_LOGIC_VECTOR (15 downto 0);
-           OUTPUT : out  STD_LOGIC_VECTOR (15 downto 0));
+    Port ( 	SE : in  STD_LOGIC;
+			LEFT : in STD_LOGIC;
+			INPUT : in  STD_LOGIC_VECTOR (15 downto 0);
+			OUTPUT : out  STD_LOGIC_VECTOR (15 downto 0));
 end ShiftRegister;
 
 architecture Behavioral of ShiftRegister is
