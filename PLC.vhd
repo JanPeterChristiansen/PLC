@@ -50,6 +50,8 @@ architecture Behavioral of PLC is
 													-- 8-bit  | 4-bit | 16-bit 
 													-- opcode | reg   | value
 
+	signal dCLK : STD_LOGIC_VECTOR (63 downto 0) := (others => '0');
+
 	signal PC : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 	signal start : STD_LOGIC := '1';
 	signal jump: STD_LOGIC := '0';
@@ -90,6 +92,14 @@ architecture Behavioral of PLC is
 	
 begin
 
+process (clk)
+begin
+	if rising_edge(clk) then
+	 dCLK <= dCLK + 1;
+	end if;
+end process;
+
+
 -- ALU port map
 ALU : entity work.ALU
 	Port Map(
@@ -102,7 +112,7 @@ ALU : entity work.ALU
 -- Registers port map
 REG : entity work.Registers
 	Port Map(
-		CLK => clk,
+		CLK => dclk(27),
 		addrA => addrA,
 		addrB => addrB,
 		A => A,
@@ -116,11 +126,11 @@ REG : entity work.Registers
 -- RAM port map
 RAM : SimpleDualPortRAM
 	PORT MAP(
-		clka => clk,
+		clka => dclk(27),
 		wea => RAM_we,
 		addra => RAM_addrA,
 		dina => RAM_din,
-		clkb => clk,
+		clkb => dclk(27),
 		addrb => RAM_addrB,
 		doutb => RAM_dout
 	);
@@ -131,9 +141,9 @@ cmd <= PROG(conv_integer(PC));
 next_cmd <= PROG(conv_integer(PC + 1));
 
 -- update PC every clk cycle
-process(clk)
+process(dclk(27))
 begin
-	if rising_edge(clk) then
+	if rising_edge(dclk(27)) then
 		if (start = '1') then
 			start <= '0';
 		else 
@@ -176,7 +186,8 @@ PROCESSEN : entity work.Processen
 
 
 -- for test
-LED <= C(7 downto 0);
+LED(0) <= dCLK(27);
+LED(1 downto 7) <= C(6 downto 0);
 
 end Behavioral;
 

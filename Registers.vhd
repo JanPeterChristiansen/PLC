@@ -30,15 +30,15 @@ use ieee.std_logic_unsigned.all;
 --use UNISIM.VComponents.all;
 
 entity Registers is
-    Port ( clk : in STD_LOGIC; 
-			  addrA : in  STD_LOGIC_VECTOR (3 downto 0);
-			  addrB : in  STD_LOGIC_VECTOR (3 downto 0);
-           C : in  STD_LOGIC_VECTOR (15 downto 0);
-           A : out  STD_LOGIC_VECTOR (15 downto 0);
-			  B : out STD_LOGIC_VECTOR (15 downto 0);
-			  reA : in STD_LOGIC; 
-			  reB : in STD_LOGIC; 
-           we : in  STD_LOGIC);
+    Port (	clk : in STD_LOGIC; 
+			addrA : in  STD_LOGIC_VECTOR (3 downto 0);
+			addrB : in  STD_LOGIC_VECTOR (3 downto 0);
+			C : in  STD_LOGIC_VECTOR (15 downto 0);
+			A : out  STD_LOGIC_VECTOR (15 downto 0);
+			B : out STD_LOGIC_VECTOR (15 downto 0);
+			reA : in STD_LOGIC; 
+			reB : in STD_LOGIC; 
+			we : in  STD_LOGIC);
 end Registers;
 
 architecture Behavioral of Registers is

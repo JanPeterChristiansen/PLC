@@ -264,9 +264,7 @@ begin
 			ALUfunc <= x"3"; 						-- write A to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target regiser address
 			weC <= '1'; 							-- write from C-bus to target register
-			
-
-			
+				
 		when x"1c" => -- LOAD reg reg (indirect)
 			-- TBD
 			
