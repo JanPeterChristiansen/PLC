@@ -34,6 +34,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity PLC is
 	Port ( 
 		clk : in  STD_LOGIC;
+		SW : in STD_LOGIC_VECTOR (7 downto 0);
 		LED : out STD_LOGIC_VECTOR(7 downto 0)
 	);
 	
@@ -120,7 +121,9 @@ REG : entity work.Registers
 		C => C,
 		reA => reA,
 		reB => reB,
-		we => weC
+		we => weC,
+		LED => LED,
+		SW => SW
 	);
 
 -- RAM port map
@@ -184,10 +187,6 @@ PROCESSEN : entity work.Processen
 		RAM_dout => RAM_dout		
 	);
 
-
--- for test
-LED(0) <= dCLK(27);
-LED(1 downto 7) <= C(6 downto 0);
 
 end Behavioral;
 

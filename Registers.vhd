@@ -38,7 +38,10 @@ entity Registers is
 			B : out STD_LOGIC_VECTOR (15 downto 0);
 			reA : in STD_LOGIC; 
 			reB : in STD_LOGIC; 
-			we : in  STD_LOGIC);
+			we : in  STD_LOGIC;
+			SW : in STD_LOGIC_VECTOR (7 downto 0);
+			LED : out STD_LOGIC_VECTOR (7 downto 0)
+			);
 end Registers;
 
 architecture Behavioral of Registers is
@@ -47,6 +50,16 @@ architecture Behavioral of Registers is
 	signal REG : reg_type := (others => (others => '0')); 
 	
 begin
+
+
+process (SW,REG)
+begin
+
+LED <= REG(conv_integer(SW))(7 downto 0);
+
+end process;
+
+
 
 -- CAN ONLY WRITE C-BUS TO THE ADDRESS SPECIFIED FOR A-BUS
 
