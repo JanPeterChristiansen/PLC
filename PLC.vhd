@@ -94,6 +94,9 @@ architecture Behavioral of PLC is
 	-- Input buffer 
 	signal InputBuffer : STD_LOGIC_VECTOR (15 downto 0);
 
+	--Output buffer
+	signal OUTBUFF_WE, OUTBUFF_overide : STD_LOGIC; 
+	signal OUTBUFF_addr : STD_LOGIC_VECTOR (3 downto 0); 
 	
 begin
 
@@ -153,6 +156,15 @@ INPUT_BUFFER : entity work.Inputs
 		clk => clk,
 		din => INPUT,
 		dout => InputBuffer
+	);
+OUTPUT_BUFFER : entity work.Output
+	port map(
+		clk => clk,
+		din => C,
+		dout => output,
+		addr => OUTBUFF_addr,
+		we => OUTBUFF_we,
+		overide => OUTBUFF_overide	
 	);
 
 
@@ -214,7 +226,13 @@ PROCESSEN : entity work.Processen
 		SERIAL_full => SERIAL_full,
 		SERIAL_dready => SERIAL_dready,
 		SERIAL_rst => SERIAL_rst,
-		SERIAL_msb_lsb => SERIAL_msb_lsb
+		SERIAL_msb_lsb => SERIAL_msb_lsb,
+		
+		inputBuffer => inputBuffer,
+		-- OUTBUFF 
+		OUTBUFF_we => OUTBUFF_we,
+		OUTBUFF_overide => OUTBUFF_overide,
+		OUTBUFF_addr => OUTBUFF_addr
 	);
 
 end Behavioral;

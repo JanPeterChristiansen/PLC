@@ -25,6 +25,8 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity Processen is
 	Port (
+	
+		
 		cmd : in  STD_LOGIC_VECTOR (27 downto 0);
 		next_cmd : in STD_LOGIC_VECTOR(27 downto 0);
 		-- ALU
@@ -55,7 +57,13 @@ entity Processen is
 		SERIAL_full : in STD_LOGIC;
 		SERIAL_dready : in STD_LOGIC;
 		SERIAL_rst : out STD_LOGIC;
-		SERIAL_msb_lsb : out STD_LOGIC
+		SERIAL_msb_lsb : out STD_LOGIC;
+		
+		--IO 
+		inputBuffer : in STD_LOGIC_VECTOR (15 downto 0);
+		OUTBUFF_we : out STD_LOGIC; 
+		OUTBUFF_overide : out STD_LOGIC;
+		OUTBUFF_addr : out STD_LOGIC_VECTOR(3 downto 0) 
 	);
 	
 end Processen;
@@ -405,6 +413,21 @@ begin
 			if (SERIAL_full = '1') then 			-- if tx buffer is full
 				skip <= '1';						-- set skip flag
 			end if;
+			
+		when x"30" =>
+		
+		when x"31" =>  -- digitalRead reg inputbuffer(x)
+			A <= (others => '0'); 
+			A(0) <= inputbuffer(conv_integer(cmd(3 downto 0))); 
+			ALUfunc <= x"3"; 
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
+		
+		when x"32" => -- digitalWrite outbuffer(x) 
+			
+			
+			
+		
 			
 			
 			
