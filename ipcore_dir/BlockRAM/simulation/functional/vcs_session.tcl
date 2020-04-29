@@ -69,14 +69,17 @@ gui_set_precision 1ps
 gui_set_time_units 1ps
 
 gui_open_window Wave
-gui_sg_create BlockRAM_Group
-gui_list_add_group -id Wave.1 {BlockRAM_Group}
+gui_sg_create Blockram_Group
+gui_list_add_group -id Wave.1 {Blockram_Group}
 
-      gui_sg_addsignal -group BlockRAM_Group  /BlockRAM_tb/status
-      gui_sg_addsignal -group BlockRAM_Group  /BlockRAM_tb/BlockRAM_synth_inst/bmg_port/CLKA
-      gui_sg_addsignal -group BlockRAM_Group  /BlockRAM_tb/BlockRAM_synth_inst/bmg_port/ADDRA
-      gui_sg_addsignal -group BlockRAM_Group  /BlockRAM_tb/BlockRAM_synth_inst/bmg_port/DINA
-      gui_sg_addsignal -group BlockRAM_Group  /BlockRAM_tb/BlockRAM_synth_inst/bmg_port/WEA
-      gui_sg_addsignal -group BlockRAM_Group  /BlockRAM_tb/BlockRAM_synth_inst/bmg_port/DOUTA
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/status
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/Blockram_synth_inst/bmg_port/CLKA
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/Blockram_synth_inst/bmg_port/ADDRA
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/Blockram_synth_inst/bmg_port/DINA
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/Blockram_synth_inst/bmg_port/WEA
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/Blockram_synth_inst/bmg_port/RSTB
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/Blockram_synth_inst/bmg_port/CLKB
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/Blockram_synth_inst/bmg_port/ADDRB
+      gui_sg_addsignal -group Blockram_Group  /Blockram_tb/Blockram_synth_inst/bmg_port/DOUTB
 
 gui_zoom -window Wave.1 -full

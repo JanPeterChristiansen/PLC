@@ -22,14 +22,6 @@ use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity PLC is
 	Port ( 
@@ -48,11 +40,11 @@ architecture Behavioral of PLC is
 								x"0000000", x"0000000", x"0000000", x"0000000", 
 								x"0000000", x"0000000", x"0000000", x"0000000");
 													-- 8-bit  | 4-bit | 16-bit 
-													-- opcode | reg   | value
+													-- opcode | reg   | value 
 
 	signal PC : STD_LOGIC_VECTOR (3 downto 0) := "0000";
 	signal start : STD_LOGIC := '1';
-	signal jump: STD_LOGIC := '0';
+	signal jump : STD_LOGIC := '0';
 	signal skip : STD_LOGIC := '0';
 	signal cmd : STD_LOGIC_VECTOR (27 downto 0) := x"0000000";
 	signal next_cmd : STD_LOGIC_VECTOR (27 downto 0) := x"0000000";
@@ -67,7 +59,6 @@ architecture Behavioral of PLC is
 	signal addrA, addrB : STD_LOGIC_VECTOR (3 downto 0);
 	signal reA, reB, weC : STD_LOGIC;
 	
-	
 	-- Simple Dual Port RAM block 1024 x 16-bit
 	component SimpleDualPortRAM
 		PORT(
@@ -81,11 +72,15 @@ architecture Behavioral of PLC is
 		);
 	end component;
 	
-	
 	-- RAM signals
 	signal RAM_we : STD_LOGIC_VECTOR (0 downto 0);
 	signal RAM_addrA, RAM_addrB : STD_LOGIC_VECTOR(9 downto 0);
 	signal RAM_din, RAM_dout : STD_LOGIC_VECTOR (15 downto 0);
+	
+	-- IO bus and signals
+	signal IO_bus : STD_LOGIC_VECTOR (15 downto 0);
+	signal IO_addr : STD_LOGIC_VECTOR (3 downto 0);
+	signal IO_we : STD_LOGIC;
 	
 	
 begin
@@ -124,6 +119,7 @@ RAM : SimpleDualPortRAM
 		addrb => RAM_addrB,
 		doutb => RAM_dout
 	);
+
 
 
 -- always parses cmd from program memory

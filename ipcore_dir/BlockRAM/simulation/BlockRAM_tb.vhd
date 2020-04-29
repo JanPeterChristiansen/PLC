@@ -51,7 +51,7 @@
 -- PART OF THIS FILE AT ALL TIMES.
 
 --------------------------------------------------------------------------------
--- Filename: BlockRAM_tb.vhd
+-- Filename: Blockram_tb.vhd
 -- Description:
 --  Testbench Top
 --------------------------------------------------------------------------------
@@ -72,13 +72,14 @@ USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 LIBRARY work;
 USE work.ALL;
 
-ENTITY BlockRAM_tb IS
+ENTITY Blockram_tb IS
 END ENTITY;
 
 
-ARCHITECTURE BlockRAM_tb_ARCH OF BlockRAM_tb IS
+ARCHITECTURE Blockram_tb_ARCH OF Blockram_tb IS
  SIGNAL  STATUS : STD_LOGIC_VECTOR(8 DOWNTO 0);
  SIGNAL  CLK :  STD_LOGIC := '1';
+ SIGNAL  CLKB :  STD_LOGIC := '1';
  SIGNAL  RESET : STD_LOGIC;
  
  BEGIN
@@ -88,6 +89,12 @@ ARCHITECTURE BlockRAM_tb_ARCH OF BlockRAM_tb IS
      CLK <= NOT CLK;
      WAIT FOR 100 NS;
      CLK <= NOT CLK; 
+     WAIT FOR 100 NS;
+  END PROCESS;
+ CLKB_GEN: PROCESS BEGIN
+     CLKB <= NOT CLKB;
+     WAIT FOR 100 NS;
+     CLKB <= NOT CLKB; 
      WAIT FOR 100 NS;
   END PROCESS;
   
@@ -124,9 +131,10 @@ PROCESS BEGIN
   
 END PROCESS;	 
   
-  BlockRAM_synth_inst:ENTITY work.BlockRAM_synth
+  Blockram_synth_inst:ENTITY work.Blockram_synth
   PORT MAP(
            CLK_IN   => CLK,
+           CLKB_IN   => CLK,
      	   RESET_IN => RESET,
            STATUS   => STATUS
 	  );

@@ -49,7 +49,7 @@ static void work_a_0595992924_3212880686_p_0(char *t0)
     int t18;
     char *t19;
 
-LAB0:    xsi_set_current_line(47, ng0);
+LAB0:    xsi_set_current_line(39, ng0);
     t1 = (t0 + 1032U);
     t2 = *((char **)t1);
     t3 = *((unsigned char *)t2);
@@ -57,7 +57,7 @@ LAB0:    xsi_set_current_line(47, ng0);
     if (t4 != 0)
         goto LAB2;
 
-LAB4:    xsi_set_current_line(60, ng0);
+LAB4:    xsi_set_current_line(52, ng0);
     t1 = (t0 + 1352U);
     t2 = *((char **)t1);
     t1 = (t0 + 3072);
@@ -72,7 +72,7 @@ LAB3:    t1 = (t0 + 2992);
     *((int *)t1) = 1;
 
 LAB1:    return;
-LAB2:    xsi_set_current_line(48, ng0);
+LAB2:    xsi_set_current_line(40, ng0);
     t1 = (t0 + 1192U);
     t5 = *((char **)t1);
     t6 = *((unsigned char *)t5);
@@ -80,7 +80,7 @@ LAB2:    xsi_set_current_line(48, ng0);
     if (t7 != 0)
         goto LAB5;
 
-LAB7:    xsi_set_current_line(52, ng0);
+LAB7:    xsi_set_current_line(44, ng0);
     t1 = (t0 + 1352U);
     t2 = *((char **)t1);
     t9 = (15 - 15);
@@ -94,7 +94,7 @@ LAB7:    xsi_set_current_line(52, ng0);
     t14 = *((char **)t13);
     memcpy(t14, t1, 15U);
     xsi_driver_first_trans_delta(t5, 1U, 15U, 0LL);
-    xsi_set_current_line(53, ng0);
+    xsi_set_current_line(45, ng0);
     t1 = (t0 + 1352U);
     t2 = *((char **)t1);
     t1 = (t0 + 4848U);
@@ -115,7 +115,7 @@ LAB7:    xsi_set_current_line(52, ng0);
     if (t3 != 0)
         goto LAB8;
 
-LAB10:    xsi_set_current_line(56, ng0);
+LAB10:    xsi_set_current_line(48, ng0);
     t1 = (t0 + 3072);
     t2 = (t1 + 56U);
     t5 = *((char **)t2);
@@ -127,7 +127,7 @@ LAB10:    xsi_set_current_line(56, ng0);
 LAB9:
 LAB6:    goto LAB3;
 
-LAB5:    xsi_set_current_line(49, ng0);
+LAB5:    xsi_set_current_line(41, ng0);
     t1 = (t0 + 1352U);
     t8 = *((char **)t1);
     t9 = (15 - 14);
@@ -141,7 +141,7 @@ LAB5:    xsi_set_current_line(49, ng0);
     t16 = *((char **)t15);
     memcpy(t16, t1, 15U);
     xsi_driver_first_trans_delta(t12, 0U, 15U, 0LL);
-    xsi_set_current_line(50, ng0);
+    xsi_set_current_line(42, ng0);
     t1 = (t0 + 3072);
     t2 = (t1 + 56U);
     t5 = *((char **)t2);
@@ -151,7 +151,7 @@ LAB5:    xsi_set_current_line(49, ng0);
     xsi_driver_first_trans_delta(t1, 15U, 1, 0LL);
     goto LAB6;
 
-LAB8:    xsi_set_current_line(54, ng0);
+LAB8:    xsi_set_current_line(46, ng0);
     t13 = (t0 + 3072);
     t14 = (t13 + 56U);
     t15 = *((char **)t14);

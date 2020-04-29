@@ -49,8 +49,8 @@
 
 mkdir work
 echo "Compiling Core Verilog UNISIM/Behavioral model"
-ncvlog -work work ../../../BlockRAM.v 
-ncvhdl -v93 -work work ../../example_design/BlockRAM_exdes.vhd
+ncvlog -work work ../../../Blockram.v 
+ncvhdl -v93 -work work ../../example_design/Blockram_exdes.vhd
 
 echo "Compiling Test Bench Files"
 
@@ -60,12 +60,12 @@ ncvhdl -v93 -work work    ../data_gen.vhd
 ncvhdl -v93 -work work    ../addr_gen.vhd
 ncvhdl -v93 -work work    ../checker.vhd
 ncvhdl -v93 -work work    ../bmg_stim_gen.vhd
-ncvhdl -v93 -work work    ../BlockRAM_synth.vhd 
-ncvhdl -v93 -work work    ../BlockRAM_tb.vhd
+ncvhdl -v93 -work work    ../Blockram_synth.vhd 
+ncvhdl -v93 -work work    ../Blockram_tb.vhd
 
 echo "Elaborating Design"
 ncvlog -work work $XILINX/verilog/src/glbl.v
-ncelab -access +rwc glbl work.BlockRAM_tb
+ncelab -access +rwc glbl work.Blockram_tb
 
 echo "Simulating Design"
-ncsim -gui -input @"simvision -input wave_ncsim.sv" work.BlockRAM_tb
+ncsim -gui -input @"simvision -input wave_ncsim.sv" work.Blockram_tb

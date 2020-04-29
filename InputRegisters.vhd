@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    14:15:46 04/15/2020 
+-- Create Date:    10:45:16 04/28/2020 
 -- Design Name: 
--- Module Name:    RandomAccessMemory - Behavioral 
+-- Module Name:    InputRegisters - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -19,7 +19,6 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -30,33 +29,34 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity RandomAccessMemory is
-    Port ( CLK : in  STD_LOGIC;
-           ADDR : in  STD_LOGIC_VECTOR (15 downto 0);
-			  WE : in  STD_LOGIC;
-			  ENABLE : in STD_LOGIC;
-           MEM_BUS : inout  STD_LOGIC_VECTOR (15 downto 0)
-			);
-           
-end RandomAccessMemory;
+entity InputRegisters is
+	Port(
+		clk : in  STD_LOGIC;
+		din : in STD_LOGIC_VECTOR (15 downto 0);
+		addr : in STD_LOGIC_VECTOR (3 downto 0);
+		dout : out STD_LOGIC_VECTOR (15 downto 0);
+		re : in STD_LOGIC
+	);
+	
+end InputRegisters;
 
-architecture Behavioral of RandomAccessMemory is
+architecture Behavioral of InputRegisters is
 
-	type ram_type is array (0 to 65535) of STD_LOGIC_VECTOR (15 downto 0);
-	signal RAM : ram_type := (others => (others => '0'));
-
+	type reg_type is array (0 to 15) of STD_LOGIC_VECTOR (15 downto 0);
+	signal REG : reg_type := (others => (others => '0'));
+	
 begin
 
-	process(ENABLE, WE)
+	process(din)
 	begin
-		if (ENABLE = '1') then
-			if (WE = '1') then
-				RAM(conv_integer(ADDR)) <= MEM_BUS;
-			else
-				MEM_BUS <= RAM(conv_integer(ADDR));
-			end if;
-		end if;
+		for i in 0 to 15 loop
+			REG(i) <= 
+		
+		end loop;
+	
 	end process;
+
+
 
 end Behavioral;
 

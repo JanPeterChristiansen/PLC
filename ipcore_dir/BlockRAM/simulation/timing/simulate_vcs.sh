@@ -58,12 +58,12 @@ vhdlan    ../data_gen.vhd
 vhdlan    ../addr_gen.vhd
 vhdlan    ../checker.vhd
 vhdlan    ../bmg_stim_gen.vhd
-vhdlan    ../BlockRAM_synth.vhd 
-vhdlan    ../BlockRAM_tb.vhd
+vhdlan    ../Blockram_synth.vhd 
+vhdlan    ../Blockram_tb.vhd
 
 
 echo "Elaborating Design"
-vcs +neg_tchk +vcs+lic+wait -debug BlockRAM_tb glbl
+vcs +neg_tchk +vcs+lic+wait -debug Blockram_tb glbl
 
 echo "Simulating Design"
 ./simv -ucli -i ucli_commands.key

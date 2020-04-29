@@ -57,9 +57,9 @@ vhpcomp -work work    ..\data_gen.vhd
 vhpcomp -work work    ..\addr_gen.vhd
 vhpcomp -work work    ..\checker.vhd
 vhpcomp -work work    ..\bmg_stim_gen.vhd
-vhpcomp -work work    ..\BlockRAM_synth.vhd 
-vhpcomp -work work    ..\BlockRAM_tb.vhd
+vhpcomp -work work    ..\Blockram_synth.vhd 
+vhpcomp -work work    ..\Blockram_tb.vhd
 
-    fuse -L simprims_ver work.BlockRAM_tb work.glbl -o BlockRAM_tb.exe
+    fuse -L simprims_ver work.Blockram_tb work.glbl -o Blockram_tb.exe
 
-.\BlockRAM_tb.exe -sdftyp /BlockRAM_tb/BlockRAM_synth_inst/bmg_port=..\..\implement\results\routed.sdf -gui -tclbatch simcmds.tcl
+.\Blockram_tb.exe -sdftyp /Blockram_tb/Blockram_synth_inst/bmg_port=..\..\implement\results\routed.sdf -gui -tclbatch simcmds.tcl

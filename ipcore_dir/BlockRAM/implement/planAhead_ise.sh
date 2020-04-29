@@ -51,5 +51,5 @@
 rm -rf results
 mkdir results
 cd results
-cp ../../../BlockRAM.ngc .
+cp ../../../Blockram.ngc .
 planAhead -mode batch -source ../planAhead_ise.tcl

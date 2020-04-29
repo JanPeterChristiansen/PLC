@@ -59,7 +59,7 @@
 
 --------------------------------------------------------------------------------
 --
--- Filename: BlockRAM_exdes.vhd
+-- Filename: Blockram_exdes.vhd
 --
 -- Description:
 --   This is the actual BMG core wrapper.
@@ -85,25 +85,30 @@ USE UNISIM.VCOMPONENTS.ALL;
 --------------------------------------------------------------------------------
 -- Entity Declaration
 --------------------------------------------------------------------------------
-ENTITY BlockRAM_exdes IS
+ENTITY Blockram_exdes IS
   PORT (
       --Inputs - Port A
   
     WEA            : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-    ADDRA          : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+    ADDRA          : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
   
-    DINA           : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+    DINA           : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
   
-    DOUTA          : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
-    CLKA       : IN STD_LOGIC
+    CLKA       : IN STD_LOGIC;
 
+  
+      --Inputs - Port B
+    RSTB           : IN STD_LOGIC;  --opt port
+    ADDRB          : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+    DOUTB          : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+    CLKB           : IN STD_LOGIC
 
   );
 
-END BlockRAM_exdes;
+END Blockram_exdes;
 
 
-ARCHITECTURE xilinx OF BlockRAM_exdes IS
+ARCHITECTURE xilinx OF Blockram_exdes IS
 
   COMPONENT BUFG IS
   PORT (
@@ -112,19 +117,24 @@ ARCHITECTURE xilinx OF BlockRAM_exdes IS
   );
   END COMPONENT;
 
-  COMPONENT BlockRAM IS
+  COMPONENT Blockram IS
   PORT (
       --Port A
   
     WEA        : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
-    ADDRA      : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+    ADDRA      : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
   
-    DINA       : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+    DINA       : IN STD_LOGIC_VECTOR(7 DOWNTO 0);
+
   
-    DOUTA      : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+    CLKA       : IN STD_LOGIC;
 
-    CLKA       : IN STD_LOGIC
-
+  
+      --Port B
+    RSTB       : IN STD_LOGIC;  --opt port
+    ADDRB      : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+    DOUTB      : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+    CLKB       : IN STD_LOGIC
 
 
   );
@@ -142,9 +152,14 @@ BEGIN
      O => CLKA_buf
      );
 
+  bufg_B : BUFG
+    PORT MAP (
+     I => CLKB,
+     O => CLKB_buf
+     );
 
 
-  bmg0 : BlockRAM
+  bmg0 : Blockram
     PORT MAP (
       --Port A
   
@@ -152,11 +167,15 @@ BEGIN
       ADDRA      => ADDRA,
   
       DINA       => DINA,
+
+      CLKA       => CLKA_buf,
+
   
-      DOUTA      => DOUTA,
-
-      CLKA       => CLKA_buf
-
+      --Port B
+      RSTB       => RSTB,
+      ADDRB      => ADDRB,
+      DOUTB      => DOUTB,
+      CLKB       => CLKB_buf
 
     );
 

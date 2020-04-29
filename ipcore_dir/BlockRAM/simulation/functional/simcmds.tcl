@@ -52,11 +52,14 @@
 
 wcfg new
 isim set radix hex
-wave add /BlockRAM_tb/status
-      wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/CLKA
-      wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/ADDRA
-      wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/DINA
-      wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/WEA
-      wave add  /BlockRAM_tb/BlockRAM_synth_inst/BMG_PORT/DOUTA
+wave add /Blockram_tb/status
+      wave add  /Blockram_tb/Blockram_synth_inst/BMG_PORT/CLKA
+      wave add  /Blockram_tb/Blockram_synth_inst/BMG_PORT/ADDRA
+      wave add  /Blockram_tb/Blockram_synth_inst/BMG_PORT/DINA
+      wave add  /Blockram_tb/Blockram_synth_inst/BMG_PORT/WEA
+      wave add  /Blockram_tb/Blockram_synth_inst/BMG_PORT/RSTB
+      wave add  /Blockram_tb/Blockram_synth_inst/BMG_PORT/CLKB
+      wave add  /Blockram_tb/Blockram_synth_inst/BMG_PORT/ADDRB
+      wave add  /Blockram_tb/Blockram_synth_inst/BMG_PORT/DOUTB
 run all
 quit

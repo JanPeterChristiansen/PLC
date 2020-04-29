@@ -46,22 +46,22 @@
 
 
 set device xc6slx9tqg144-2
-set projName BlockRAM
-set design BlockRAM
+set projName Blockram
+set design Blockram
 set projDir [file dirname [info script]]
 create_project $projName $projDir/results/$projName -part $device -force
 set_property design_mode RTL [current_fileset -srcset]
-set top_module BlockRAM_exdes
-add_files -norecurse {../../example_design/BlockRAM_exdes.vhd}
-add_files -norecurse {./BlockRAM.ngc}
-import_files -fileset [get_filesets constrs_1] -force -norecurse {../../example_design/BlockRAM_exdes.xdc}
-set_property top BlockRAM_exdes [get_property srcset [current_run]]
+set top_module Blockram_exdes
+add_files -norecurse {../../example_design/Blockram_exdes.vhd}
+add_files -norecurse {./Blockram.ngc}
+import_files -fileset [get_filesets constrs_1] -force -norecurse {../../example_design/Blockram_exdes.xdc}
+set_property top Blockram_exdes [get_property srcset [current_run]]
 synth_design
 opt_design 
 place_design 
 route_design 
-write_sdf -rename_top_module BlockRAM_exdes -file routed.sdf 
-write_verilog -nolib -mode timesim -sdf_anno false -rename_top_module BlockRAM_exdes routed.v
+write_sdf -rename_top_module Blockram_exdes -file routed.sdf 
+write_verilog -nolib -mode timesim -sdf_anno false -rename_top_module Blockram_exdes routed.v
 report_timing -nworst 30 -path_type full -file routed.twr
 report_drc -file report.drc
 write_bitstream -bitgen_options {-g UnconstrainedPins:Allow}

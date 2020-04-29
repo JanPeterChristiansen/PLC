@@ -60,10 +60,10 @@ vcom -work work    ../data_gen.vhd
 vcom -work work    ../addr_gen.vhd
 vcom -work work    ../checker.vhd
 vcom -work work    ../bmg_stim_gen.vhd
-vcom -work work    ../BlockRAM_synth.vhd 
-vcom -work work    ../BlockRAM_tb.vhd
+vcom -work work    ../Blockram_synth.vhd 
+vcom -work work    ../Blockram_tb.vhd
 
-    vsim -novopt -t ps  -L simprims_ver +transport_int_delays -sdftyp /BlockRAM_tb/BlockRAM_synth_inst/bmg_port=../../implement/results/routed.sdf $work.BlockRAM_tb $work.glbl -novopt
+    vsim -novopt -t ps  -L simprims_ver +transport_int_delays -sdftyp /Blockram_tb/Blockram_synth_inst/bmg_port=../../implement/results/routed.sdf $work.Blockram_tb $work.glbl -novopt
 
 #Disabled waveform to save the disk space
 add log -r /*
