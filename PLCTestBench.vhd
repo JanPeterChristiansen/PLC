@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   15:10:16 04/15/2020
+-- Create Date:   12:23:02 04/29/2020
 -- Design Name:   
 -- Module Name:   C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench.vhd
 -- Project Name:  PLC
@@ -42,26 +42,29 @@ ARCHITECTURE behavior OF PLCTestBench IS
     COMPONENT PLC
     PORT(
          clk : IN  std_logic;
-         LED : OUT  std_logic_vector(7 downto 0)
+         RX : IN  std_logic_vector(15 downto 0);
+         TX : OUT  std_logic_vector(15 downto 0)
         );
     END COMPONENT;
     
 
    --Inputs
    signal clk : std_logic := '0';
+   signal RX : std_logic_vector(15 downto 0) := (others => '0');
 
  	--Outputs
-   signal LED : std_logic_vector(7 downto 0);
+   signal TX : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 10 ns;
+   constant clk_period : time := 31.25 ns;
  
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
    uut: PLC PORT MAP (
           clk => clk,
-          LED => LED
+          RX => RX,
+          TX => TX
         );
 
    -- Clock process definitions

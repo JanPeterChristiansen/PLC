@@ -24,24 +24,40 @@ use IEEE.NUMERIC_STD.ALL;
 
 
 entity Processen is
-	 Port ( cmd : in  STD_LOGIC_VECTOR (27 downto 0);
-			next_cmd : in STD_LOGIC_VECTOR(27 downto 0);
-			C : in STD_LOGIC_VECTOR (15 downto 0);
-			A : out  STD_LOGIC_VECTOR (15 downto 0);
-			B : out  STD_LOGIC_VECTOR (15 downto 0);
-			ALUfunc : out  STD_LOGIC_VECTOR (3 downto 0);
-			addrA : out  STD_LOGIC_VECTOR (3 downto 0);
-			addrB : out  STD_LOGIC_VECTOR (3 downto 0);
-			reA : out  STD_LOGIC;
-			reB : out  STD_LOGIC;
-			weC : out  STD_LOGIC;
-			jump : out STD_LOGIC;
-			skip : out STD_LOGIC;
-			RAM_we : out STD_LOGIC_VECTOR (0 downto 0);
-			RAM_addrA : out STD_LOGIC_VECTOR (9 downto 0);
-			RAM_din : out STD_LOGIC_VECTOR (15 downto 0);
-			RAM_addrB : out STD_LOGIC_VECTOR (9 downto 0);
-			RAM_dout : in STD_LOGIC_VECTOR (15 downto 0));
+	Port (
+		cmd : in  STD_LOGIC_VECTOR (27 downto 0);
+		next_cmd : in STD_LOGIC_VECTOR(27 downto 0);
+		-- ALU
+		C : in STD_LOGIC_VECTOR (15 downto 0);
+		A : out  STD_LOGIC_VECTOR (15 downto 0);
+		B : out  STD_LOGIC_VECTOR (15 downto 0);
+		ALUfunc : out  STD_LOGIC_VECTOR (3 downto 0);
+		-- REG
+		addrA : out  STD_LOGIC_VECTOR (3 downto 0);
+		addrB : out  STD_LOGIC_VECTOR (3 downto 0);
+		reA : out  STD_LOGIC;
+		reB : out  STD_LOGIC;
+		weC : out  STD_LOGIC;
+		-- cond.jump
+		jump : out STD_LOGIC;
+		skip : out STD_LOGIC;
+		-- RAM
+		RAM_we : out STD_LOGIC_VECTOR (0 downto 0);
+		RAM_addrA : out STD_LOGIC_VECTOR (9 downto 0);
+		RAM_din : out STD_LOGIC_VECTOR (15 downto 0);
+		RAM_addrB : out STD_LOGIC_VECTOR (9 downto 0);
+		RAM_dout : in STD_LOGIC_VECTOR (15 downto 0);
+		-- SERIAL
+		SERIAL_addr : out STD_LOGIC_VECTOR (3 downto 0);
+		SERIAL_dout : in STD_LOGIC_VECTOR (7 downto 0);
+		SERIAL_re : out STD_LOGIC;
+		SERIAL_we : out STD_LOGIC;
+		SERIAL_full : in STD_LOGIC;
+		SERIAL_dready : in STD_LOGIC;
+		SERIAL_rst : out STD_LOGIC;
+		SERIAL_msb_lsb : out STD_LOGIC
+	);
+	
 end Processen;
 
 architecture Behavioral of Processen is
@@ -64,24 +80,27 @@ end process;
 
 
 
-PROCESSEN : process(cmd, RAM_dout, C)
+PROCESSEN : process(cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready)
 begin
 	
 	-- SET DEFAULT
 	A <= (others => 'Z');
 	B <= (others => 'Z');
 	ALUfunc <= x"0";
-	addrA <= (others => 'U');
-	addrB <= (others => 'U');
+	addrA <= (others => 'Z');
+	addrB <= (others => 'Z');
 	reA <= '0'; 
 	reB <= '0';
 	weC <= '0';
 	jump <= '0';
 	skip <= '0';
 	RAM_we(0) <= '0';
-	RAM_din <= (others => 'U');
-	RAM_addrA <= (others => 'U');
-	
+	RAM_din <= (others => 'Z');
+	RAM_addrA <= (others => 'Z');
+	SERIAL_addr <= (others => 'Z');
+	SERIAL_re <= '0';
+	SERIAL_we <= '0';
+	SERIAL_rst <= '0';
 
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is
@@ -251,14 +270,12 @@ begin
 			addrA <= cmd(19 downto 16); 			-- set target regiser address
 			weC <= '1'; 							-- write from C-bus to target register
 			
-		when x"1b" => -- LOAD reg mem (direct)
+		when x"1b" => -- LOAD reg mem (direct)   !!! DOES NOT WORK IMMEDIETLY AFTER SKIP/GOTO !!!
 			A <= RAM_dout; 							-- write memory to A-bus
 			ALUfunc <= x"3"; 						-- write A to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target regiser address
 			weC <= '1'; 							-- write from C-bus to target register
-			
 
-			
 		when x"1c" => -- LOAD reg reg (indirect)
 			-- TBD
 			
@@ -349,8 +366,45 @@ begin
 			end if;
 			
 			
+		when x"29" => -- RESERVED
+			-- TBD
 			
 			
+		when x"2a" => -- READ reg port (direct)
+			A(7 downto 0) <= SERIAL_dout; 			-- write serial-data to A-bus
+			A(15 downto 8) <= (others => '0'); 		-- set the excess bits to 0
+			ALUfunc <= x"3"; 						-- write A to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			weC <= '1'; 							-- write from C-bus to target register
+			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
+			SERIAL_re <= '1'; 						-- set read flag
+			
+		when x"2b" => -- WRITE reg port (direct)
+			ALUfunc <= x"3"; 						-- write A to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			reA <= '1'; 							-- read from target register to A-bus
+			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
+			SERIAL_we <= '1';						-- set write flag
+			
+		when x"2c" => -- RESET port (direct)
+			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
+			SERIAL_rst <= '1';						-- set serial reset flag
+			
+		when x"2d" => -- SET MSB_LSB port
+			SERIAL_addr <= cmd(19 downto 16); 		-- set serial address
+			SERIAL_msb_lsb <= cmd(0); 				-- set msb_lsb flag
+			
+		when x"2e" => -- SKIP IF NOT READY port
+			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
+			if (SERIAL_dready = '0') then			-- if no new data on serial 
+				skip <= '1';						-- set skip flag
+			end if;
+			
+		when x"2f" => -- SKIP IF FULL 
+			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
+			if (SERIAL_full = '1') then 			-- if tx buffer is full
+				skip <= '1';						-- set skip flag
+			end if;
 			
 			
 			

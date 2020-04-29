@@ -26,7 +26,10 @@ use IEEE.NUMERIC_STD.ALL;
 entity PLC is
 	Port ( 
 		clk : in  STD_LOGIC;
-		LED : out STD_LOGIC_VECTOR(7 downto 0)
+		RX : in STD_LOGIC_VECTOR (15 downto 0);
+		TX : out STD_LOGIC_VECTOR (15 downto 0);
+		INPUT : in STD_LOGIC_VECTOR (15 downto 0);
+		OUTPUT : out STD_LOGIC_VECTOR (15 downto 0)
 	);
 	
 end PLC;
@@ -35,8 +38,8 @@ architecture Behavioral of PLC is
 
 	-- PROGRAMM
 	type ram_type is array (0 to 15) of STD_LOGIC_VECTOR (27 downto 0);
-	signal PROG : ram_type := (	x"1a10005", x"1a0000a", x"1100001", x"2800001",
-								x"2300002", x"2300001", x"0000000", x"0000000",
+	signal PROG : ram_type := (	x"1a0aaaa", x"2d00001", x"2b00000", x"2300000",
+								x"0000000", x"0000000", x"0000000", x"0000000",
 								x"0000000", x"0000000", x"0000000", x"0000000", 
 								x"0000000", x"0000000", x"0000000", x"0000000");
 													-- 8-bit  | 4-bit | 16-bit 
@@ -77,11 +80,20 @@ architecture Behavioral of PLC is
 	signal RAM_addrA, RAM_addrB : STD_LOGIC_VECTOR(9 downto 0);
 	signal RAM_din, RAM_dout : STD_LOGIC_VECTOR (15 downto 0);
 	
-	-- IO bus and signals
-	signal IO_bus : STD_LOGIC_VECTOR (15 downto 0);
-	signal IO_addr : STD_LOGIC_VECTOR (3 downto 0);
-	signal IO_we : STD_LOGIC;
-	
+	-- Serial control signals and busses
+	signal SERIAL_addr : STD_LOGIC_VECTOR (3 downto 0);
+	signal SERIAL_din : STD_LOGIC_VECTOR (7 downto 0);
+	signal SERIAL_dout : STD_LOGIC_VECTOR (7 downto 0);
+	signal SERIAL_re : STD_LOGIC := '0';
+	signal SERIAL_we : STD_LOGIC := '0';
+	signal SERIAL_full : STD_LOGIC;
+	signal SERIAL_dready : STD_LOGIC;
+	signal SERIAL_rst : STD_LOGIC := '1';
+	signal SERIAL_msb_lsb : STD_LOGIC := '0';
+
+	-- Input buffer 
+	signal InputBuffer : STD_LOGIC_VECTOR (15 downto 0);
+
 	
 begin
 
@@ -120,6 +132,28 @@ RAM : SimpleDualPortRAM
 		doutb => RAM_dout
 	);
 
+SERIAL : entity work.SerialIO
+	Port Map(
+		clk => clk,
+		addr => SERIAL_addr,
+		din => C(7 downto 0),
+		dout => SERIAL_dout,
+		re => SERIAL_re,
+		we => SERIAL_we,
+		full => SERIAL_full,
+		dready => SERIAL_dready,
+		rst => SERIAL_rst,
+		msb_lsb => SERIAL_msb_lsb,
+		rx => RX,
+		tx => TX
+	);
+
+INPUT_BUFFER : entity work.Inputs
+	Port Map(
+		clk => clk,
+		din => INPUT,
+		dout => InputBuffer
+	);
 
 
 -- always parses cmd from program memory
@@ -152,27 +186,36 @@ PROCESSEN : entity work.Processen
 	Port Map(
 		cmd => cmd,
 		next_cmd => next_cmd,
+		-- ALU
 		C => C,
 		A => A,
 		B => B,
 		ALUfunc => ALUfunc,
+		-- REG
 		addrA => addrA,
 		addrB => addrB,
 		reA => reA,
 		reB => reB,
 		weC => weC,
+		-- cond. jump
 		jump => jump,
 		skip => skip,
+		-- RAM
 		RAM_we => RAM_we,
 		RAM_addrA => RAM_addrA,
 		RAM_din => RAM_din,
 		RAM_addrB => RAM_addrB,
-		RAM_dout => RAM_dout		
+		RAM_dout => RAM_dout,
+		-- SERIAL
+		SERIAL_addr => SERIAL_addr,
+		SERIAL_dout => SERIAL_dout,
+		SERIAL_re => SERIAL_re,
+		SERIAL_we => SERIAL_we,
+		SERIAL_full => SERIAL_full,
+		SERIAL_dready => SERIAL_dready,
+		SERIAL_rst => SERIAL_rst,
+		SERIAL_msb_lsb => SERIAL_msb_lsb
 	);
-
-
--- for test
-LED <= C(7 downto 0);
 
 end Behavioral;
 
