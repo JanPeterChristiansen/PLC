@@ -25,6 +25,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity Processen is
 	Port (
+		PC : in STD_LOGIC_VECTOR (3 downto 0); 
 		cmd : in  STD_LOGIC_VECTOR (27 downto 0);
 		next_cmd : in STD_LOGIC_VECTOR(27 downto 0);
 		-- ALU
@@ -58,7 +59,16 @@ entity Processen is
 		SERIAL_msb_lsb : out STD_LOGIC;
 		--IO 
 		inputBuffer : in STD_LOGIC_VECTOR (15 downto 0);
-		OUTBUFF_we : out STD_LOGIC
+		OUTBUFF_we : out STD_LOGIC;
+		--Timer
+		MSEC : in STD_LOGIC_VECTOR (9 downto 0);  
+		SEC : in STD_LOGIC_VECTOR (5 downto 0);
+		MIN : in STD_LOGIC_VECTOR (5 downto 0); 
+		HOUR : in STD_LOGIC_VECTOR (15 downto 0); 
+		-- STACK
+		STACK_INC : out STD_LOGIC;
+		STACK_DEC : out STD_LOGIC; 
+		STACK_TOS : in STD_LOGIC_VECTOR(9 downto 0)
 	);
 	
 end Processen;
@@ -73,9 +83,12 @@ begin
 
 	case (next_cmd(27 downto 20)) is
 		when x"1b" => 
-			RAM_addrB <= next_cmd(9 downto 0);
+			RAM_addrB <= next_cmd(9 downto 0); -- prefetches for load cmd
+		when x"3b" => 
+			RAM_addrB <= STACK_TOS + 1; -- prefetches top of stack value
 		when others => 
 			RAM_addrB <= (others => 'U');
+		
 	end case;
 
 end process;
@@ -141,7 +154,6 @@ begin
 		
 		when x"05" => -- AND reg reg (bitwise, indirect)
 			-- TBD
-		
 		
 		
 		when x"06" => -- ORi reg $value (bitwise, Immediate)
@@ -332,14 +344,18 @@ begin
 		
 		
 		
-		when x"23" => -- JMP PC (direct)
-			jump <= '1'; 							-- set jump flag
-			-- the new PC is taken directly from cmd (3 downto 0)
-			-- see the process that increments the PC for detail
+		when x"23" => -- GOTO $val (imediate)
+			A <= (others => '0'); 
+			A(3 downto 0) <= cmd(3 downto 0);			
+			ALUfunc <= x"3"; 	
+			jump <= '1'; 				-- set jump flag
 			
-		when x"24" => -- JMP $value (Immediate, relative)
-			-- TBD
-		
+			
+		when x"24" => -- GOTO reg (direct)
+			ALUfunc <= x"3"; 
+			addrA <= cmd(19 downto 16);
+			reA <= '1'; 
+			jump <= '1'; 
 		
 		
 		when x"25" => -- SKIP IF 0 reg (direct)
@@ -437,7 +453,7 @@ begin
 			weC <= '1'; 							-- write from C-bus to target register
 			
 		when x"31" => -- MOD reg reg
-			ALUfunc <= x"d"; 						-- write A mod B to C-bus
+			ALUfunc <= x"a"; 						-- write A mod B to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
 			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
@@ -463,8 +479,70 @@ begin
 				addrA <= cmd(19 downto 16); 
 				reA <= '1'; 
 				OUTBUFF_WE <= '1'; 
+				
+		when x"35" =>   -- Readmicros
+		
+		
+		when x"36" => -- ReadMillis reg
+			ALUfunc <= x"3";
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
+			A <= (others => '0');
+			A(9 downto 0) <= MSEC; 
+			
+		when x"37" => -- ReadSEC reg
+			ALUfunc <= x"3";
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
+			A <= (others => '0');
+			A(5 downto 0) <= SEC; 
+			
+		when x"38" => -- ReadMIN reg
+			ALUfunc <= x"3";
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
+			A <= (others => '0');
+			A(5 downto 0) <= MIN; 
+			
+		when x"39" => -- ReadHOURreg
+			ALUfunc <= x"3";
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
+			A(15 downto 0) <= HOUR; 
+			
+			
+		when x"3A" => -- push reg
+			ALUfunc <= x"3"; 
+			addrA <= cmd(19 downto 16); 
+			reA <= '1'; 
+			
+			RAM_we(0) <= '1'; 			-- write to memory
+			RAM_addrA <= STACK_TOS; 	-- set memory address
+			RAM_din <= C;					-- write C to memory
+			STACK_INC <= '1'; 
+			
+		when x"3B" => -- pop reg
+			A <= RAM_dout; 
+			ALUfunc <= x"3";
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
+			STACK_DEC <= '1'; 
+		
+		when x"3C" => -- return 
+			A <= RAM_dout; 
+			ALUfunc <= x"3"; 
+			jump <= '1'; 
+			STACK_DEC <= '1'; 
+			
+		when x"3D" => -- push PC
+			A <= (others => '0'); 
+			A(3 downto 0) <= PC; 
+			RAM_we(0) <= '1'; 			-- write to memory
+			RAM_addrA <= STACK_TOS; 	-- set memory address
+			RAM_din <= C;					-- write C to memory
+			STACK_INC <= '1'; 	
 
-
+		
 		when others =>
 	end case;
 

@@ -17,6 +17,8 @@
 -- Additional Comments: 
 --
 ----------------------------------------------------------------------------------
+
+-- CANNOT READ FROM RAM DIRECTLY AFTER BRANCHING NEED ONE CYCLE TO PREFETCH
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
@@ -96,8 +98,38 @@ architecture Behavioral of PLC is
 
 	--Output buffer
 	signal OUTBUFF_WE : std_logic;
+	-- timer 
+	signal MSEC : STD_LOGIC_VECTOR (9 downto 0);  
+	signal SEC : STD_LOGIC_VECTOR (5 downto 0);
+	signal MIN : STD_LOGIC_VECTOR (5 downto 0); 
+	signal HOUR : STD_LOGIC_VECTOR (15 downto 0); 
+	-- stack control
+	signal STACK_INC : STD_LOGIC;
+	signal STACK_DEC : STD_LOGIC; 
+	signal STACK_TOS : STD_LOGIC_VECTOR(9 downto 0); 
+	-- Interrupts 
+
 	
 begin
+
+stackcontrol1 : entity work.Stackcontrol
+	port map(
+		clk => clk,
+		INC => STACK_INC,
+		DEC => STACK_DEC,
+		stk => STACK_TOS
+	);
+
+-- Timer port map
+timer1 : entity work.Timer
+	port map  (
+		CLK => CLK,
+		RESET	 => '0',
+		MSEC => MSEC,
+		SEC => SEC, 		
+		MIN => MIN, 		
+		HOUR => HOUR		
+	);
 
 -- ALU port map
 ALU : entity work.ALU
@@ -180,7 +212,7 @@ begin
 				PC <= PC + 2;
 			else
 				if (jump = '1') then
-					PC <= cmd(3 downto 0);
+					PC <= C(3 downto 0) ;
 				else 
 					PC <= PC + 1;
 				end if;
@@ -193,6 +225,7 @@ end process;
 -- interprets cmd fetched from program memory
 PROCESSEN : entity work.Processen
 	Port Map(
+		PC => PC,
 		cmd => cmd,
 		next_cmd => next_cmd,
 		-- ALU
@@ -224,11 +257,22 @@ PROCESSEN : entity work.Processen
 		SERIAL_dready => SERIAL_dready,
 		SERIAL_rst => SERIAL_rst,
 		SERIAL_msb_lsb => SERIAL_msb_lsb,
-		
+		--Inputbuff
 		inputBuffer => inputBuffer,
 		-- OUTBUFF 
-		OUTBUFF_we => OUTBUFF_we
+		OUTBUFF_we => OUTBUFF_we,
+		-- Timer
+		MSEC => MSEC,
+		SEC => SEC,
+		MIN => MIN,
+		HOUR => HOUR,
+		-- STACK
+		STACK_INC =>STACK_INC,
+		STACK_DEC => STACK_DEC,
+		STACK_TOS => STACK_TOS
 	);
 
 end Behavioral;
+
+  
 
