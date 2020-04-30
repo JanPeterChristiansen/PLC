@@ -21,37 +21,33 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL; 
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity Output is
-    Port ( clk : in  STD_LOGIC;
-           din : in  STD_LOGIC_VECTOR (15 downto 0);
-           dout : out  STD_LOGIC_VECTOR (15 downto 0); 
-			  we : in STD_LOGIC; 
-			  );
+    Port( 
+		clk : in  STD_LOGIC;
+		din : in  STD_LOGIC_VECTOR (15 downto 0);
+		dout : out  STD_LOGIC_VECTOR (15 downto 0); 
+		we : in STD_LOGIC; 
+	);
 end Output;
 
 architecture Behavioral of Output is
-signal buff : std_logic_vector(15 downto 0) := (others => '0'); 
+
+	signal buff : std_logic_vector(15 downto 0) := (others => '0'); 
 
 begin
-dout <= buff; 
-process(clk, addr, we)
-begin
-	if rising_edge(clk) then 
-		if we = '1' then 
-			buff <= din;
-		end if;
-	else
-		buff <= buff; 
-	end if; 
-end process; 
+
+	dout <= buff; 
+
+	process(clk, addr, we)
+	begin
+		if rising_edge(clk) then 
+			if we = '1' then 
+				buff <= din;
+			end if;
+		else
+			buff <= buff; 
+		end if; 
+	end process; 
+
 end Behavioral;
 
