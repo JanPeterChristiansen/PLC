@@ -31,33 +31,37 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 --use UNISIM.VComponents.all;
 
 entity Output is
-    Port ( clk : in  STD_LOGIC;
-           din : in  STD_LOGIC_VECTOR (15 downto 0);
-           dout : out  STD_LOGIC_VECTOR (15 downto 0); 
-			  addr : in STD_LOGIC_VECTOR(3 downto 0);
-			  we : in STD_LOGIC; 
-			  overide : in STD_LOGIC
-			  );
+	Port(
+		clk : in  STD_LOGIC;
+		din : in  STD_LOGIC_VECTOR (15 downto 0);
+		dout : out  STD_LOGIC_VECTOR (15 downto 0); 
+		addr : in STD_LOGIC_VECTOR(3 downto 0);
+		we : in STD_LOGIC; 
+		overide : in STD_LOGIC
+	);
 end Output;
 
 architecture Behavioral of Output is
 signal buff : std_logic_vector(15 downto 0) := (others => '0'); 
 
 begin
-dout <= buff; 
-process(clk, addr, we)
-begin
-	if rising_edge(clk) then 
-		if we = '1' then 
-			if overide = '1' then
-				buff <= din; 
-			else
-				buff(conv_integer(addr)) <= din(conv_integer(addr)); 
+
+	dout <= buff; 
+	
+	process(clk, addr, we)
+	begin
+		if rising_edge(clk) then 
+			if (we = '1') then 
+				if (overide = '1') then
+					buff <= din; 
+				else
+					buff(conv_integer(addr)) <= din(conv_integer(addr)); 
+				end if; 
 			end if; 
+		else
+			buff <= buff; 
 		end if; 
-	else
-		buff <= buff; 
-	end if; 
-end process; 
+	end process; 
+	
 end Behavioral;
 
