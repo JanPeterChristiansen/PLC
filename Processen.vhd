@@ -62,8 +62,6 @@ entity Processen is
 		--IO 
 		inputBuffer : in STD_LOGIC_VECTOR (15 downto 0);
 		OUTBUFF_we : out STD_LOGIC; 
-		OUTBUFF_overide : out STD_LOGIC;
-		OUTBUFF_addr : out STD_LOGIC_VECTOR(3 downto 0) 
 	);
 	
 end Processen;
@@ -109,6 +107,7 @@ begin
 	SERIAL_re <= '0';
 	SERIAL_we <= '0';
 	SERIAL_rst <= '0';
+	OUTBUFF_we <= '0'; 
 
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is
@@ -416,20 +415,25 @@ begin
 			
 		when x"30" =>
 		
-		when x"31" =>  -- digitalRead reg inputbuffer(x)
+		when x"31" =>  -- digitalReadOne reg inputbuffer(x)
 			A <= (others => '0'); 
 			A(0) <= inputbuffer(conv_integer(cmd(3 downto 0))); 
 			ALUfunc <= x"3"; 
 			addrA <= cmd(19 downto 16); 
 			weC <= '1'; 
+
+		when x"32" => -- digitalReadAll reg inputbuffer
+			A <= inputbuffer; 
+			ALUfunc <= x"3"; 
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
 		
-		when x"32" => -- digitalWrite outbuffer(x) 
-			
-			
-			
-		
-			
-			
+		when x"33" => -- digitalWrite reg outbuffer
+				ALUfunc <= x"3"; 
+				addrA <= cmd(19 downto 16); 
+				reA <= '1'; 
+				OUTBUFF_WE <= '1'; 
+
 			
 		when others =>
 	end case;

@@ -49,6 +49,7 @@ entity SerialIO is
 	
 end SerialIO;
 
+
 architecture Behavioral of SerialIO is
 	
 	signal re_vec 		: STD_LOGIC_VECTOR (15 downto 0);
