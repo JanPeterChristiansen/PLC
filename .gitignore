@@ -73,6 +73,8 @@ _xmsgs/
 *.xmsgs
 *.cmd
 *.ini
+isim/
+netgen/synthesis
 
 # ipcore_dir prune
 ipcore_dir/_xmsgs/
