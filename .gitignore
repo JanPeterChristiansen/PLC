@@ -96,3 +96,6 @@ ipcore_dir/*.txt
 ipcore_dir/*.xise
 ipcore_dir/*.tcl
 ipcore_dir/*.asy
+ipcore_dir/*.vhd
+
+
