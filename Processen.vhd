@@ -58,7 +58,7 @@ entity Processen is
 		SERIAL_msb_lsb : out STD_LOGIC;
 		--IO 
 		inputBuffer : in STD_LOGIC_VECTOR (15 downto 0);
-		OUTBUFF_we : out STD_LOGIC; 
+		OUTBUFF_we : out STD_LOGIC
 	);
 	
 end Processen;

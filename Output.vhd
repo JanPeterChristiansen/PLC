@@ -26,7 +26,7 @@ entity Output is
 		clk : in  STD_LOGIC;
 		din : in  STD_LOGIC_VECTOR (15 downto 0);
 		dout : out  STD_LOGIC_VECTOR (15 downto 0); 
-		we : in STD_LOGIC; 
+		we : in STD_LOGIC
 	);
 end Output;
 
@@ -38,7 +38,7 @@ begin
 
 	dout <= buff; 
 
-	process(clk, addr, we)
+	process(clk, we)
 	begin
 		if rising_edge(clk) then 
 			if we = '1' then 

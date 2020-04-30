@@ -95,7 +95,7 @@ architecture Behavioral of PLC is
 	signal InputBuffer : STD_LOGIC_VECTOR (15 downto 0);
 
 	--Output buffer
-	signal OUTBUFF_WE;
+	signal OUTBUFF_WE : std_logic;
 	
 begin
 

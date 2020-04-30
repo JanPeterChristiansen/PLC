@@ -39,8 +39,7 @@ entity FirFilter is
 			  Reset : in  STD_LOGIC;
 			  order : in STD_LOGIC_VECTOR (7 downto 0);
 			  setPoint : in STD_LOGIC;
-			  LOADCOEFF : in STD_LOGIC; 
-			  LED : out STD_LOGIC); 
+			  LOADCOEFF : in STD_LOGIC); 
 		
 end FirFilter;
 
@@ -76,7 +75,7 @@ begin
 			coeff(countCo) <= signed(DataIN); 
 			countCo <= countCo + 1; 		
 		end if; 
-		if (setPoint <= '1')
+		if (setPoint <= '1') then
 			point <= dataIN(4 downto 0); 
 		end if; 
 	end if; 

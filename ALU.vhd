@@ -79,7 +79,7 @@ begin
 		B									when x"7", -- B
 		A - 1 								when x"8", -- A - 1
 		A - B 								when x"9", -- A - B
-		A mod B 	 						when x"a", -- remainder of floor division
+		std_logic_vector(signed(A) mod signed(B)) 	 						when x"a", -- remainder of floor division
 		A and B 							when x"b", -- AND
 		A or B 								when x"c", -- OR
 		A xor B 							when x"d", -- XOR
