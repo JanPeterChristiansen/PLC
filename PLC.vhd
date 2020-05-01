@@ -48,7 +48,7 @@ architecture Behavioral of PLC is
 													-- opcode | reg   | value 
 
 	signal PC : STD_LOGIC_VECTOR (13	downto 0) := (others => '0');
-	signal start : STD_LOGIC := '1';
+	signal start : STD_LOGIC := '0';
 	signal jump : STD_LOGIC := '0';
 	signal skip : STD_LOGIC := '0';
 	signal cmd : STD_LOGIC_VECTOR (27 downto 0) := x"0000000";
@@ -223,9 +223,16 @@ OUTPUT_BUFFER : entity work.Output
 		dout => output,
 		we => OUTBUFF_we
 	);
-
-
-
+	
+PROGMEM : PROGRAM 
+	port map (
+		clka => clk,
+		addra => PROG_addrA, 
+		douta => PROG_doutA,
+		clkb => clk, 
+		addrb => PROG_addrB,
+		doutb => PROG_doutB
+	); 
 
 -- always parses cmd from program memory
 PROG_addrA <= PC; 

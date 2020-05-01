@@ -178,7 +178,6 @@ re_state_next <= empty;
 			end if; 	
 	end case; 
 
-
 end process; 
 
 
