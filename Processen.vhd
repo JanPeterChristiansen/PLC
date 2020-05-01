@@ -78,7 +78,7 @@ architecture Behavioral of Processen is
 begin
 
 -- pre fetch memory addr because of read latency
-PREFETCHER: process(next_cmd)
+PREFETCHER: process(next_cmd, STACK_TOS)
 begin
 
 	case (next_cmd(27 downto 20)) is
@@ -96,7 +96,7 @@ end process;
 
 
 
-PROCESSEN : process(cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready)
+PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS )
 begin
 	
 	-- SET DEFAULT
@@ -118,6 +118,9 @@ begin
 	SERIAL_we <= '0';
 	SERIAL_rst <= '0';
 	OUTBUFF_we <= '0'; 
+	
+	STACK_INC <= '0'; 
+	STACK_DEC <= '0'; 
 	
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is

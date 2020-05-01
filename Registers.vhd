@@ -63,7 +63,7 @@ begin
 	end if;
 
 	-- falling edge -> write to register address A from C-bus
-	if falling_edge(clk) then
+	if rising_edge(clk) then
 		if (we = '1') then
 			REG(conv_integer(addrA)) <= C;
 		end if;

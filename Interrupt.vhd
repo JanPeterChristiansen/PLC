@@ -58,6 +58,7 @@ ptr <= isrreg(addr);
 
 process (clk)
 begin
+	rst <= (others => '0');
 	if rising_edge(clk) then 
 		-- Set reset for interrupts  
 		for I in 0 to pins'length loop

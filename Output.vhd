@@ -38,14 +38,14 @@ begin
 
 	dout <= buff; 
 
-	process(clk, we)
+	process(clk, we, buff)
 	begin
+	
+	buff <= buff; 
 		if rising_edge(clk) then 
 			if we = '1' then 
 				buff <= din;
 			end if;
-		else
-			buff <= buff; 
 		end if; 
 	end process; 
 

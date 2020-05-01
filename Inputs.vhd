@@ -39,7 +39,7 @@ architecture Behavioral of Inputs is
 begin
 
 	-- assert buffer
-	process(clk)
+	process(clk, buff)
 	begin
 		if rising_edge(clk) then
 			buff <= din;

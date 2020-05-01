@@ -139,21 +139,25 @@ UART4 : entity work.UARTWithFifo
 	);
 
 
+	-- mux control signals
 
-process (addr, re, we, rst, msb_lsb)
+	full <= full_vec(conv_integer(addr));
+	dready <= dready_vec(conv_integer(addr));
+	msb_lsb_vec(conv_integer(addr)) <= msb_lsb;
+
+
+
+process (addr, re, we, rst, dout_vec)
 begin
 	
 	-- avoid unintentional latches
 	re_vec <= (others => '0');
 	we_vec <= (others => '0');
-	
-	-- mux control signals
+	rst_vec <= (others => '0'); 
+	rst_vec(conv_integer(addr)) <= rst;
 	re_vec(conv_integer(addr)) <= re;
 	we_vec(conv_integer(addr)) <= we;
-	full <= full_vec(conv_integer(addr));
-	dready <= dready_vec(conv_integer(addr));
-	rst_vec(conv_integer(addr)) <= rst;
-	msb_lsb_vec(conv_integer(addr)) <= msb_lsb;
+
 	
 	-- mux dataout
 	if (re = '1') then
