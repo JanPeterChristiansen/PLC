@@ -237,24 +237,29 @@ PROGMEM : PROGRAM
 -- always parses cmd from program memory
 PROG_addrA <= PC; 
 PROG_addrB <= PC + 1; 
-cmd <= PROG_doutA; 
-next_cmd <= PROG_doutB; 
+
+
 
 --cmd <= PROG(conv_integer(PC));
 --next_cmd <= PROG(conv_integer(PC + 1));
 
 -- update PC every clk cycle
-process(clk)
+process(clk, PROG_doutA, PROG_doutB)
 begin
+	cmd <= PROG_doutA; 
+	next_cmd <= PROG_doutB; 
+	
 	if rising_edge(clk) then
 		if (start = '1') then
 			start <= '0';
 		else 
 			if (skip = '1') then
 				PC <= PC + 2;
+				cmd <= (others => '0'); 
 			else
 				if (jump = '1') then
 					PC <= C(13 downto 0) ;
+					cmd <= (others => '0'); 
 				else 
 					PC <= PC + 1;
 				end if;
