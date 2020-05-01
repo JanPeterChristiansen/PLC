@@ -25,7 +25,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity Processen is
 	Port (
-		PC : in STD_LOGIC_VECTOR (3 downto 0); 
+		PC : in STD_LOGIC_VECTOR (13 downto 0); 
 		cmd : in  STD_LOGIC_VECTOR (27 downto 0);
 		next_cmd : in STD_LOGIC_VECTOR(27 downto 0);
 		-- ALU
@@ -536,7 +536,7 @@ begin
 			
 		when x"3D" => -- push PC
 			A <= (others => '0'); 
-			A(3 downto 0) <= PC; 
+			A(13 downto 0) <= PC; 
 			RAM_we(0) <= '1'; 			-- write to memory
 			RAM_addrA <= STACK_TOS; 	-- set memory address
 			RAM_din <= C;					-- write C to memory

@@ -47,9 +47,9 @@
 
 
 
-echo "Compiling Core Verilog UNISIM/Behavioral model"
-vlogcomp -work work ..\..\..\SimpleDualPortRAM.v 
-vhpcomp -work work ..\..\example_design\SimpleDualPortRAM_exdes.vhd
+echo "Compiling Core VHDL UNISIM/Behavioral model"
+vhpcomp  -work work ..\..\..\SimpleDualPortRAM.vhd 
+vhpcomp  -work work ..\..\example_design\SimpleDualPortRAM_exdes.vhd
 
 echo "Compiling Test Bench Files"
 
@@ -62,8 +62,7 @@ vhpcomp -work work    ..\bmg_stim_gen.vhd
 vhpcomp -work work    ..\SimpleDualPortRAM_synth.vhd 
 vhpcomp -work work    ..\SimpleDualPortRAM_tb.vhd
 
+fuse work.SimpleDualPortRAM_tb -L unisims -L xilinxcorelib -o SimpleDualPortRAM_tb.exe
 
-vlogcomp -work work $XILINX\verilog\src\glbl.v
-fuse work.SimpleDualPortRAM_tb work.glbl -L unisims_ver -L xilinxcorelib_ver -o SimpleDualPortRAM_tb.exe
 
 .\SimpleDualPortRAM_tb.exe -gui -tclbatch simcmds.tcl

@@ -47,7 +47,8 @@
 
 
 
-vlogcomp -work work ..\..\implement\results\routed.v
+echo "Compiling Core VHDL UNISIM/Behavioral model"
+vhpcomp  -work work ..\..\implement\results\routed.vhd
 
 echo "Compiling Test Bench Files"
 
@@ -60,6 +61,7 @@ vhpcomp -work work    ..\bmg_stim_gen.vhd
 vhpcomp -work work    ..\SimpleDualPortRAM_synth.vhd 
 vhpcomp -work work    ..\SimpleDualPortRAM_tb.vhd
 
-    fuse -L simprims_ver work.SimpleDualPortRAM_tb work.glbl -o SimpleDualPortRAM_tb.exe
+
+    fuse -L simprim work.SimpleDualPortRAM_tb -o SimpleDualPortRAM_tb.exe
 
 .\SimpleDualPortRAM_tb.exe -sdftyp /SimpleDualPortRAM_tb/SimpleDualPortRAM_synth_inst/bmg_port=..\..\implement\results\routed.sdf -gui -tclbatch simcmds.tcl

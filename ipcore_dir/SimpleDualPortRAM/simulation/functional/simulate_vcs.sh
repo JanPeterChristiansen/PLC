@@ -47,8 +47,8 @@
 #!/bin/sh
 rm -rf simv* csrc DVEfiles AN.DB
 
-echo "Compiling Core Verilog UNISIM/Behavioral model"
-vlogan +v2k  ../../../SimpleDualPortRAM.v
+echo "Compiling Core VHDL UNISIM/Behavioral model"
+vhdlan  ../../../SimpleDualPortRAM.vhd
 vhdlan  ../../example_design/SimpleDualPortRAM_exdes.vhd
 
 echo "Compiling Test Bench Files"
@@ -62,8 +62,7 @@ vhdlan    ../SimpleDualPortRAM_synth.vhd
 vhdlan    ../SimpleDualPortRAM_tb.vhd
 
 echo "Elaborating Design"
-vlogan +v2k $XILINX/verilog/src/glbl.v
-vcs +vcs+lic+wait -debug SimpleDualPortRAM_tb glbl
+vcs +vcs+lic+wait -debug SimpleDualPortRAM_tb
 
 echo "Simulating Design"
 ./simv -ucli -i ucli_commands.key

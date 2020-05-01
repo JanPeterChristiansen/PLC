@@ -106,21 +106,24 @@ end process;
 process(reptr, wrptr, we, clk, wr_state_reg, reset) 
 begin
 
+	if (rising_edge(clk)) then  -- all clockecd processes on wrPTR need to be under the same clk event
+		if reset = '1' then 
+			wrPTR <= (others => '0'); 
+		end if; 
+	
+		if wr_state_reg = nFull then 
+			if (we = '1') then 
+				wrptr <= wrptr + 1; 
+			else 
+				wrPTR <= wrPTR; 
+			end if; 
+		end if; 
+	end if; 
+			
 
 	case(wr_state_reg) is
 	when nFull =>
 		FULL <= '0';
-			if (rising_edge(clk)) then 
-				if(reset = '1') then
-					wrPTR <= (others => '0'); 
-				elsif (we = '1') then 
-				   wrptr <= wrptr + 1; 
-				else 
-					wrPTR <= wrPTR; 
-				end if; 
-			end if; 
-
-		
 		if (wrptr + 1 = reptr and we = '1') then  -- if next wr_ptr is re_ptr, then 
 			wr_state_next <= isFull; 	 	
 		else 
@@ -135,6 +138,8 @@ begin
 			wr_state_next <= isFull; 
 		end if; 	
 	end case; 
+	
+
 end process; 
 
 
@@ -144,16 +149,16 @@ process(re_state_reg, clk, re, wrptr, reptr, reset)
 begin
 re_state_next <= empty; 
 -- the clocked output logic must be in seperate if statement to ensure prober flipflop definition apperently 
-if rising_edge(clk ) then 
-	if re_state_reg = empty and reset = '1' then 
-	rePTR <= "000000";  
-	elsif re_state_reg = nempty and re = '1' then
-	rePTR <= rePTR + 1;
-	else 
-	rePTR <= rePTR; 
+	
+	if rising_edge(clk) then 
+		if reset = '1' then 
+			rePTR <= "000000";  
+		elsif re_state_reg = nempty and re = '1' then
+			rePTR <= rePTR + 1;
+		else 
+			rePTR <= rePTR; 
+		end if; 
 	end if; 
-end if; 
-
 	
 	case re_state_reg is
 		when empty =>
@@ -172,6 +177,8 @@ end if;
 				re_state_next <= nEmpty; 
 			end if; 	
 	end case; 
+
+
 end process; 
 
 

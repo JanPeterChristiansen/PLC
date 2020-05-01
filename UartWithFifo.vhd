@@ -151,7 +151,7 @@ if rising_edge(clk) then
 end if;
 end process;  
 -- next state logic
-process(txlink_statereg, tx_busy, tx_dataready)
+process(txlink_statereg, tx_busy, tx_dataready, reset)
 begin
 		tx_re <= '0'; 
 		tx_ena <= '0'; 

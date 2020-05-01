@@ -3,8 +3,8 @@ SimpleDualPortRAM.asy
 SimpleDualPortRAM.gise
 SimpleDualPortRAM.ngc
 SimpleDualPortRAM.sym
-SimpleDualPortRAM.v
-SimpleDualPortRAM.veo
+SimpleDualPortRAM.vhd
+SimpleDualPortRAM.vho
 SimpleDualPortRAM.xco
 SimpleDualPortRAM.xise
 SimpleDualPortRAM\blk_mem_gen_v7_3_readme.txt

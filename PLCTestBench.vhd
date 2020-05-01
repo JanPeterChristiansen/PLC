@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   12:23:02 04/29/2020
+-- Create Date:   12:18:46 05/01/2020
 -- Design Name:   
--- Module Name:   C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench.vhd
+-- Module Name:   E:/GitHub/PLC/PLCtestbench.vhd
 -- Project Name:  PLC
 -- Target Device:  
 -- Tool versions:  
@@ -32,10 +32,10 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY PLCTestBench IS
-END PLCTestBench;
+ENTITY PLCtestbench IS
+END PLCtestbench;
  
-ARCHITECTURE behavior OF PLCTestBench IS 
+ARCHITECTURE behavior OF PLCtestbench IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
@@ -43,7 +43,9 @@ ARCHITECTURE behavior OF PLCTestBench IS
     PORT(
          clk : IN  std_logic;
          RX : IN  std_logic_vector(15 downto 0);
-         TX : OUT  std_logic_vector(15 downto 0)
+         TX : OUT  std_logic_vector(15 downto 0);
+         INPUT : IN  std_logic_vector(15 downto 0);
+         OUTPUT : OUT  std_logic_vector(15 downto 0)
         );
     END COMPONENT;
     
@@ -51,12 +53,14 @@ ARCHITECTURE behavior OF PLCTestBench IS
    --Inputs
    signal clk : std_logic := '0';
    signal RX : std_logic_vector(15 downto 0) := (others => '0');
+   signal INPUT : std_logic_vector(15 downto 0) := (others => '0');
 
  	--Outputs
    signal TX : std_logic_vector(15 downto 0);
+   signal OUTPUT : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 31.25 ns;
+   constant clk_period : time := 10 ns;
  
 BEGIN
  
@@ -64,7 +68,9 @@ BEGIN
    uut: PLC PORT MAP (
           clk => clk,
           RX => RX,
-          TX => TX
+          TX => TX,
+          INPUT => INPUT,
+          OUTPUT => OUTPUT
         );
 
    -- Clock process definitions

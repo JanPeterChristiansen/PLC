@@ -223,12 +223,12 @@ utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path SimpleDualPo
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type symbol
 incr fcount
 
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path SimpleDualPortRAM.v
-utilities_xmdf::xmdfSetData $instance FileSet $fcount type verilog
+utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path SimpleDualPortRAM.vhd
+utilities_xmdf::xmdfSetData $instance FileSet $fcount type vhdl
 incr fcount
 
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path SimpleDualPortRAM.veo
-utilities_xmdf::xmdfSetData $instance FileSet $fcount type verilog_template
+utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path SimpleDualPortRAM.vho
+utilities_xmdf::xmdfSetData $instance FileSet $fcount type vhdl_template
 incr fcount
 
 utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path SimpleDualPortRAM.xco

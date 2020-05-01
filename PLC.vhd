@@ -47,7 +47,7 @@ architecture Behavioral of PLC is
 													-- 8-bit  | 4-bit | 16-bit 
 													-- opcode | reg   | value 
 
-	signal PC : STD_LOGIC_VECTOR (3 downto 0) := "0000";
+	signal PC : STD_LOGIC_VECTOR (13	downto 0) := (others => '0');
 	signal start : STD_LOGIC := '1';
 	signal jump : STD_LOGIC := '0';
 	signal skip : STD_LOGIC := '0';
@@ -77,10 +77,25 @@ architecture Behavioral of PLC is
 		);
 	end component;
 	
+	-- dualport rom blocram 16384 x 28 bit
+	COMPONENT PROGRAM
+	  PORT (
+		 clka : IN STD_LOGIC;
+		 addra : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
+		 douta : OUT STD_LOGIC_VECTOR(27 DOWNTO 0);
+		 clkb : IN STD_LOGIC;
+		 addrb : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
+		 doutb : OUT STD_LOGIC_VECTOR(27 DOWNTO 0)
+	  );
+	END COMPONENT;
+	
 	-- RAM signals
 	signal RAM_we : STD_LOGIC_VECTOR (0 downto 0);
 	signal RAM_addrA, RAM_addrB : STD_LOGIC_VECTOR(9 downto 0);
 	signal RAM_din, RAM_dout : STD_LOGIC_VECTOR (15 downto 0);
+	-- PROGRAM
+	signal PROG_addrA, PROG_addrB : STD_LOGIC_VECTOR(13 downto 0); 
+	signal PROG_doutA, PROG_doutB : STD_LOGIC_VECTOR(27 downto 0); 
 	
 	-- Serial control signals and busses
 	signal SERIAL_addr : STD_LOGIC_VECTOR (3 downto 0);
@@ -108,9 +123,22 @@ architecture Behavioral of PLC is
 	signal STACK_DEC : STD_LOGIC; 
 	signal STACK_TOS : STD_LOGIC_VECTOR(9 downto 0); 
 	-- Interrupts 
-
+	signal INT_pins : STD_LOGIC_VECTOR(3 downto 0); 
+	signal INT_pending : STD_LOGIC_VECTOR(3 downto 0); 
+	signal INT_reset : STD_LOGIC_VECTOR(3 downto 0); 
+	signal INT_busy : STD_LOGIC; 
+	signal INT_isrvect : STD_LOGIC_VECTOR(15 downto 0); 
+	
 	
 begin
+
+--interrupt : entity work.Interrupt
+--    Port map( 
+--		clk => clk,
+--		pins => INT_pins, 
+--		output => INT_pending,
+--		rst => INT_reset 
+--	 );
 
 stackcontrol1 : entity work.Stackcontrol
 	port map(
@@ -197,9 +225,16 @@ OUTPUT_BUFFER : entity work.Output
 	);
 
 
+
+
 -- always parses cmd from program memory
-cmd <= PROG(conv_integer(PC));
-next_cmd <= PROG(conv_integer(PC + 1));
+PROG_addrA <= PC; 
+PROG_addrB <= PC + 1; 
+cmd <= PROG_doutA; 
+next_cmd <= PROG_doutB; 
+
+--cmd <= PROG(conv_integer(PC));
+--next_cmd <= PROG(conv_integer(PC + 1));
 
 -- update PC every clk cycle
 process(clk)
@@ -212,7 +247,7 @@ begin
 				PC <= PC + 2;
 			else
 				if (jump = '1') then
-					PC <= C(3 downto 0) ;
+					PC <= C(13 downto 0) ;
 				else 
 					PC <= PC + 1;
 				end if;
