@@ -32,7 +32,9 @@ entity UartWithFifo is
 			rx : in STD_LOGIC;
 			tx : out STD_LOGIC; 
 			reset : in STD_LOGIC;
-			MSB_LSB : in STD_LOGIC -- transmits LSB when 0 MSB when 1 
+			MSB_LSB : in STD_LOGIC; -- transmits LSB when 0 MSB when 1 
+			tx_buffer_space : out STD_LOGIC_VECTOR(6 downto 0); 
+			rx_buffer_space : out STD_LOGIC_VECTOR(6 downto 0)
 	 );
 end UartWithFifo;
 
@@ -47,7 +49,8 @@ component FIFOBuffer is
 		RE : in STD_LOGIC; 
 		dataReady : out STD_LOGIC;
 		Full : out STD_LOGIC;
-		reset : in STD_LOGIC 
+		reset : in STD_LOGIC;
+		buffer_space : out STD_LOGIC_VECTOR(6 downto 0)
 	); 	  
 end component; 
  
@@ -108,19 +111,22 @@ port map(
 	RE => tx_re,
 	dataReady => tx_dataready, 
 	full => full,
-	reset => reset
+	reset => reset, 
+	buffer_space => tx_buffer_space
 	); 
 	
 RXbuffer : FIFObuffer 
 port map(
-clk => clk,
-dataIN => rx_data,
-dataOUT => dataOUT,
-WE => rx_we,
-RE => RE,
-dataReady => dataReady,
-full => rx_full,
-reset => reset
+	clk => clk,
+	dataIN => rx_data,
+	dataOUT => dataOUT,
+	WE => rx_we,
+	RE => RE,
+	dataReady => dataReady,
+	full => rx_full,
+	reset => reset,
+	buffer_space => rx_buffer_space
+
 ); 
 	
 uart1 : uart 

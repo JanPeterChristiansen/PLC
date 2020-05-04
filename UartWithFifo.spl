@@ -1,0 +1,16 @@
+[Inputs]
+clk
+WE
+RE
+rx
+reset
+MSB_LSB
+=dataIN[7:0]=
+[Outputs]
+full
+dataReady
+tx
+=dataOUT[7:0]=
+=tx_buffer_space[6:0]=
+=rx_buffer_space[6:0]=
+[BiDir]

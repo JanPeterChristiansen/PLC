@@ -3,8 +3,8 @@ Blockram.asy
 Blockram.gise
 Blockram.ngc
 Blockram.sym
-Blockram.v
-Blockram.veo
+Blockram.vhd
+Blockram.vho
 Blockram.xco
 Blockram.xise
 Blockram\blk_mem_gen_v7_3_readme.txt

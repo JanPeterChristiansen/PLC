@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <symbol version="7" name="Blockram">
     <symboltype>BLOCK</symboltype>
-    <timestamp>2020-4-30T9:12:9</timestamp>
+    <timestamp>2020-5-4T8:39:37</timestamp>
     <pin polarity="Input" x="0" y="80" name="addra[5:0]" />
     <pin polarity="Input" x="0" y="112" name="dina[7:0]" />
     <pin polarity="Input" x="0" y="208" name="wea[0:0]" />

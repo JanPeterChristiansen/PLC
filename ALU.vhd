@@ -79,6 +79,7 @@ begin
 		B									when x"7", -- B
 		A - 1 								when x"8", -- A - 1
 		A - B 								when x"9", -- A - B
+		A(7 downto 0) & B(7 downto 0) when x"a", -- concatenate two 8 bit values 
 		--std_logic_vector(signed(A) mod signed(B)) 	 						when x"a", -- remainder of floor division
 		A and B 							when x"b", -- AND
 		A or B 								when x"c", -- OR

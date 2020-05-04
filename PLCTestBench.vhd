@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   12:18:46 05/01/2020
+-- Create Date:   09:58:25 05/04/2020
 -- Design Name:   
 -- Module Name:   E:/GitHub/PLC/PLCtestbench.vhd
 -- Project Name:  PLC

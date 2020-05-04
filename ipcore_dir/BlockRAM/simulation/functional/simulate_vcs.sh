@@ -47,8 +47,8 @@
 #!/bin/sh
 rm -rf simv* csrc DVEfiles AN.DB
 
-echo "Compiling Core Verilog UNISIM/Behavioral model"
-vlogan +v2k  ../../../Blockram.v
+echo "Compiling Core VHDL UNISIM/Behavioral model"
+vhdlan  ../../../Blockram.vhd
 vhdlan  ../../example_design/Blockram_exdes.vhd
 
 echo "Compiling Test Bench Files"
@@ -62,8 +62,7 @@ vhdlan    ../Blockram_synth.vhd
 vhdlan    ../Blockram_tb.vhd
 
 echo "Elaborating Design"
-vlogan +v2k $XILINX/verilog/src/glbl.v
-vcs +vcs+lic+wait -debug Blockram_tb glbl
+vcs +vcs+lic+wait -debug Blockram_tb
 
 echo "Simulating Design"
 ./simv -ucli -i ucli_commands.key

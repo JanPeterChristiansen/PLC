@@ -47,9 +47,9 @@
 
 
 
-echo "Compiling Core Verilog UNISIM/Behavioral model"
-vlogcomp -work work ..\..\..\Blockram.v 
-vhpcomp -work work ..\..\example_design\Blockram_exdes.vhd
+echo "Compiling Core VHDL UNISIM/Behavioral model"
+vhpcomp  -work work ..\..\..\Blockram.vhd 
+vhpcomp  -work work ..\..\example_design\Blockram_exdes.vhd
 
 echo "Compiling Test Bench Files"
 
@@ -62,8 +62,7 @@ vhpcomp -work work    ..\bmg_stim_gen.vhd
 vhpcomp -work work    ..\Blockram_synth.vhd 
 vhpcomp -work work    ..\Blockram_tb.vhd
 
+fuse work.Blockram_tb -L unisims -L xilinxcorelib -o Blockram_tb.exe
 
-vlogcomp -work work $XILINX\verilog\src\glbl.v
-fuse work.Blockram_tb work.glbl -L unisims_ver -L xilinxcorelib_ver -o Blockram_tb.exe
 
 .\Blockram_tb.exe -gui -tclbatch simcmds.tcl

@@ -107,6 +107,7 @@ architecture Behavioral of PLC is
 	signal SERIAL_dready : STD_LOGIC;
 	signal SERIAL_rst : STD_LOGIC := '1';
 	signal SERIAL_msb_lsb : STD_LOGIC := '0';
+	signal SERIAL_tx_buffer_space : STD_LOGIC_VECTOR(6 downto 0); 
 
 	-- Input buffer 
 	signal InputBuffer : STD_LOGIC_VECTOR (15 downto 0);
@@ -207,7 +208,8 @@ SERIAL : entity work.SerialIO
 		rst => SERIAL_rst,
 		msb_lsb => SERIAL_msb_lsb,
 		rx => RX,
-		tx => TX
+		tx => TX,
+		tx_buffer_space => SERIAL_tx_buffer_space
 	);
 
 INPUT_BUFFER : entity work.Inputs
@@ -304,6 +306,7 @@ PROCESSEN : entity work.Processen
 		SERIAL_dready => SERIAL_dready,
 		SERIAL_rst => SERIAL_rst,
 		SERIAL_msb_lsb => SERIAL_msb_lsb,
+		SERIAL_tx_buffer_space => SERIAL_tx_buffer_space,
 		--Inputbuff
 		inputBuffer => inputBuffer,
 		-- OUTBUFF 

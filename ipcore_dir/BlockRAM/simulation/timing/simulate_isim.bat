@@ -47,7 +47,8 @@
 
 
 
-vlogcomp -work work ..\..\implement\results\routed.v
+echo "Compiling Core VHDL UNISIM/Behavioral model"
+vhpcomp  -work work ..\..\implement\results\routed.vhd
 
 echo "Compiling Test Bench Files"
 
@@ -60,6 +61,7 @@ vhpcomp -work work    ..\bmg_stim_gen.vhd
 vhpcomp -work work    ..\Blockram_synth.vhd 
 vhpcomp -work work    ..\Blockram_tb.vhd
 
-    fuse -L simprims_ver work.Blockram_tb work.glbl -o Blockram_tb.exe
+
+    fuse -L simprim work.Blockram_tb -o Blockram_tb.exe
 
 .\Blockram_tb.exe -sdftyp /Blockram_tb/Blockram_synth_inst/bmg_port=..\..\implement\results\routed.sdf -gui -tclbatch simcmds.tcl

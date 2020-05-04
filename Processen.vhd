@@ -57,6 +57,7 @@ entity Processen is
 		SERIAL_dready : in STD_LOGIC;
 		SERIAL_rst : out STD_LOGIC;
 		SERIAL_msb_lsb : out STD_LOGIC;
+		SERIAL_tx_buffer_space : in STD_LOGIC_VECTOR(6 downto 0); 
 		--IO 
 		inputBuffer : in STD_LOGIC_VECTOR (15 downto 0);
 		OUTBUFF_we : out STD_LOGIC;
@@ -96,7 +97,7 @@ end process;
 
 
 
-PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS )
+PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS, SERIAL_tx_buffer_space)
 begin
 	
 	-- SET DEFAULT
@@ -544,7 +545,36 @@ begin
 			RAM_addrA <= STACK_TOS; 	-- set memory address
 			RAM_din <= C;					-- write C to memory
 			STACK_INC <= '1'; 	
+			
+		when x"3F" => -- SKIP not enough space in uart: uart val (immediate)
+			ALUfunc <= x"9"; 						-- write A-B to C-bus
+			SERIAL_addr <= cmd(19 downto 16);-- addres of UART 
+			A <= (others => '0');				-- set target register address
+			A(6 downto 0) <= SERIAL_tx_buffer_space;
+			B <= cmd(15 downto 0); 				-- set value register address
+														-- read from target register to A-bus
+														-- read from value register to B-bus
+			if (signed(C) < 0) then				-- if A < B set skip flag 
+				skip <= '1';
+			end if;
+		
+		when x"40" => -- SKIP not enough space in uart: uart val (direct)
+			ALUfunc <= x"9"; 
+			A <= (others => '0');				-- set target register address
+			A(6 downto 0) <= SERIAL_tx_buffer_space;
+			addrB <= cmd(3 downto 0); 
+			reB <= '1';
+			
+			if (signed(C) < 0) then				-- if A < B set skip flag 
+				skip <= '1';
+			end if;
 
+		when x"41" => -- Load buffer space: uart reg 
+			ALUfunc <= x"3"; 						-- through 
+			A <= (others => '0');				-- set target register address
+			A(6 downto 0) <= SERIAL_tx_buffer_space;
+			addrA <= cmd(3 downto 0); 			-- register address 
+			weC <= '1';								-- enable write from Cbuss to register A 
 		
 		when others =>
 	end case;

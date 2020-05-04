@@ -38,7 +38,8 @@ entity FIFOBuffer is
 				  RE : in STD_LOGIC; 
 				  dataReady : out STD_LOGIC;
 				  Full : out STD_LOGIC; 
-				  reset : in STD_LOGIC := '1'
+				  reset : in STD_LOGIC := '1' ; 
+				  buffer_space : out STD_LOGIC_VECTOR(6 downto 0)
 				  ); 	  
 end FIFOBuffer;
 
@@ -66,7 +67,7 @@ type re_state_type is (Empty, nEmpty);
 
 signal wr_state_reg, wr_state_next : wr_state_type := nFull; 
 signal re_state_reg, re_state_next : re_state_type := Empty; 
-
+signal counter : STD_LOGIC_VECTOR (6 downto 0) := "1000000"; -- counts how much space is left
 
 begin
 
@@ -85,8 +86,28 @@ Bram1 : Blockram
 wrs(0) <= WE;
 res(0) <= RE;
 
+buffer_space <= counter; 
 
 -- implementation with statemachines
+
+
+process(clk, reset, WE, RE, wr_state_reg, re_state_reg)
+begin
+	counter <= counter; -- counter is normally latched
+	if rising_edge(clk) then 
+		if (WE = '1' and RE = '0' and wr_state_reg = nFull)then -- when something is written it counts up
+		counter <= counter - 1; 
+		end if; 
+		if (WE = '0' and RE = '1' and re_state_reg = nEmpty)then
+		counter <= counter + 1; 
+		end if; 
+		
+	end if; 
+	if reset = '1' then 
+		counter <= "1000000"; 
+	end if; 
+
+end process; 
 
 process(clk, reset) 
 begin
