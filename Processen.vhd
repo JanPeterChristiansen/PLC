@@ -642,8 +642,11 @@ begin
 				returned <= '0'; 
 			end if; 
 		
-		
-			
+		when x"47" => -- SKIP IF READY
+			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
+			if (SERIAL_dready = '1') then			-- if no new data on serial 
+				skip <= '1';						-- set skip flag
+			end if;
 		when others =>
 	end case;
 
