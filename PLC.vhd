@@ -111,9 +111,12 @@ architecture Behavioral of PLC is
 
 	-- Input buffer 
 	signal InputBuffer : STD_LOGIC_VECTOR (15 downto 0);
-
+	-- outputMux
+	signal OUTMUX_SETUP : STD_LOGIC_VECTOR(9 downto 0); 
+	signal OUTMUX_WE : STD_LOGIC; 
 	--Output buffer
 	signal OUTBUFF_WE : std_logic;
+	signal OUTBUFF_OUTPUT : STD_LOGIC_VECTOR(15 downto 0); 
 	-- timer 
 	signal MSEC : STD_LOGIC_VECTOR (9 downto 0);  
 	signal SEC : STD_LOGIC_VECTOR (5 downto 0);
@@ -129,6 +132,12 @@ architecture Behavioral of PLC is
 	signal INT_reset : STD_LOGIC_VECTOR(3 downto 0); 
 	signal INT_busy : STD_LOGIC; 
 	signal INT_isrvect : STD_LOGIC_VECTOR(15 downto 0); 
+	-- PWM
+	signal PWM_OUTPUTS: STD_LOGIC_VECTOR(15 downto 0); 
+	signal PWM_addr : STD_LOGIC_VECTOR(3 downto 0); 
+	signal PWM_CMD :STD_LOGIC_VECTOR(1 downto 0); 
+	signal PWM_value : STD_LOGIC_VECTOR(7 downto 0); 
+	signal PWM_we : STD_LOGIC;  
 	
 	
 begin
@@ -140,6 +149,29 @@ begin
 --		output => INT_pending,
 --		rst => INT_reset 
 --	 );
+
+PWMcontroller1 : entity work.PWMcontroller
+    Port map( 
+		clk => clk, 
+		addr => PWM_addr, 
+		cmd => PWM_CMD, 
+		value => PWM_value, 
+		OUTPUT => PWM_OUTPUTS, 
+		we => PWM_WE
+		);
+
+
+
+OutPutMux1 : entity work.OutputConnectionMux
+    Port map ( 
+		clk => clk,
+		OUTPUT => OUTPUT,
+		OutputBuffer => OUTBUFF_OUTPUT,
+		PWMsignals => PWM_OUTPUTS,
+		SetupData =>	OUTMUX_SETUP,	
+		we =>	OUTMUX_WE
+	); 
+
 
 stackcontrol1 : entity work.Stackcontrol
 	port map(
@@ -222,7 +254,7 @@ OUTPUT_BUFFER : entity work.Output
 	port map(
 		clk => clk,
 		din => C,
-		dout => output,
+		dout => OUTBUFF_OUTPUT,
 		we => OUTBUFF_we
 	);
 	
@@ -246,28 +278,41 @@ PROG_addrB <= PC + 1;
 --next_cmd <= PROG(conv_integer(PC + 1));
 
 -- update PC every clk cycle
-process(clk, PROG_doutA, PROG_doutB)
+process(clk, PROG_doutA, PROG_doutB, skip, jump)
+
+    variable henning : STD_LOGIC := '0';
+
 begin
-	cmd <= PROG_doutA; 
-	next_cmd <= PROG_doutB; 
-	
-	if rising_edge(clk) then
-		if (start = '1') then
-			start <= '0';
-		else 
-			if (skip = '1') then
-				PC <= PC + 2;
-				cmd <= (others => '0'); 
-			else
-				if (jump = '1') then
-					PC <= C(13 downto 0) ;
-					cmd <= (others => '0'); 
-				else 
-					PC <= PC + 1;
-				end if;
-			end if;
-		end if;
-	end if;
+	-- henning makes sure a nop is asserted after skip or jump since the program is delayed
+    if(henning = '0') then 
+        cmd <= PROG_doutA; 
+        next_cmd <= PROG_doutB;
+    else 
+        cmd <= (others =>'0');
+		  next_cmd <= PROG_doutB; 
+    end if;
+
+    if rising_edge(clk) then
+
+        henning := '0';
+
+        if (start = '1') then
+            start <= '0';
+        else 
+            if (skip = '1') then
+                PC <= PC + 1;
+                henning := '1';
+            else
+                if (jump = '1') then
+                    PC <= C(13 downto 0);
+                    henning := '1';
+                    --cmd <= (others => '0'); 
+                else 
+                    PC <= PC + 1;
+                end if;
+            end if;
+        end if;
+    end if;
 end process;
 
 
@@ -309,6 +354,9 @@ PROCESSEN : entity work.Processen
 		SERIAL_tx_buffer_space => SERIAL_tx_buffer_space,
 		--Inputbuff
 		inputBuffer => inputBuffer,
+		-- OUTMUX
+		OUTMUX_WE => OUTMUX_WE,
+		OUTMUX_SETUP => OUTMUX_SETUP,
 		-- OUTBUFF 
 		OUTBUFF_we => OUTBUFF_we,
 		-- Timer
@@ -319,7 +367,12 @@ PROCESSEN : entity work.Processen
 		-- STACK
 		STACK_INC =>STACK_INC,
 		STACK_DEC => STACK_DEC,
-		STACK_TOS => STACK_TOS
+		STACK_TOS => STACK_TOS,
+		-- PWM
+		PWM_WE => PWM_WE, 
+		PWM_ADDR => PWM_ADDR, 
+		PWM_CMD => PWM_CMD, 
+		PWM_VALUE => PWM_VALUE
 	);
 
 end Behavioral;

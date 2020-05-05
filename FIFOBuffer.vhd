@@ -91,7 +91,7 @@ buffer_space <= counter;
 -- implementation with statemachines
 
 
-process(clk, reset, WE, RE, wr_state_reg, re_state_reg)
+process(clk, reset, WE, RE, wr_state_reg, re_state_reg, counter)
 begin
 	counter <= counter; -- counter is normally latched
 	if rising_edge(clk) then 

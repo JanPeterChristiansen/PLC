@@ -1,7 +1,7 @@
 ##############################################################
 #
 # Xilinx Core Generator version 14.7
-# Date: Fri May 01 09:57:17 2020
+# Date: Tue May 05 10:42:37 2020
 #
 ##############################################################
 #
@@ -46,7 +46,7 @@ CSET axi_id_width=4
 CSET axi_slave_type=Memory_Slave
 CSET axi_type=AXI4_Full
 CSET byte_size=9
-CSET coe_file=..\PROGRAM.coe
+CSET coe_file=E:\GitHub\PLC\PROGRAM.coe
 CSET collision_warnings=ALL
 CSET component_name=PROGRAM
 CSET disable_collision_warnings=false

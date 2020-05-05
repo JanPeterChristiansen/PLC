@@ -58,6 +58,9 @@ entity Processen is
 		SERIAL_rst : out STD_LOGIC;
 		SERIAL_msb_lsb : out STD_LOGIC;
 		SERIAL_tx_buffer_space : in STD_LOGIC_VECTOR(6 downto 0); 
+		-- OUTMUX
+		OUTMUX_SETUP : out STD_LOGIC_VECTOR(9 downto 0); 
+		OUTMUX_WE : out STD_LOGIC;
 		--IO 
 		inputBuffer : in STD_LOGIC_VECTOR (15 downto 0);
 		OUTBUFF_we : out STD_LOGIC;
@@ -69,12 +72,20 @@ entity Processen is
 		-- STACK
 		STACK_INC : out STD_LOGIC;
 		STACK_DEC : out STD_LOGIC; 
-		STACK_TOS : in STD_LOGIC_VECTOR(9 downto 0)
+		STACK_TOS : in STD_LOGIC_VECTOR(9 downto 0); 
+		-- PWM 
+		PWM_WE : out STD_LOGIC; 
+		PWM_CMD : out STD_LOGIC_VECTOR(1 downto 0); 
+		PWM_addr : out STD_LOGIC_VECTOR(3 downto 0); 
+		PWM_value : out STD_LOGIC_VECTOR(7 downto 0)
+		
+
 	);
 	
 end Processen;
 
 architecture Behavioral of Processen is
+signal returned : STD_LOGIC := '0'; 
 
 begin
 
@@ -87,6 +98,8 @@ begin
 			RAM_addrB <= next_cmd(9 downto 0); -- prefetches for load cmd
 		when x"3b" => 
 			RAM_addrB <= STACK_TOS + 1; -- prefetches top of stack value
+		when x"3C" =>
+			RAM_addrB <= STACK_TOS + 1; -- prefetches top of stack value
 		when others => 
 			RAM_addrB <= (others => 'U');
 		
@@ -97,7 +110,7 @@ end process;
 
 
 
-PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS, SERIAL_tx_buffer_space)
+PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS, SERIAL_tx_buffer_space )
 begin
 	
 	-- SET DEFAULT
@@ -122,6 +135,15 @@ begin
 	
 	STACK_INC <= '0'; 
 	STACK_DEC <= '0'; 
+	
+	OUTMUX_WE <= '0'; 
+	OUTMUX_SETUP <= (others => '-'); 
+	
+	PWM_WE <= '0'; 
+	PWM_VALUE <= (others => '-');  
+	PWM_addr <= (others => '-'); 
+	PWM_CMD <= (others => '-'); 
+	
 	
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is
@@ -537,6 +559,7 @@ begin
 			ALUfunc <= x"3"; 
 			jump <= '1'; 
 			STACK_DEC <= '1'; 
+			returned <= '1'; 
 			
 		when x"3D" => -- push PC
 			A <= (others => '0'); 
@@ -576,6 +599,51 @@ begin
 			addrA <= cmd(3 downto 0); 			-- register address 
 			weC <= '1';								-- enable write from Cbuss to register A 
 		
+		when x"42" => -- setup outmux: (imediate) 
+			ALUfunc <= x"3"; 
+			A <= (others => '0'); 
+			A(11 downto 0) <= cmd(11 downto 0);  -- PIN, Type, instance
+			OUTMUX_WE <= '1'; 
+			OUTMUX_SETUP(9 downto 6) <= C(11 downto 8);
+			OUTMUX_SETUP(5 downto 4) <= C(5 downto 4);	
+			OUTMUX_SETUP(3 downto 0) <= C(3 downto 0); 
+			
+		when x"43" => -- setup PWM (imediate)
+			ALUfunc <= x"3"; 
+			A(15 downto 0) <= cmd(15 downto 0);
+			
+			PWM_ADDR <= C(15 downto 12); 
+			PWM_CMD <= C(9 downto 8); -- 0 : enable, 1 : prescalar, 2 : compare, 3 : overflow
+			PWM_Value <= C(7 downto 0); 
+			PWM_WE <= '1'; 
+		
+		when x"44" => -- skip if not 0
+			ALUfunc <= x"3"; 						-- write A to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			reA <= '1'; 
+			-- read from target register to A-bus
+			if (C /= x"0000")  then					-- if register is 0 set skip flag
+				skip <= '1';
+			end if;
+			
+		when x"45" => -- skip if not equal reg reg
+			ALUfunc <= x"9"; 						-- write A-B to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrB <= cmd(3 downto 0); 				-- set value register address
+			reA <= '1'; 							-- read from target register to A-bus
+			reB <= '1'; 							-- read from value register to B-bus
+			if (C /= x"0000") then					-- if register is 0 set skip flag
+				skip <= '1';
+			end if;	
+		
+		when x"46" => -- skip if returned
+			if returned = '1' then
+				skip <= '1'; 
+				returned <= '0'; 
+			end if; 
+		
+		
+			
 		when others =>
 	end case;
 

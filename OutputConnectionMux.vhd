@@ -57,7 +57,7 @@ module_mux(1) <= PWMsignals;
 module_mux(2) <= (others => '-'); 
 module_mux(3) <= (others => '-'); 
 
-process (clk, we, SetupData) -- setup module and address for pin of address 
+process (clk, we, SetupData, module, module_addr) -- setup module and address for pin of address 
 begin
 	module <= module; 
 	module_addr <= module_addr; 
@@ -70,7 +70,7 @@ begin
 end process;
 
  
-process(module_addr, module, PWMsignals, OutputBuffer)
+process(module_addr, module, PWMsignals, OutputBuffer, module_mux)
 begin
 	for I in 0 to output'length - 1 loop
 	OUTPUT(I) <= module_mux(conv_integer(module(I)))(conv_integer(module_addr(I)));  

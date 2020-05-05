@@ -13,7 +13,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity PWM is
     Port ( CLK 		: 	in  STD_LOGIC;
 			  ENABLE		: 	in	 STD_LOGIC;
-           PRESCALAR : 	in  STD_LOGIC_VECTOR (7 downto 0);
+           PRESCALAR : 	in  STD_LOGIC_VECTOR (4 downto 0);
            COMPARE 	: 	in  STD_LOGIC_VECTOR (7 downto 0);
            OUTPUT 	: 	out STD_LOGIC;
 			  OVERFLOW  :	in STD_LOGIC_VECTOR (7 downto 0));
@@ -38,7 +38,7 @@ begin
 	end if;	
 end process;
 
-pwm_proc : process(clk,scaledclk)
+pwm_proc : process(clk,scaledclk, enable)
 begin
 	if ENABLE = '0' then
 		OUTPUT <= '0';
