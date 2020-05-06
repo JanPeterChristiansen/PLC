@@ -77,9 +77,18 @@ entity Processen is
 		PWM_WE : out STD_LOGIC; 
 		PWM_CMD : out STD_LOGIC_VECTOR(1 downto 0); 
 		PWM_addr : out STD_LOGIC_VECTOR(3 downto 0); 
-		PWM_value : out STD_LOGIC_VECTOR(7 downto 0)
+		PWM_value : out STD_LOGIC_VECTOR(7 downto 0); 
+		-- OOCC
+		OOCC_addr : out STD_LOGIC_VECTOR(3 downto 0); 
+		OOCC_input : out STD_LOGIC_VECTOR(15 downto 0); 
+		OOCC_ws : out STD_LOGIC_VECTOR(2 downto 0); 
+		OOCC_outputs : in STD_LOGIC_VECTOR(15 downto 0); 
+		-- FIRfilter
+		FIR_input : out STD_LOGIC_VECTOR(15 downto 0); 
+		FIR_output : in STD_LOGIC_VECTOR(15 downto 0); 
+		FIR_ctrl : out STD_LOGIC_VECTOR(2 downto 0); 
+		FIR_done : in STD_LOGIC
 		
-
 	);
 	
 end Processen;
@@ -144,6 +153,11 @@ begin
 	PWM_addr <= (others => '-'); 
 	PWM_CMD <= (others => '-'); 
 	
+	OOCC_input <= (others => '-'); 
+	OOCC_ws <= (others => '-'); 
+	
+	FIR_ctrl <= (others => '0');
+	FIR_input <= (others => '-'); 
 	
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is
@@ -372,7 +386,7 @@ begin
 		
 		when x"23" => -- GOTO $val (imediate)
 			A <= (others => '0'); 
-			A(3 downto 0) <= cmd(3 downto 0);			
+			A(13 downto 0) <= cmd(13 downto 0);			
 			ALUfunc <= x"3"; 	
 			jump <= '1'; 				-- set jump flag
 			
@@ -647,10 +661,39 @@ begin
 			if (SERIAL_dready = '1') then			-- if no new data on serial 
 				skip <= '1';						-- set skip flag
 			end if;
+		
+		when x"48" => -- OOCC_Control reg OOCC ws (write select)
+			 ALUfunc <= x"3"; 
+			 reA <= '1'; 
+			 addrA <= cmd(19 downto 16); 
+			 OOCC_addr <= cmd(15 downto 12); 			 
+			 OOCC_ws <= cmd(10 downto 8); -- x4: sense, x5 ref, x6: limit, x7: reverse
+			 OOCC_input <= C; 					
+			
+		when x"49" => -- OOCC_read: reg 
+			ALUfunc <= x"3"; 
+			addrA <= cmd(19 downto 16);  
+			A <= OOCC_outputs; 
+			weC <= '1'; 
+		
+		when x"4A" => -- write to FIRfilter reg ctrl 
+			ALUfunc <= x"3"; 
+			addrA <= cmd(19 downto 16); 
+			reA <= '1'; 
+			FIR_input <= C; 
+			FIR_ctrl <= cmd(2 downto 0); -- x3: reset, x4: load and calc, x5: loafcoeff, x6: set point x7: set order else nop  
+		
+		when x"4B" => -- read from firFilter reg 
+			ALUfunc <= x"3"; 
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
+			A <= FIR_output; 
+			
 		when others =>
 	end case;
 
 end process;
 
 end Behavioral;
+
 

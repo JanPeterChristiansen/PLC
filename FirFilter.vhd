@@ -30,17 +30,16 @@ use ieee.numeric_std.all;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
+
+
 entity FirFilter is
     Port ( 
            clk : in STD_LOGIC; 
 			  DataIN : in STD_LOGIC_VECTOR (15 downto 0);  
 			  DataOUT : out STD_LOGIC_VECTOR (15 downto 0); 
-           sync : in  STD_LOGIC;
-			  Reset : in  STD_LOGIC;
-			  order : in STD_LOGIC_VECTOR (7 downto 0);
-			  setPoint : in STD_LOGIC;
-			  LOADCOEFF : in STD_LOGIC); 
-		
+			  ctrl : in STD_LOGIC_VECTOR(2 downto 0);
+			  Done : out STD_LOGIC
+			  );
 end FirFilter;
 
 
@@ -49,34 +48,65 @@ architecture Behavioral of FirFilter is
 type coefficients is array (0 to 100) of signed (15 downto 0);  -- 
 type DataStore is array (0 to 100) of signed (15 downto 0); 
 
-signal coeff : coefficients := (X"00FF",X"00AF",X"00FF",X"00FF",X"00AF",X"00FF",X"00AF",X"00DF",X"00AF",X"00AF",X"00CF", others => X"0000"); 
-signal DelayData : DataStore := (X"00FF",X"00FF",X"00FF",X"00FF",X"00FF",X"00FF",X"00FF",X"00FF",X"00FF",X"00FF",X"00FF", others => X"0000");
+signal coeff : coefficients := (others => X"0000"); 
+signal DelayData : DataStore := (others => X"0000");
 
-signal counter : unsigned (7 downto 0) :=  X"00"; 
+signal counter : unsigned (7 downto 0) := X"00"; 
 signal result : signed (31 downto 0) := X"00000000";
 signal resultvect : STD_LOGIC_VECTOR (31 downto 0) := X"00000000"; 
 
 signal state : STD_LOGIC_VECTOR (1 downto 0) := "10"; 
-signal point : STD_LOGIC_VECTOR (4 downto 0); 
 signal countCo : integer := 0; 
+signal point : STD_LOGIC_VECTOR(4 downto 0); 
+signal order : STD_LOGIC_VECTOR(7 downto 0); 
+signal reset : STD_LOGIC := '0'; 
+signal LOADCOEFF : STD_LOGIC := '0'; 
+signal sync : STD_LOGIC := '0'; 
+
 
 begin
+	-- ctrl process 
+	process(clk, ctrl, dataIN, order, point)
+	begin 
+			sync <= '0'; 
+			reset <= '0'; 
+			LOADCOEFF <= '0'; 
+			order <= order; 
+			point <= point; 
+		case ctrl is 
+			when "100" => -- load val and calc 
+				sync <= '1';
+			when "101" => -- load coeff 
+				LOADCOEFF <= '1'; 
+			when "110" => -- set point 
+				if rising_edge(clk) then 
+					point <= dataIN(4 downto 0); 
+				end if; 
+			when "111" => -- set order 
+				if rising_edge(clk) then 
+					order <= dataIN(7 downto 0);
+				end if; 
+			when "011" => -- reset 
+				reset <= '1'; 
+				if rising_edge(clk) then 
+					point <= (others => '0'); 
+				end if; 
+			when others => 
+		
+		end case; 
+		
+	end process; 
 
-	LED <= result(0); 
 	dataOUT <= resultvect(15 downto 0); 
 
 	process(clk) -- process for handling coeffcient loading
 	begin
 	if (rising_edge(clk)) then
 		if (reset = '1') then 
-			countCo <= 0; 
-			point <= (others => '0'); 
+			countCo <= 0;
 		elsif(LOADCOEFF = '1') then
 			coeff(countCo) <= signed(DataIN); 
 			countCo <= countCo + 1; 		
-		end if; 
-		if (setPoint <= '1') then
-			point <= dataIN(4 downto 0); 
 		end if; 
 	end if; 
 	end process; 
@@ -103,17 +133,20 @@ begin
 	process(state, clk, sync) 
 	begin
 		if(rising_edge(clk)) then 
-			if (loadcoeff = '0' and setPoint = '0') then -- when not setting coeffs or point
+			if (loadcoeff = '0' and reset = '0') then -- when not setting coeffs or point
 				case state is 
 					
 					when "00" => 
 						resultvect <= STD_LOGIC_VECTOR(result); 
+						Done <= '1'; 
 						if (sync = '1') then -- start calculations on if sync
 							state <= "01"; 
 							result <= X"00000000"; 
+							Done <= '0'; 
 						end if; 
 					
 					when "01" => -- sequential calculation of data 
+							Done <= '0'; 
 							counter <= counter + 1; 
 							result <= result + DelayData(to_integer(counter)) * coeff(to_integer(counter));
 							if (counter = unsigned(order)) then
@@ -122,6 +155,7 @@ begin
 							end if; 
 							
 					when "10" => -- sequential bitshift of result
+							Done <= '0'; 
 							result <= shift_right(result, 1); 
 							counter <= counter + 1; 
 							if (counter = (unsigned(point)) - 1) then

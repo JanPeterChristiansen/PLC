@@ -138,6 +138,18 @@ architecture Behavioral of PLC is
 	signal PWM_CMD :STD_LOGIC_VECTOR(1 downto 0); 
 	signal PWM_value : STD_LOGIC_VECTOR(7 downto 0); 
 	signal PWM_we : STD_LOGIC;  
+	-- OnOFFControllerController
+	signal OOCC_addr : STD_LOGIC_VECTOR(3 downto 0); 
+	signal OOCC_input : STD_LOGIC_VECTOR(15 downto 0); 
+	signal OOCC_ws : STD_LOGIC_VECTOR(2 downto 0); 
+	signal OOCC_outputs : STD_LOGIC_VECTOR(15 downto 0); 
+	-- FIRfilter
+	signal FIR_input : STD_LOGIC_VECTOR(15 downto 0); 
+	signal FIR_output : STD_LOGIC_VECTOR(15 downto 0); 
+	signal FIR_ctrl : STD_LOGIC_VECTOR(2 downto 0); 
+	signal FIR_done : STD_LOGIC; 
+	
+	
 	
 	
 begin
@@ -149,6 +161,25 @@ begin
 --		output => INT_pending,
 --		rst => INT_reset 
 --	 );
+
+FirFilter1 : entity work.FirFilter
+    Port map ( 
+		clk => clk, 
+		DataIN => FIR_input,
+		DataOUT => FIR_output,
+		ctrl => FIR_ctrl,
+		Done => FIR_done
+	);
+
+
+OnOffControllerController1 : entity work.OnOffControllerController
+    Port map ( 
+		clk => clk,
+      addr => OOCC_addr, 
+      Input => OOCC_input, 
+      ws => OOCC_ws, 
+      outputs => OOCC_outputs
+	); 
 
 PWMcontroller1 : entity work.PWMcontroller
     Port map( 
@@ -168,7 +199,8 @@ OutPutMux1 : entity work.OutputConnectionMux
 		OUTPUT => OUTPUT,
 		OutputBuffer => OUTBUFF_OUTPUT,
 		PWMsignals => PWM_OUTPUTS,
-		SetupData =>	OUTMUX_SETUP,	
+		OOCCsignals => OOCC_outputs, 
+		SetupData => OUTMUX_SETUP,	
 		we =>	OUTMUX_WE
 	); 
 
@@ -372,7 +404,19 @@ PROCESSEN : entity work.Processen
 		PWM_WE => PWM_WE, 
 		PWM_ADDR => PWM_ADDR, 
 		PWM_CMD => PWM_CMD, 
-		PWM_VALUE => PWM_VALUE
+		PWM_VALUE => PWM_VALUE,
+		-- ONoffControllerController
+		OOCC_addr => OOCC_addr,
+		OOCC_input => OOCC_input,
+		OOCC_ws => OOCC_ws,
+		OOCC_outputs => OOCC_outputs,
+		-- FIRfilter
+		FIR_input => FIR_input,
+		FIR_output => FIR_output, 
+		FIR_ctrl => FIR_ctrl, 
+		FIR_done => FIR_done
+		
+		
 	);
 
 end Behavioral;

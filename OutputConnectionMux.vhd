@@ -34,6 +34,7 @@ entity OutputConnectionMux is
            OUTPUT : out  STD_LOGIC_VECTOR (15 downto 0);
 			  OutputBuffer : in STD_LOGIC_VECTOR (15 downto 0);
 			  PWMsignals : in STD_LOGIC_VECTOR (15 downto 0);
+			  OOCCsignals : in STD_LOGIC_VECTOR (15 downto 0); 
 			  SetupData : in STD_LOGIC_VECTOR (9 downto 0);
 			  we : in STD_LOGIC
 			  ); 
@@ -54,7 +55,7 @@ begin
 
 module_mux(0) <= OutputBuffer; 
 module_mux(1) <= PWMsignals; 
-module_mux(2) <= (others => '-'); 
+module_mux(2) <= OOCCsignals; 
 module_mux(3) <= (others => '-'); 
 
 process (clk, we, SetupData, module, module_addr) -- setup module and address for pin of address 
