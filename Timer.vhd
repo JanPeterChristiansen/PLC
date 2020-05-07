@@ -32,7 +32,7 @@ entity Timer is
 
 port( 
 	CLK 		: in std_logic;
-	RESET	   : in std_logic;
+	RESET	    : in std_logic;
 	MSEC		: inout std_logic_vector(9 downto 0)  := (others => '0');
 	SEC 		: inout std_logic_vector(5 downto 0)  := (others => '0');
 	MIN 		: inout std_logic_vector(5 downto 0)  := (others => '0');
@@ -48,11 +48,11 @@ begin
 
 if rising_edge(CLK) then 
 	if RESET = '1' then 
-		MSEC  	<= (others => '0');
-		SEC 		<= (others => '0');
-		MIN 		<= (others => '0');
-		HOUR   	<= (others => '0');
-		ticks   	<= (others => '0');
+		MSEC <= (others => '0');
+		SEC <= (others => '0');
+		MIN <= (others => '0');
+		HOUR <= (others => '0');
+		ticks <= (others => '0');
 	else 
 		if conv_integer(ticks) = 31999 then
 			MSEC <= MSEC+1;

@@ -38,15 +38,6 @@ end PLC;
 
 architecture Behavioral of PLC is
 
-	-- PROGRAMM
-	type ram_type is array (0 to 15) of STD_LOGIC_VECTOR (27 downto 0);
-	signal PROG : ram_type := (	x"1a0aaaa", x"2d00001", x"2b00000", x"2300000",
-								x"0000000", x"0000000", x"0000000", x"0000000",
-								x"0000000", x"0000000", x"0000000", x"0000000", 
-								x"0000000", x"0000000", x"0000000", x"0000000");
-													-- 8-bit  | 4-bit | 16-bit 
-													-- opcode | reg   | value 
-
 	signal PC : STD_LOGIC_VECTOR (13	downto 0) := (others => '0');
 	signal start : STD_LOGIC := '0';
 	signal jump : STD_LOGIC := '0';
@@ -282,6 +273,7 @@ INPUT_BUFFER : entity work.Inputs
 		din => INPUT,
 		dout => InputBuffer
 	);
+	
 OUTPUT_BUFFER : entity work.Output
 	port map(
 		clk => clk,
@@ -304,10 +296,6 @@ PROGMEM : PROGRAM
 PROG_addrA <= PC; 
 PROG_addrB <= PC + 1; 
 
-
-
---cmd <= PROG(conv_integer(PC));
---next_cmd <= PROG(conv_integer(PC + 1));
 
 -- update PC every clk cycle
 process(clk, PROG_doutA, PROG_doutB, skip, jump)
@@ -415,8 +403,6 @@ PROCESSEN : entity work.Processen
 		FIR_output => FIR_output, 
 		FIR_ctrl => FIR_ctrl, 
 		FIR_done => FIR_done
-		
-		
 	);
 
 end Behavioral;

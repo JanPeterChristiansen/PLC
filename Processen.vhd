@@ -165,7 +165,6 @@ begin
 			-- There is nothing here. Keep reading...
 			
 			
-			
 		when x"01" => -- NOT reg (bitwise, direct)
 			ALUfunc <= x"4"; 						-- write not A to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
@@ -292,13 +291,13 @@ begin
 	
 		when x"14" => -- MULUi reg $value (Immediate, unsigned)
 			B <= cmd(15 downto 0); 					-- write $value to B-bus
-			ALUfunc <= x"e"; 						-- write A-B to C-bus
+			ALUfunc <= x"e"; 						-- write A*B to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		when x"15" => -- MULU reg reg (direct, unsigned)
-			ALUfunc <= x"e"; 						-- write A-B to C-bus
+			ALUfunc <= x"e"; 						-- write A*B to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
 			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
@@ -312,13 +311,13 @@ begin
 		
 		when x"17" => -- MULi reg $value (Immediate, signed)
 			B <= cmd(15 downto 0); 					-- write $value to B-bus
-			ALUfunc <= x"f"; 						-- write A-B to C-bus
+			ALUfunc <= x"f"; 						-- write A*B to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 		
 		when x"18" => -- MUL reg reg (direct, signed)
-			ALUfunc <= x"f"; 						-- write A-B to C-bus
+			ALUfunc <= x"f"; 						-- write A*B to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
 			addrB <= cmd(3 downto 0); 				-- set value register address
 			reA <= '1'; 							-- read from target register to A-bus
@@ -555,9 +554,8 @@ begin
 			ALUfunc <= x"3"; 
 			addrA <= cmd(19 downto 16); 
 			reA <= '1'; 
-			
-			RAM_we(0) <= '1'; 			-- write to memory
-			RAM_addrA <= STACK_TOS; 	-- set memory address
+			RAM_we(0) <= '1'; 				-- write to memory
+			RAM_addrA <= STACK_TOS; 		-- set memory address
 			RAM_din <= C;					-- write C to memory
 			STACK_INC <= '1'; 
 			
@@ -585,13 +583,12 @@ begin
 			
 		when x"3F" => -- SKIP not enough space in uart: uart val (immediate)
 			ALUfunc <= x"9"; 						-- write A-B to C-bus
-			SERIAL_addr <= cmd(19 downto 16);-- addres of UART 
-			A <= (others => '0');				-- set target register address
+			SERIAL_addr <= cmd(19 downto 16); 		-- addres of UART 
+			A <= (others => '0');					-- set target register address
 			A(6 downto 0) <= SERIAL_tx_buffer_space;
-			B <= cmd(15 downto 0); 				-- set value register address
-														-- read from target register to A-bus
-														-- read from value register to B-bus
-			if (signed(C) < 0) then				-- if A < B set skip flag 
+			B <= cmd(15 downto 0); 					-- set value register address
+
+			if (signed(C) < 0) then					-- if A < B set skip flag 
 				skip <= '1';
 			end if;
 		
@@ -601,7 +598,6 @@ begin
 			A(6 downto 0) <= SERIAL_tx_buffer_space;
 			addrB <= cmd(3 downto 0); 
 			reB <= '1';
-			
 			if (signed(C) < 0) then				-- if A < B set skip flag 
 				skip <= '1';
 			end if;
@@ -625,7 +621,6 @@ begin
 		when x"43" => -- setup PWM (imediate)
 			ALUfunc <= x"3"; 
 			A(15 downto 0) <= cmd(15 downto 0);
-			
 			PWM_ADDR <= C(15 downto 12); 
 			PWM_CMD <= C(9 downto 8); -- 0 : enable, 1 : prescalar, 2 : compare, 3 : overflow
 			PWM_Value <= C(7 downto 0); 
@@ -634,8 +629,7 @@ begin
 		when x"44" => -- skip if not 0
 			ALUfunc <= x"3"; 						-- write A to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
-			reA <= '1'; 
-			-- read from target register to A-bus
+			reA <= '1'; 							-- read from target register to A-bus
 			if (C /= x"0000")  then					-- if register is 0 set skip flag
 				skip <= '1';
 			end if;
@@ -666,7 +660,7 @@ begin
 			 ALUfunc <= x"3"; 
 			 reA <= '1'; 
 			 addrA <= cmd(19 downto 16); 
-			 OOCC_addr <= cmd(15 downto 12); 			 
+			 OOCC_addr <= cmd(15 downto 12);
 			 OOCC_ws <= cmd(10 downto 8); -- x4: sense, x5 ref, x6: limit, x7: reverse
 			 OOCC_input <= C; 					
 			
@@ -688,6 +682,40 @@ begin
 			addrA <= cmd(19 downto 16); 
 			weC <= '1'; 
 			A <= FIR_output; 
+			
+			
+
+		when x"4C" => -- SKIP IF EQ i reg $value (immediate)
+			B <= cmd(15 downto 0);					-- write $value to B-bus
+			ALUfunc <= x"9"; 						-- write A-B to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			reA <= '1'; 							-- read from target register to A-bus
+			if (C = x"0000") then					-- if register is 0 set skip flag
+				skip <= '1';
+			end if;
+
+		when x"4D" => -- SKIP IF LESS i reg $value (immediate)
+			B <= cmd(15 downto 0);					-- write $value to B-bus
+			ALUfunc <= x"9"; 						-- write A-B to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			reA <= '1'; 							-- read from target register to A-bus
+			if (signed(C) < 0) then					-- if A < B set skip flag 
+				skip <= '1';
+			end if;
+			
+		when x"4E" => -- SKIP IF LEQ i reg $value (direct)
+			B <= cmd(15 downto 0);					-- write $value to B-bus
+			ALUfunc <= x"9"; 						-- write A-B to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			reA <= '1'; 							-- read from target register to A-bus
+			if (signed(C) > 0) then 				-- if A leq B set skip flag
+				-- do nothing
+			else
+				skip <= '1';
+			end if;
+			
+			
+			
 			
 		when others =>
 	end case;
