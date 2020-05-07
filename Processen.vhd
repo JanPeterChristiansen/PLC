@@ -714,7 +714,14 @@ begin
 				skip <= '1';
 			end if;
 			
-			
+		when x"4F" => -- SKIP IF NOT EQUAL i reg $value (immediate)
+			B <= cmd(15 downto 0);					-- write $value to B-bus
+			ALUfunc <= x"9"; 						-- write A-B to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target register address
+			reA <= '1'; 							-- read from target register to A-bus
+			if (C /= x"0000") then					-- if register is 0 set skip flag
+				skip <= '1';
+			end if;	
 			
 			
 		when others =>
