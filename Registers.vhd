@@ -27,9 +27,11 @@ entity Registers is
 		clk : in STD_LOGIC; 
 		addrA : in  STD_LOGIC_VECTOR (3 downto 0);
 		addrB : in  STD_LOGIC_VECTOR (3 downto 0);
+		addrR : in STD_LOGIC_VECTOR (3 downto 0); 
 		C : in  STD_LOGIC_VECTOR (15 downto 0);
 		A : out  STD_LOGIC_VECTOR (15 downto 0);
 		B : out STD_LOGIC_VECTOR (15 downto 0);
+		R : out STD_LOGIC_VECTOR (15 downto 0); 
 		reA : in STD_LOGIC; 
 		reB : in STD_LOGIC; 
 		we : in  STD_LOGIC
@@ -42,9 +44,11 @@ architecture Behavioral of Registers is
 	signal REG : reg_type := (others => (others => '0')); 
 	
 begin
+-- makes it possible to addres the ram with a value from a register while the register is used for an instruction
+R <= REG(conv_integer(addrR));   
+
 
 -- CAN ONLY WRITE C-BUS TO THE ADDRESS SPECIFIED FOR A-BUS
-
 process(clk, reA, reB, REG, addrA, addrB)
 begin
 	

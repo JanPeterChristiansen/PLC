@@ -65,6 +65,8 @@ entity Processen is
 		inputBuffer : in STD_LOGIC_VECTOR (15 downto 0);
 		OUTBUFF_we : out STD_LOGIC;
 		--Timer
+		TIMER_reset : out STD_LOGIC; 
+		USEC : in STD_LOGIC_VECTOR(9 downto 0); 
 		MSEC : in STD_LOGIC_VECTOR (9 downto 0);  
 		SEC : in STD_LOGIC_VECTOR (5 downto 0);
 		MIN : in STD_LOGIC_VECTOR (5 downto 0); 
@@ -87,7 +89,11 @@ entity Processen is
 		FIR_input : out STD_LOGIC_VECTOR(15 downto 0); 
 		FIR_output : in STD_LOGIC_VECTOR(15 downto 0); 
 		FIR_ctrl : out STD_LOGIC_VECTOR(2 downto 0); 
-		FIR_done : in STD_LOGIC
+		FIR_done : in STD_LOGIC;
+		-- pointer to ram
+		REG_Raddr : out STD_LOGIC_VECTOR(3 downto 0); 
+		REG_Rout : in STD_LOGIC_VECTOR(15 downto 0); 
+		REG_Baddr : in STD_LOGIC_VECTOR(9 downto 0)
 		
 	);
 	
@@ -99,9 +105,9 @@ signal returned : STD_LOGIC := '0';
 begin
 
 -- pre fetch memory addr because of read latency
-PREFETCHER: process(next_cmd, STACK_TOS)
+PREFETCHER: process(next_cmd, STACK_TOS, REG_Rout)
 begin
-
+	REG_Raddr <= (others => '-'); 
 	case (next_cmd(27 downto 20)) is
 		when x"1b" => 
 			RAM_addrB <= next_cmd(9 downto 0); -- prefetches for load cmd
@@ -109,6 +115,9 @@ begin
 			RAM_addrB <= STACK_TOS + 1; -- prefetches top of stack value
 		when x"3C" =>
 			RAM_addrB <= STACK_TOS + 1; -- prefetches top of stack value
+		when x"1C" => 
+			REG_Raddr <= next_cmd(3 downto 0); 
+			RAM_addrB <= REG_Rout(9 downto 0);  
 		when others => 
 			RAM_addrB <= (others => 'U');
 		
@@ -119,7 +128,7 @@ end process;
 
 
 
-PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS, SERIAL_tx_buffer_space )
+PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS, SERIAL_tx_buffer_space, REG_Baddr)
 begin
 	
 	-- SET DEFAULT
@@ -158,7 +167,7 @@ begin
 	
 	FIR_ctrl <= (others => '0');
 	FIR_input <= (others => '-'); 
-	
+	TIMER_reset <= '0'; 
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is
 		when x"00" => 								-- NOP
@@ -341,8 +350,12 @@ begin
 			addrA <= cmd(19 downto 16); 			-- set target regiser address
 			weC <= '1'; 							-- write from C-bus to target register
 
-		when x"1c" => -- LOAD reg reg (indirect)
-			-- TBD
+		when x"1c" => -- LOAD reg reg(addr) (indirect)
+			A <= RAM_dout; 					
+			ALUfunc <= x"3"; 						-- write A to C-bus
+			addrA <= cmd(19 downto 16); 			-- set target regiser address
+			weC <= '1'; 	
+			
 			
 			
 			
@@ -357,9 +370,15 @@ begin
 			RAM_addrA <= cmd(9 downto 0); 			-- set memory address
 			RAM_din <= C; 							-- write C to memory
 			
-		when x"1f" => -- STORE reg reg (indirect)
-			-- TBD (what does this OP even mean ???)
-			
+		when x"1f" => -- STORE reg reg(addr) (indirect)
+			ALUfunc <= x"3"; 						-- write A to C-bus
+			addrA <= cmd(19 downto 16);		-- set target regiser address
+			addrB <= cmd(3 downto 0); 			
+			reA <= '1'; 							-- read from target register to A-bus
+			reB <= '1'; 			
+			RAM_we(0) <= '1'; 					-- write to memory
+			RAM_addrA <= REG_Baddr; 	 	-- set memory address
+			RAM_din <= C; 		
 			
 			
 		when x"20" => -- CLEAR reg (direct)
@@ -519,8 +538,12 @@ begin
 				reA <= '1'; 
 				OUTBUFF_WE <= '1'; 
 				
-		when x"35" =>   -- Readmicros
-		
+		when x"35" =>   -- Readmicros reg
+			ALUfunc <= x"3";
+			addrA <= cmd(19 downto 16); 
+			weC <= '1'; 
+			A <= (others => '0');
+			A(9 downto 0) <= USEC; 
 		
 		when x"36" => -- ReadMillis reg
 			ALUfunc <= x"3";
@@ -723,7 +746,8 @@ begin
 				skip <= '1';
 			end if;	
 			
-			
+		when x"50" => -- reset timer
+			TIMER_reset <='1'; 
 		when others =>
 	end case;
 

@@ -32,7 +32,8 @@ entity Timer is
 
 port( 
 	CLK 		: in std_logic;
-	RESET	    : in std_logic;
+	RESET	   : in std_logic;
+	USEC		: inout std_logic_vector(9 downto 0)  := (others => '0');
 	MSEC		: inout std_logic_vector(9 downto 0)  := (others => '0');
 	SEC 		: inout std_logic_vector(5 downto 0)  := (others => '0');
 	MIN 		: inout std_logic_vector(5 downto 0)  := (others => '0');
@@ -40,7 +41,7 @@ port(
 end Timer;
 
 architecture Behavioral of Timer is
-	signal ticks : std_logic_vector(14 downto 0) := (others => '0');
+	signal ticks : std_logic_vector(4 downto 0) := (others => '0');
 begin
 
 process(CLK) is 
@@ -48,26 +49,31 @@ begin
 
 if rising_edge(CLK) then 
 	if RESET = '1' then 
-		MSEC <= (others => '0');
-		SEC <= (others => '0');
-		MIN <= (others => '0');
-		HOUR <= (others => '0');
-		ticks <= (others => '0');
-	else 
-		if conv_integer(ticks) = 31999 then
-			MSEC <= MSEC+1;
+		USEC     <= (others => '0'); 
+		MSEC  	<= (others => '0');
+		SEC 		<= (others => '0');
+		MIN 		<= (others => '0');
+		HOUR   	<= (others => '0');
+		ticks   	<= (others => '0');
+	else
+		if conv_integer(ticks) = 31 then
+			USEC <= USEC+1;
 			ticks <= (others => '0');
-			if conv_integer(MSEC) = 999 then
-				SEC <= SEC+1;
-				MSEC <= (others => '0');
-					if conv_integer(SEC) = 59 then
-						MIN <= MIN+1;
-						SEC <= (others => '0');
-						if conv_integer(MIN) = 59 then
-							HOUR <= HOUR+1;
-							MIN <= (others => '0');
+			if conv_integer(USEC) = 999 then
+				MSEC <= MSEC+1;
+				USEC <= (others => '0');
+				if conv_integer(MSEC) = 999 then
+					SEC <= SEC+1;
+					MSEC <= (others => '0');
+						if conv_integer(SEC) = 59 then
+							MIN <= MIN+1;
+							SEC <= (others => '0');
+							if conv_integer(MIN) = 59 then
+								HOUR <= HOUR+1;
+								MIN <= (others => '0');
+							end if;
 						end if;
-					end if;
+				end if;
 			end if;
 		else
 			ticks <= ticks + 1;

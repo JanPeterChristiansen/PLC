@@ -109,6 +109,8 @@ architecture Behavioral of PLC is
 	signal OUTBUFF_WE : std_logic;
 	signal OUTBUFF_OUTPUT : STD_LOGIC_VECTOR(15 downto 0); 
 	-- timer 
+	signal TIMER_reset : STD_LOGIC; 
+	signal USEC : STD_LOGIC_VECTOR (9 downto 0); 
 	signal MSEC : STD_LOGIC_VECTOR (9 downto 0);  
 	signal SEC : STD_LOGIC_VECTOR (5 downto 0);
 	signal MIN : STD_LOGIC_VECTOR (5 downto 0); 
@@ -139,7 +141,10 @@ architecture Behavioral of PLC is
 	signal FIR_output : STD_LOGIC_VECTOR(15 downto 0); 
 	signal FIR_ctrl : STD_LOGIC_VECTOR(2 downto 0); 
 	signal FIR_done : STD_LOGIC; 
-	
+	-- indirect memory access
+	signal REG_Raddr : STD_LOGIC_VECTOR(3 downto 0); 
+	signal REG_Rout : STD_LOGIC_VECTOR(15 downto 0); 
+	signal REG_Baddr : STD_LOGIC_VECTOR(9 downto 0); 
 	
 	
 	
@@ -208,7 +213,8 @@ stackcontrol1 : entity work.Stackcontrol
 timer1 : entity work.Timer
 	port map  (
 		CLK => CLK,
-		RESET	 => '0',
+		RESET	 => TIMER_reset,
+		USEC => USEC, 
 		MSEC => MSEC,
 		SEC => SEC, 		
 		MIN => MIN, 		
@@ -230,13 +236,16 @@ REG : entity work.Registers
 		CLK => clk,
 		addrA => addrA,
 		addrB => addrB,
+		addrR => REG_Raddr,
 		A => A,
 		B => B,
 		C => C,
+		R => REG_Rout,
 		reA => reA,
 		reB => reB,
 		we => weC
 	);
+REG_Baddr <= B(9 downto 0); 
 
 -- RAM port map
 RAM : SimpleDualPortRAM
@@ -380,6 +389,8 @@ PROCESSEN : entity work.Processen
 		-- OUTBUFF 
 		OUTBUFF_we => OUTBUFF_we,
 		-- Timer
+		TIMER_reset => TIMER_reset, 
+		USEC => USEC, 
 		MSEC => MSEC,
 		SEC => SEC,
 		MIN => MIN,
@@ -402,7 +413,11 @@ PROCESSEN : entity work.Processen
 		FIR_input => FIR_input,
 		FIR_output => FIR_output, 
 		FIR_ctrl => FIR_ctrl, 
-		FIR_done => FIR_done
+		FIR_done => FIR_done,
+		-- pointer to ram
+		REG_Raddr => REG_Raddr, 
+		REG_Rout => REG_Rout,
+		REG_Baddr => REG_Baddr
 	);
 
 end Behavioral;
