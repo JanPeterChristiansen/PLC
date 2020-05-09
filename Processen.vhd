@@ -372,12 +372,12 @@ begin
 			
 		when x"1f" => -- STORE reg reg(addr) (indirect)
 			ALUfunc <= x"3"; 						-- write A to C-bus
-			addrA <= cmd(19 downto 16);		-- set target regiser address
+			addrA <= cmd(19 downto 16);				-- set target regiser address
 			addrB <= cmd(3 downto 0); 			
 			reA <= '1'; 							-- read from target register to A-bus
 			reB <= '1'; 			
-			RAM_we(0) <= '1'; 					-- write to memory
-			RAM_addrA <= REG_Baddr; 	 	-- set memory address
+			RAM_we(0) <= '1'; 						-- write to memory
+			RAM_addrA <= REG_Baddr; 	 			-- set memory address
 			RAM_din <= C; 		
 			
 			
@@ -406,7 +406,7 @@ begin
 			A <= (others => '0'); 
 			A(13 downto 0) <= cmd(13 downto 0);			
 			ALUfunc <= x"3"; 	
-			jump <= '1'; 				-- set jump flag
+			jump <= '1'; 							-- set jump flag
 			
 			
 		when x"24" => -- GOTO reg (direct)
@@ -476,9 +476,9 @@ begin
 			
 		when x"2b" => -- WRITE reg port (direct)
 			ALUfunc <= x"3"; 						-- write A to C-bus
-			addrA <= cmd(19 downto 16); 			-- set target register address
+			addrA <= cmd(3 downto 0); 				-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
-			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
+			SERIAL_addr <= cmd(19 downto 16); 		-- set serial address
 			SERIAL_we <= '1';						-- set write flag
 			
 		when x"2c" => -- RESET port (direct)
@@ -533,10 +533,10 @@ begin
 			weC <= '1'; 
 		
 		when x"34" => -- digitalWrite reg outbuffer
-				ALUfunc <= x"3"; 
-				addrA <= cmd(19 downto 16); 
-				reA <= '1'; 
-				OUTBUFF_WE <= '1'; 
+			ALUfunc <= x"3"; 
+			addrA <= cmd(19 downto 16); 
+			reA <= '1'; 
+			OUTBUFF_WE <= '1'; 
 				
 		when x"35" =>   -- Readmicros reg
 			ALUfunc <= x"3";
@@ -577,9 +577,9 @@ begin
 			ALUfunc <= x"3"; 
 			addrA <= cmd(19 downto 16); 
 			reA <= '1'; 
-			RAM_we(0) <= '1'; 				-- write to memory
-			RAM_addrA <= STACK_TOS; 		-- set memory address
-			RAM_din <= C;					-- write C to memory
+			RAM_we(0) <= '1'; 						-- write to memory
+			RAM_addrA <= STACK_TOS; 				-- set memory address
+			RAM_din <= C;							-- write C to memory
 			STACK_INC <= '1'; 
 			
 		when x"3B" => -- pop reg
@@ -599,9 +599,9 @@ begin
 		when x"3D" => -- push PC
 			A <= (others => '0'); 
 			A(13 downto 0) <= PC; 
-			RAM_we(0) <= '1'; 			-- write to memory
-			RAM_addrA <= STACK_TOS; 	-- set memory address
-			RAM_din <= C;					-- write C to memory
+			RAM_we(0) <= '1'; 						-- write to memory
+			RAM_addrA <= STACK_TOS; 				-- set memory address
+			RAM_din <= C;							-- write C to memory
 			STACK_INC <= '1'; 	
 			
 		when x"3F" => -- SKIP not enough space in uart: uart val (immediate)
@@ -617,25 +617,25 @@ begin
 		
 		when x"40" => -- SKIP not enough space in uart: uart val (direct)
 			ALUfunc <= x"9"; 
-			A <= (others => '0');				-- set target register address
+			A <= (others => '0');					-- set target register address
 			A(6 downto 0) <= SERIAL_tx_buffer_space;
 			addrB <= cmd(3 downto 0); 
 			reB <= '1';
-			if (signed(C) < 0) then				-- if A < B set skip flag 
+			if (signed(C) < 0) then					-- if A < B set skip flag 
 				skip <= '1';
 			end if;
 
 		when x"41" => -- Load buffer space: uart reg 
 			ALUfunc <= x"3"; 						-- through 
-			A <= (others => '0');				-- set target register address
+			A <= (others => '0');					-- set target register address
 			A(6 downto 0) <= SERIAL_tx_buffer_space;
-			addrA <= cmd(3 downto 0); 			-- register address 
+			addrA <= cmd(3 downto 0); 				-- register address 
 			weC <= '1';								-- enable write from Cbuss to register A 
 		
 		when x"42" => -- setup outmux: (imediate) 
 			ALUfunc <= x"3"; 
 			A <= (others => '0'); 
-			A(11 downto 0) <= cmd(11 downto 0);  -- PIN, Type, instance
+			A(11 downto 0) <= cmd(11 downto 0);  	-- PIN, Type, instance
 			OUTMUX_WE <= '1'; 
 			OUTMUX_SETUP(9 downto 6) <= C(11 downto 8);
 			OUTMUX_SETUP(5 downto 4) <= C(5 downto 4);	
@@ -748,7 +748,21 @@ begin
 			
 		when x"50" => -- reset timer
 			TIMER_reset <='1'; 
+		
+		
+		
+		when x"51" => -- WRITEi reg $value (direct)
+			A <= (others => '0'); 					-- write 0 to excess bits on bus
+			A(7 downto 0) <= cmd(7 downto 0);		-- write 8-bit immediate value to A-bus
+			ALUfunc <= x"3"; 						-- write A to C-bus
+			SERIAL_addr <= cmd(19 downto 16); 		-- set serial address
+			SERIAL_we <= '1';						-- set write flag
+		
+		
+		
 		when others =>
+
+		
 	end case;
 
 end process;

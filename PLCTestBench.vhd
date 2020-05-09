@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   09:58:25 05/04/2020
+-- Create Date:   11:12:55 05/08/2020
 -- Design Name:   
--- Module Name:   E:/GitHub/PLC/PLCtestbench.vhd
+-- Module Name:   C:/Users/japem/Documents/repos/VHDL/PLC/PLCTestBench.vhd
 -- Project Name:  PLC
 -- Target Device:  
 -- Tool versions:  
@@ -32,10 +32,10 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY PLCtestbench IS
-END PLCtestbench;
+ENTITY PLCTestBench IS
+END PLCTestBench;
  
-ARCHITECTURE behavior OF PLCtestbench IS 
+ARCHITECTURE behavior OF PLCTestBench IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
@@ -52,7 +52,7 @@ ARCHITECTURE behavior OF PLCtestbench IS
 
    --Inputs
    signal clk : std_logic := '0';
-   signal RX : std_logic_vector(15 downto 0) := (others => '0');
+   signal RX : std_logic_vector(15 downto 0) := (others => '1');
    signal INPUT : std_logic_vector(15 downto 0) := (others => '0');
 
  	--Outputs
@@ -60,7 +60,7 @@ ARCHITECTURE behavior OF PLCtestbench IS
    signal OUTPUT : std_logic_vector(15 downto 0);
 
    -- Clock period definitions
-   constant clk_period : time := 10 ns;
+   constant clk_period : time := 31.25 ns;
  
 BEGIN
  
