@@ -145,6 +145,8 @@ architecture Behavioral of PLC is
 	signal REG_Raddr : STD_LOGIC_VECTOR(3 downto 0); 
 	signal REG_Rout : STD_LOGIC_VECTOR(15 downto 0); 
 	signal REG_Baddr : STD_LOGIC_VECTOR(9 downto 0); 
+	-- return
+	signal RET_returned : STD_LOGIC := '0'; 
 	
 	
 	
@@ -417,9 +419,24 @@ PROCESSEN : entity work.Processen
 		-- pointer to ram
 		REG_Raddr => REG_Raddr, 
 		REG_Rout => REG_Rout,
-		REG_Baddr => REG_Baddr
+		REG_Baddr => REG_Baddr,
+		-- return
+		RET_returned => RET_returned
 	);
-
+	
+-- return controller 
+	process(cmd, clk) 
+	begin
+		if rising_edge(clk) then
+			if cmd(27 downto 20) = X"46" then
+				RET_returned <= '0'; 
+			end if; 
+			if cmd(27 downto 20) = X"3C" then
+				RET_returned <= '1'; 
+			end if; 
+		end if; 
+			
+	end process; 
 end Behavioral;
 
   

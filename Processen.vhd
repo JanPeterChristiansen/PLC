@@ -93,14 +93,16 @@ entity Processen is
 		-- pointer to ram
 		REG_Raddr : out STD_LOGIC_VECTOR(3 downto 0); 
 		REG_Rout : in STD_LOGIC_VECTOR(15 downto 0); 
-		REG_Baddr : in STD_LOGIC_VECTOR(9 downto 0)
+		REG_Baddr : in STD_LOGIC_VECTOR(9 downto 0);
+		--return
+		RET_returned : in STD_LOGIC
 		
 	);
 	
 end Processen;
 
 architecture Behavioral of Processen is
-signal returned : STD_LOGIC := '0'; 
+
 
 begin
 
@@ -141,7 +143,6 @@ begin
 	reB <= '0';
 	weC <= '0';
 	jump <= '0';
-	skip <= '0';
 	RAM_we(0) <= '0';
 	RAM_din <= (others => 'Z');
 	RAM_addrA <= (others => 'Z');
@@ -168,6 +169,9 @@ begin
 	FIR_ctrl <= (others => '0');
 	FIR_input <= (others => '-'); 
 	TIMER_reset <= '0'; 
+	
+	skip <= '0';
+	
 	-- change relevant values to execute an opcode
 	case (cmd(27 downto 20)) is
 		when x"00" => 								-- NOP
@@ -594,7 +598,6 @@ begin
 			ALUfunc <= x"3"; 
 			jump <= '1'; 
 			STACK_DEC <= '1'; 
-			returned <= '1'; 
 			
 		when x"3D" => -- push PC
 			A <= (others => '0'); 
@@ -668,9 +671,8 @@ begin
 			end if;	
 		
 		when x"46" => -- skip if returned
-			if returned = '1' then
+			if RET_returned = '1' then
 				skip <= '1'; 
-				returned <= '0'; 
 			end if; 
 		
 		when x"47" => -- SKIP IF READY
