@@ -602,9 +602,10 @@ begin
 		when x"3D" => -- push PC
 			A <= (others => '0'); 
 			A(13 downto 0) <= PC; 
+			ALUfunc <= x"3";
 			RAM_we(0) <= '1'; 						-- write to memory
 			RAM_addrA <= STACK_TOS; 				-- set memory address
-			RAM_din <= C;							-- write C to memory
+			RAM_din <= C;								-- write C to memory
 			STACK_INC <= '1'; 	
 			
 		when x"3F" => -- SKIP not enough space in uart: uart val (immediate)

@@ -1,0 +1,15 @@
+set -xsthdpdir "./_cg/_dbg/PROGRAM_xsd"
+run
+-ifn "./_cg/_dbg/PROGRAM.prj"
+-ifmt VHDL
+-ofmt NGC
+-ofn "./_cg/_dbg/PROGRAM.ngc"
+-p xc6slx9-2tqg144
+-iobuf NO
+-work_lib work
+-ent PROGRAM
+-arch spartan6
+-top PROGRAM
+-bus_delimiter <>
+-lso "./_cg/_dbg/_default.lso"
+-use_new_parser yes
