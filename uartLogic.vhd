@@ -96,7 +96,8 @@ BEGIN
 			VARIABLE	os_count	:	INTEGER RANGE 0 TO os_rate-1 := 0;	
 			VARIABLE count_mid : INTEGER RANGE 0 TO clk_freq/baud_rate-1 := 0;
 	BEGIN
-		IF(reset_n = '1') THEN																--asynchronous reset asserted
+		IF(reset_n = '1') THEN																				--asynchronous reset asserted
+			count_mid := 0;
 			os_count := 0;																			--clear oversampling pulse counter
 			rx_count := 0;																			--clear receive bit counter
 			rx_busy <= '0';																		--clear receive busy signal
