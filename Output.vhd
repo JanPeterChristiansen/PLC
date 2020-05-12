@@ -38,7 +38,7 @@ begin
 
 	dout <= buff; 
 
-	process(clk, we, buff)
+	process(clk, we, buff, din)
 	begin
 	
 	buff <= buff; 

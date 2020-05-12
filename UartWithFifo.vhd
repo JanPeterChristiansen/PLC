@@ -165,19 +165,19 @@ begin
 	case txlink_statereg is
 		when s0 => 
 			tx_re <='0'; 
-			if (tx_busy = '0' and tx_dataready = '1') then
-				txlink_statenext <= s1; 
-				tx_ena <= '1'; 
+			if (tx_busy = '0' and tx_dataready = '1') then 
+				txlink_statenext <= s1;
+				tx_ena <= '1'; -- enables uart transmit
 			else 
 				txlink_statenext <= s0;
-				tx_ena <='0';
+				tx_ena <='0'; 
 			end if; 
 		when S1 =>
-			txlink_statenext <= s2; 
+			txlink_statenext <= s2;  
 			tx_ena <= '1'; 
 		when S2 =>
 			txlink_statenext <= s0; 
-			tx_re <='1'; 
+			tx_re <='1'; -- set readflag of FIFO buffer 
 	end case; 
 end process;
 
@@ -190,7 +190,7 @@ begin
 	case rxlink_statereg is
 	when s0 => 
 		if falling_edge(rx_busy)then 
-			rxlink_statenext <= S1;
+			rxlink_statenext <= S1; 
 		end if; 
 	when s1 =>
 		rxlink_statenext <= s0; 
@@ -200,9 +200,9 @@ end process;
 process(rxlink_statereg)
 begin
 	case rxlink_statereg is 
-	when s0 =>
-		rx_we <='0';
-	when s1 =>
+	when s0 => 
+		rx_we <='0'; 
+	when s1 => -- read data from rx_data of UART
 		rx_we <= '1';
 	end case; 
 end process; 
