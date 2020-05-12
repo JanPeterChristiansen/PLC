@@ -130,7 +130,7 @@ end process;
 
 
 
-PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS, SERIAL_tx_buffer_space, REG_Baddr, RET_returned)
+PROCESSEN : process(cmd, PC, next_cmd, RAM_dout, C, SERIAL_dout, SERIAL_full, SERIAL_dready, inputBuffer, MSEC, SEC, MIN, HOUR, STACK_TOS, SERIAL_tx_buffer_space, REG_Baddr, RET_returned, OOCC_outputs)
 begin
 	
 	-- SET DEFAULT

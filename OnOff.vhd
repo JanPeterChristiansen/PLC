@@ -37,34 +37,38 @@ entity OnOff is
 			  Limit	: in  STD_LOGIC_VECTOR(15 downto 0);
 			  Reverse: in 	STD_LOGIC;
 			  CLK		: in  STD_LOGIC;
-           Output : out STD_LOGIC := '0');
+           Output : out STD_LOGIC);
 end OnOff;
 
 architecture Behavioral of OnOff is
 
+signal Output_signal : STD_LOGIC := '0'; 
+
 begin 
-	process(sensIn,Ref,Limit)
+Output <= Output_signal; 
+	process(sensIn,Ref,Limit, Reverse, CLK)
 		begin 
-		
+		if rising_edge(clk) then
 		case(reverse) is
 		when '1' => 
 		if sensIn > Ref then 
-		Output <= '0';
+		Output_signal <= '0';
 		
 		elsif sensIn < Limit then 
-		Output <= '1';
+		Output_signal <= '1';
 		end if;
 		
 		when '0' =>
 			if sensIn > Ref then 
-		Output <= '1';
+		Output_signal <= '1';
 		
 		elsif sensIn < Limit then 
-		Output <= '0';
+		Output_signal <= '0';
 		end if;
 		
 		when others =>
 		end case;
+		end if;
 	end process;
 	
 
