@@ -156,9 +156,16 @@ UART4 : entity work.UARTWithFifo
 
 	full <= full_vec(conv_integer(addr));
 	dready <= dready_vec(conv_integer(addr));
-	msb_lsb_vec(conv_integer(addr)) <= msb_lsb;
+	-- msb_lsb_vec(conv_integer(addr)) <= msb_lsb;
 
-
+process(clk) 
+begin
+    if rising_edge(clk) then 
+		if (we = '1') then
+			msb_lsb_vec(conv_integer(addr)) <= msb_lsb;
+		end if;
+    end if; 
+end process;
 
 process (addr, re, we, rst, dout_vec, buff_space_array)
 begin
