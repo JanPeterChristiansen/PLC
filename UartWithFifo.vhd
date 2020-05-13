@@ -22,6 +22,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 
 entity UartWithFifo is
+	 generic(
+			baud_rate : integer; 
+	 );
     Port(clk : in  STD_LOGIC;
 			dataIN : in STD_LOGIC_VECTOR (7 downto 0); 
 			dataOUT : out STD_LOGIC_VECTOR (7 downto 0); 
@@ -130,6 +133,9 @@ port map(
 ); 
 	
 uart1 : uart 
+generic map(
+baud_rate => baud_rate; 
+)
 port map(
 clk => clk,
 reset_n => reset,
