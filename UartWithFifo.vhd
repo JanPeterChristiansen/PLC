@@ -22,9 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 
 entity UartWithFifo is
-	 generic(
-			baud_rate : integer; 
-	 );
+	 generic (baud_rate : integer ); 
     Port(clk : in  STD_LOGIC;
 			dataIN : in STD_LOGIC_VECTOR (7 downto 0); 
 			dataOUT : out STD_LOGIC_VECTOR (7 downto 0); 
@@ -61,7 +59,7 @@ end component;
 component uart IS
 	GENERIC(
 		clk_freq	:	INTEGER		:= 32_000_000;	--frequency of system clock in Hertz
-		baud_rate	:	INTEGER		:= 9600;		--data link baud rate in bits/second
+		baud_rate	:	INTEGER		:= 460_800;		--data link baud rate in bits/second
 		os_rate		:	INTEGER		:= 16;			--oversampling rate to find center of receive bits (in samples per baud period)
 		d_width		:	INTEGER		:= 8; 			--data bus width
 		parity		:	INTEGER		:= 0;				--0 for no parity, 1 for parity
@@ -134,7 +132,7 @@ port map(
 	
 uart1 : uart 
 generic map(
-baud_rate => baud_rate; 
+baud_rate => baud_rate
 )
 port map(
 clk => clk,
@@ -171,19 +169,19 @@ begin
 	case txlink_statereg is
 		when s0 => 
 			tx_re <='0'; 
-			if (tx_busy = '0' and tx_dataready = '1') then 
-				txlink_statenext <= s1;
-				tx_ena <= '1'; -- enables uart transmit
+			if (tx_busy = '0' and tx_dataready = '1') then
+				txlink_statenext <= s1; 
+				tx_ena <= '1'; 
 			else 
 				txlink_statenext <= s0;
-				tx_ena <='0'; 
+				tx_ena <='0';
 			end if; 
 		when S1 =>
-			txlink_statenext <= s2;  
+			txlink_statenext <= s2; 
 			tx_ena <= '1'; 
 		when S2 =>
 			txlink_statenext <= s0; 
-			tx_re <='1'; -- set readflag of FIFO buffer 
+			tx_re <='1'; 
 	end case; 
 end process;
 
@@ -196,7 +194,7 @@ begin
 	case rxlink_statereg is
 	when s0 => 
 		if falling_edge(rx_busy)then 
-			rxlink_statenext <= S1; 
+			rxlink_statenext <= S1;
 		end if; 
 	when s1 =>
 		rxlink_statenext <= s0; 
@@ -206,9 +204,9 @@ end process;
 process(rxlink_statereg)
 begin
 	case rxlink_statereg is 
-	when s0 => 
-		rx_we <='0'; 
-	when s1 => -- read data from rx_data of UART
+	when s0 =>
+		rx_we <='0';
+	when s1 =>
 		rx_we <= '1';
 	end case; 
 end process; 

@@ -83,7 +83,7 @@ Bram1 : Blockram
     doutb => dataOUT
   );
 
-wrs(0) <= WE;
+
 res(0) <= RE;
 
 buffer_space <= counter; 
@@ -128,9 +128,6 @@ process(reptr, wrptr, we, clk, wr_state_reg, reset)
 begin
 
 	if (rising_edge(clk)) then  -- all clockecd processes on wrPTR need to be under the same clk event
-		if reset = '1' then 
-			wrPTR <= (others => '0'); 
-		end if; 
 	
 		if wr_state_reg = nFull then 
 			if (we = '1') then 
@@ -139,11 +136,16 @@ begin
 				wrPTR <= wrPTR; 
 			end if; 
 		end if; 
+		
+		if reset = '1' then 
+			wrPTR <= (others => '0'); 
+		end if; 
 	end if; 
 			
 
 	case(wr_state_reg) is
 	when nFull =>
+		wrs(0) <= WE; -- only allows overwriting when not full
 		FULL <= '0';
 		if (wrptr + 1 = reptr and we = '1') then  -- if next wr_ptr is re_ptr, then 
 			wr_state_next <= isFull; 	 	
@@ -152,6 +154,7 @@ begin
 		end if; 
 			
 	when isFull => 
+		wrs(0) <= '0'; -- cannot write to wrptr 
 		FULL <= '1'; 
 		if (not (wrptr = reptr) ) then 
 			wr_state_next <= nFull; 

@@ -67,6 +67,7 @@ architecture Behavioral of SerialIO is
 begin
 
 UART0 : entity work.UARTWithFifo
+	Generic map(baud_rate => 9600)
 	Port Map(
 		clk => clk,
 		dataIN => din,
@@ -83,6 +84,7 @@ UART0 : entity work.UARTWithFifo
 	);
 
 UART1 : entity work.UARTWithFifo
+	Generic map(baud_rate => 9600)
 	Port Map(
 		clk => clk,
 		dataIN => din,
@@ -99,6 +101,7 @@ UART1 : entity work.UARTWithFifo
 	);
 	
 UART2 : entity work.UARTWithFifo
+	Generic map(baud_rate => 9600)
 	Port Map(
 		clk => clk,
 		dataIN => din,
@@ -115,6 +118,7 @@ UART2 : entity work.UARTWithFifo
 	);
 
 UART3 : entity work.UARTWithFifo
+	Generic map(baud_rate => 9600)
 	Port Map(
 		clk => clk,
 		dataIN => din,
@@ -131,6 +135,7 @@ UART3 : entity work.UARTWithFifo
 	);
 
 UART4 : entity work.UARTWithFifo
+	Generic map(baud_rate => 9600)
 	Port Map(
 		clk => clk,
 		dataIN => din,
