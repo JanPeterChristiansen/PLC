@@ -56,7 +56,6 @@ entity Processen is
 		SERIAL_full : in STD_LOGIC;
 		SERIAL_dready : in STD_LOGIC;
 		SERIAL_rst : out STD_LOGIC;
-		SERIAL_msb_lsb : out STD_LOGIC;
 		SERIAL_tx_buffer_space : in STD_LOGIC_VECTOR(6 downto 0); 
 		-- OUTMUX
 		OUTMUX_SETUP : out STD_LOGIC_VECTOR(9 downto 0); 
@@ -488,10 +487,10 @@ begin
 		when x"2c" => -- RESET port (direct)
 			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
 			SERIAL_rst <= '1';						-- set serial reset flag
+			--
 			
-		when x"2d" => -- SET MSB_LSB port
-			SERIAL_addr <= cmd(19 downto 16); 		-- set serial address
-			SERIAL_msb_lsb <= cmd(0); 				-- set msb_lsb flag
+			
+			
 			
 		when x"2e" => -- SKIP IF NOT READY port
 			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
@@ -507,14 +506,14 @@ begin
 			
 			
 			
-		when x"30" => -- MODi reg $value
-			B <= cmd(15 downto 0); 					-- write B to C-bus
+		when x"30" => -- 	reg $val 			-- 	
+			B <= cmd(15 downto 0); 				-- write B to C-bus
 			ALUfunc <= x"a"; 						-- write A mod B to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
 			reA <= '1'; 							-- read from target register to A-bus
 			weC <= '1'; 							-- write from C-bus to target register
 			
-		when x"31" => -- MOD reg reg
+		when x"31" => --  reg & reg			-- concatenate
 			ALUfunc <= x"a"; 						-- write A mod B to C-bus
 			addrA <= cmd(19 downto 16); 			-- set target register address
 			addrB <= cmd(3 downto 0); 				-- set value register address

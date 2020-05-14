@@ -42,7 +42,6 @@ entity SerialIO is
 		full : out STD_LOGIC;
 		dready : out STD_LOGIC;
 		rst : in STD_LOGIC;
-		msb_lsb : in STD_LOGIC;
 		rx : in STD_LOGIC_VECTOR (15 downto 0);
 		tx : out STD_LOGIC_VECTOR (15 downto 0);
 		tx_buffer_space : out STD_LOGIC_VECTOR (6 downto 0)
@@ -58,7 +57,6 @@ architecture Behavioral of SerialIO is
 	signal full_vec 	: STD_LOGIC_VECTOR (15 downto 0);
 	signal dready_vec 	: STD_LOGIC_VECTOR (15 downto 0);
 	signal rst_vec 		: STD_LOGIC_VECTOR (15 downto 0);
-	signal msb_lsb_vec 	: STD_LOGIC_VECTOR (15 downto 0);
 	type dout_type is array (0 to 15) of STD_LOGIC_VECTOR (7 downto 0);
 	type buff_space_type is array (0 to 15) of STD_LOGIC_VECTOR (6 downto 0); 
 	signal dout_vec : dout_type;
@@ -79,7 +77,6 @@ UART0 : entity work.UARTWithFifo
 		rx => rx(0),
 		tx => tx(0),
 		reset => rst_vec(0),
-		MSB_LSB => msb_lsb_vec(0),
 		tx_buffer_space => buff_space_array(0)
 	);
 
@@ -96,7 +93,6 @@ UART1 : entity work.UARTWithFifo
 		rx => rx(1),
 		tx => tx(1),
 		reset => rst_vec(1),
-		MSB_LSB => msb_lsb_vec(1),
 		tx_buffer_space => buff_space_array(1)
 	);
 	
@@ -113,7 +109,6 @@ UART2 : entity work.UARTWithFifo
 		rx => rx(2),
 		tx => tx(2),
 		reset => rst_vec(2),
-		MSB_LSB => msb_lsb_vec(2),
 		tx_buffer_space => buff_space_array(2)
 	);
 
@@ -130,7 +125,6 @@ UART3 : entity work.UARTWithFifo
 		rx => rx(3),
 		tx => tx(3),
 		reset => rst_vec(3),
-		MSB_LSB => msb_lsb_vec(3),
 		tx_buffer_space => buff_space_array(3)
 	);
 
@@ -147,7 +141,6 @@ UART4 : entity work.UARTWithFifo
 		rx => rx(4),
 		tx => tx(4),
 		reset => rst_vec(4),
-		MSB_LSB => msb_lsb_vec(4),
 		tx_buffer_space => buff_space_array(4)
 	);
 
@@ -156,16 +149,7 @@ UART4 : entity work.UARTWithFifo
 
 	full <= full_vec(conv_integer(addr));
 	dready <= dready_vec(conv_integer(addr));
-	-- msb_lsb_vec(conv_integer(addr)) <= msb_lsb;
 
-process(clk) 
-begin
-    if rising_edge(clk) then 
-		if (we = '1') then
-			msb_lsb_vec(conv_integer(addr)) <= msb_lsb;
-		end if;
-    end if; 
-end process;
 
 process (addr, re, we, rst, dout_vec, buff_space_array)
 begin
@@ -190,10 +174,6 @@ begin
 	
 	
 end process;
-	
-	
-		
-
 
 
 end Behavioral;

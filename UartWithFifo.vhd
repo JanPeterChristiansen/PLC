@@ -33,7 +33,6 @@ entity UartWithFifo is
 			rx : in STD_LOGIC;
 			tx : out STD_LOGIC; 
 			reset : in STD_LOGIC;
-			MSB_LSB : in STD_LOGIC; -- transmits LSB when 0 MSB when 1 
 			tx_buffer_space : out STD_LOGIC_VECTOR(6 downto 0); 
 			rx_buffer_space : out STD_LOGIC_VECTOR(6 downto 0)
 	 );
@@ -78,18 +77,8 @@ component uart IS
 END component; 
 
 
-function reverse_vector(vect : in std_logic_vector) return std_logic_vector is 
-	variable result:  STD_logic_vector(vect'RANGE); 
-	alias rvect: std_logic_vector(vect'reverse_range) is vect; 
-begin
-	for i in rvect'range loop
-		result(i) := rvect(i); 
-	end loop; 
-	return result; 
-end; 
 
-
-signal tx_data, rx_data, tx_data_conv : STD_LOGIC_VECTOR(7 downto 0);
+signal tx_data, rx_data : STD_LOGIC_VECTOR(7 downto 0);
 signal tx_re, tx_dataReady, tx_ena, rx_busy, rx_error, tx_busy, RX_full, rx_we, receive: STD_LOGIC := '0'; 
 
 type txlink_state_type is (s0, s1 , s2); 
@@ -138,7 +127,7 @@ port map(
 clk => clk,
 reset_n => reset,
 tx_ena => tx_ena,
-tx_data => tx_data_conv,
+tx_data => tx_data, 
 rx => rx,
 rx_busy => rx_busy,
 rx_error => rx_error, 
@@ -185,8 +174,6 @@ begin
 	end case; 
 end process;
 
-
-
 -- rx to buffer FSM 
 -- nextstate logic
 process(rxlink_statereg, rx_busy)
@@ -210,10 +197,4 @@ begin
 		rx_we <= '1';
 	end case; 
 end process; 
-
---MSB/LSB converter 
-with MSB_LSB select tx_data_conv <=
-	tx_data when '0',
-	reverse_vector(tx_data) when'1', 
-	tx_data when others;
-end Behavioral;
+end Behavioral; 
