@@ -164,7 +164,7 @@ begin
 	PWM_CMD <= (others => '-'); 
 	
 	OOCC_input <= (others => '-'); 
-	OOCC_ws <= (others => '-'); 
+	OOCC_ws <= (others => '0'); 
 	
 	FIR_ctrl <= (others => '0');
 	FIR_input <= (others => '-'); 
@@ -492,7 +492,6 @@ begin
 		when x"2d" => -- SET MSB_LSB port
 			SERIAL_addr <= cmd(19 downto 16); 		-- set serial address
 			SERIAL_msb_lsb <= cmd(0); 				-- set msb_lsb flag
-			SERIAL_we <= '1';
 			
 		when x"2e" => -- SKIP IF NOT READY port
 			SERIAL_addr <= cmd(3 downto 0); 		-- set serial address
