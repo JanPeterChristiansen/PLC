@@ -118,12 +118,6 @@ architecture Behavioral of PLC is
 	signal STACK_INC : STD_LOGIC;
 	signal STACK_DEC : STD_LOGIC; 
 	signal STACK_TOS : STD_LOGIC_VECTOR(9 downto 0); 
-	-- Interrupts 
-	signal INT_pins : STD_LOGIC_VECTOR(3 downto 0); 
-	signal INT_pending : STD_LOGIC_VECTOR(3 downto 0); 
-	signal INT_reset : STD_LOGIC_VECTOR(3 downto 0); 
-	signal INT_busy : STD_LOGIC; 
-	signal INT_isrvect : STD_LOGIC_VECTOR(15 downto 0); 
 	-- PWM
 	signal PWM_OUTPUTS: STD_LOGIC_VECTOR(15 downto 0); 
 	signal PWM_addr : STD_LOGIC_VECTOR(3 downto 0); 
@@ -151,14 +145,7 @@ architecture Behavioral of PLC is
 	
 begin
 
---interrupt : entity work.Interrupt
---    Port map( 
---		clk => clk,
---		pins => INT_pins, 
---		output => INT_pending,
---		rst => INT_reset 
---	 );
-
+-- FIR filter port map
 FirFilter1 : entity work.FirFilter
     Port map ( 
 		clk => clk, 
@@ -168,7 +155,7 @@ FirFilter1 : entity work.FirFilter
 		Done => FIR_done
 	);
 
-
+-- OnOff controller port map
 OnOffControllerController1 : entity work.OnOffControllerController
     Port map ( 
 		clk => clk,
@@ -178,6 +165,7 @@ OnOffControllerController1 : entity work.OnOffControllerController
       outputs => OOCC_outputs
 	); 
 
+-- PWM controller port map
 PWMcontroller1 : entity work.PWMcontroller
     Port map( 
 		clk => clk, 
@@ -188,8 +176,7 @@ PWMcontroller1 : entity work.PWMcontroller
 		we => PWM_WE
 		);
 
-
-
+-- output multiplexer port map
 OutPutMux1 : entity work.OutputConnectionMux
     Port map ( 
 		clk => clk,
@@ -201,7 +188,7 @@ OutPutMux1 : entity work.OutputConnectionMux
 		we =>	OUTMUX_WE
 	); 
 
-
+-- Stack port map
 stackcontrol1 : entity work.Stackcontrol
 	port map(
 		clk => clk,
@@ -246,6 +233,7 @@ REG : entity work.Registers
 		reB => reB,
 		we => weC
 	);
+	
 REG_Baddr <= B(9 downto 0); 
 
 -- RAM port map
@@ -260,6 +248,7 @@ RAM : SimpleDualPortRAM
 		doutb => RAM_dout
 	);
 
+-- Serial/UART port map
 SERIAL : entity work.SerialIO
 	Port Map(
 		clk => clk,
@@ -276,13 +265,15 @@ SERIAL : entity work.SerialIO
 		tx_buffer_space => SERIAL_tx_buffer_space
 	);
 
+-- Input buffer port map
 INPUT_BUFFER : entity work.Inputs
 	Port Map(
 		clk => clk,
 		din => INPUT,
 		dout => InputBuffer
 	);
-	
+
+-- Output buffer port map	
 OUTPUT_BUFFER : entity work.Output
 	port map(
 		clk => clk,
@@ -291,6 +282,7 @@ OUTPUT_BUFFER : entity work.Output
 		we => OUTBUFF_we
 	);
 	
+-- Program ROM port map 
 PROGMEM : PROGRAM 
 	port map (
 		clka => clk,
@@ -300,6 +292,7 @@ PROGMEM : PROGRAM
 		addrb => PROG_addrB,
 		doutb => PROG_doutB
 	); 
+
 
 -- always parses cmd from program memory
 PROG_addrA <= PC; 
@@ -343,6 +336,20 @@ begin
         end if;
     end if;
 end process;
+
+
+-- return controller 
+process(cmd, clk) 
+begin
+	if rising_edge(clk) then
+		if cmd(27 downto 20) = X"46" then
+			RET_returned <= '0'; 
+		end if; 
+		if cmd(27 downto 20) = X"3C" then
+			RET_returned <= '1'; 
+		end if; 
+	end if; 
+end process; 
 
 
 -- interprets cmd fetched from program memory
@@ -421,19 +428,7 @@ PROCESSEN : entity work.Processen
 		RET_returned => RET_returned
 	);
 	
--- return controller 
-	process(cmd, clk) 
-	begin
-		if rising_edge(clk) then
-			if cmd(27 downto 20) = X"46" then
-				RET_returned <= '0'; 
-			end if; 
-			if cmd(27 downto 20) = X"3C" then
-				RET_returned <= '1'; 
-			end if; 
-		end if; 
-			
-	end process; 
+
 end Behavioral;
 
   

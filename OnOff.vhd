@@ -70,19 +70,5 @@ Output <= Output_signal;
 		end case;
 		end if;
 	end process;
-	
-
-
-
-
-
-
-
-
-
-
-
-
 
 end Behavioral;
-
